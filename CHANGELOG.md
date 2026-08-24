@@ -14,6 +14,11 @@
 
 ## v1.3（仓库结构收口）
 
+### ADD（新增）
+
+- 冻结首个 Foundation Core 源码基线：TypeScript、Node.js 22、pnpm、Vitest。
+- 冻结 `Entity Identity → Entity Registry → Structured Error` 最小协议，并以 `DESIGN_ONLY` 登记到 Manifest。
+
 ### CHANGE（修改）
 
 - 将版本化双重嵌套目录提升到仓库根，确立稳定入口。

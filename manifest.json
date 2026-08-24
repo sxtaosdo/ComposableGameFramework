@@ -8,6 +8,7 @@
   },
   "catalogs": {
     "capabilities": [
+      { "id": "core.entity-identity-registry", "status": "DESIGN_ONLY", "document": "01-architecture/entity-model.md" },
       { "id": "gameplay.combat", "status": "DESIGN_ONLY", "document": "03-gameplay/combat.md" },
       { "id": "gameplay.ai", "status": "DESIGN_ONLY", "document": "03-gameplay/ai.md" },
       { "id": "gameplay.quest-dialogue", "status": "DESIGN_ONLY", "document": "03-gameplay/quest-dialogue.md" },

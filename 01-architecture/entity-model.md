@@ -166,3 +166,31 @@ Instance 表达世界中的具体对象。
 重新激活时恢复运行时表示。
 
 这是 LifeSim（生活模拟）和大世界的重要边界。
+
+## 10. Phase 1 最小协议
+
+首个 Foundation Core（基础核心）切片只实现 Entity Identity（实体身份）与 Entity Registry（实体注册表）：
+
+```text
+EntityId
+→ Register / Get / Has / Remove
+→ Structured Result / Error
+```
+
+协议约束：
+
+1. `EntityId` 是不透明字符串；Core 不生成 ID，也不要求 UUID 格式。
+2. 空字符串、纯空白或首尾带空白的值无效；合法值保持原样，不自动修正。
+3. Registry 只拥有 `EntityId → Payload` 映射，不拥有 Payload 内的 Gameplay 状态。
+4. 重复注册、无效 ID 和目标不存在均返回结构化错误，不以异常作为预期分支。
+5. Registry 不发布 Event、不写 Save、不依赖 ECS 或 Engine Adapter。
+
+本切片明确不包含：
+
+```text
+Entity ID Generator
+Command / Query / Event Bus
+Save Identity Migration
+ECS Entity Binding
+Cocos Node Binding
+```

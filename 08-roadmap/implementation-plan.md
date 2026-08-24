@@ -20,6 +20,25 @@
 目录约定
 ```
 
+### 首次源码基线（Owner 已确认）
+
+```text
+Language: TypeScript 5.x
+Headless Runtime: Node.js 22
+Package Manager: pnpm
+Test Runner: Vitest
+First Engine Adapter Target: Cocos Creator 3.8+
+```
+
+首个源码目录：
+
+```text
+src/foundation-core/
+tests/foundation-core/
+```
+
+`adapters/`、`examples/`、`specs/` 与 `validation/` 在出现真实产物前不创建。
+
 ## Phase 1：Foundation Core（基础核心）
 
 优先：
@@ -37,6 +56,17 @@ Clock 基础
 Error Model
 Random Source
 ```
+
+首个纵向切片：
+
+```text
+Entity Identity
+→ Entity Registry
+→ Structured Error
+→ Headless Unit Test
+```
+
+该切片不同时引入 Command / Query / Event Bus、Save、ECS 或 Engine Adapter。
 
 验收：
 
