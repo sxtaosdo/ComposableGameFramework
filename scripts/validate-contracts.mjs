@@ -1,9 +1,12 @@
-import { readFile, readdir, stat } from "node:fs/promises";
+import { readFile, stat } from "node:fs/promises";
 import { createHash } from "node:crypto";
-import { dirname, join, relative, resolve } from "node:path";
+import { execFile } from "node:child_process";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { promisify } from "node:util";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const execFileAsync = promisify(execFile);
 const fail = (message) => { throw new Error(message); };
 const readJson = async (path) => JSON.parse(await readFile(path, "utf8"));
 const isRelativePath = (value) => typeof value === "string" && value.length > 0 && !value.startsWith("/") && !value.split("/").includes("..");
@@ -15,18 +18,6 @@ async function verifyReceipt(path, expectedSha256) {
   if (!absolutePath.startsWith(`${root}/`)) fail(`Evidence receipt escapes P0002: ${path}`);
   const bytes = await readFile(absolutePath);
   if (sha256(bytes) !== expectedSha256) fail(`Evidence receipt hash mismatch: ${path}`);
-}
-
-async function walk(directory) {
-  const files = [];
-  const ignoredDirectories = new Set([".git", "node_modules", "dist", "build", "temp", "library"]);
-  for (const entry of await readdir(directory, { withFileTypes: true })) {
-    if (entry.isDirectory() && ignoredDirectories.has(entry.name)) continue;
-    const path = join(directory, entry.name);
-    if (entry.isDirectory()) files.push(...await walk(path));
-    else files.push(path);
-  }
-  return files;
 }
 
 function checkLocalRefs(schema, node = schema) {
@@ -108,7 +99,8 @@ for (const engine of manifest.compatibility?.engines ?? []) {
   }
 }
 
-const markdownCount = (await walk(root)).filter((path) => path.endsWith(".md")).length;
+const trackedMarkdown = await execFileAsync("git", ["ls-files", "-z", "--", "*.md"], { cwd: root, encoding: "utf8" });
+const markdownCount = trackedMarkdown.stdout.split("\0").filter(Boolean).length;
 if (markdownCount !== manifest.documentCount) fail(`documentCount ${manifest.documentCount} != ${markdownCount}`);
 
 console.log(`Validated ${manifest.contracts.length} contracts for ${manifest.framework.id}@${version}; documentCount=${markdownCount}; status=${manifest.framework.status}`);
