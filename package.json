@@ -1,0 +1,21 @@
+{
+  "name": "@shidai3/composable-game-framework",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22 <23"
+  },
+  "packageManager": "pnpm@10.33.2",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "typescript": "5.9.2",
+    "vitest": "3.2.4"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  }
+}
