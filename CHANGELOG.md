@@ -1,5 +1,13 @@
 # CHANGELOG（变更日志）
 
+## v1.3（仓库结构收口）
+
+### CHANGE（修改）
+
+- 将版本化双重嵌套目录提升到仓库根，确立稳定入口。
+- 新增根 `VERSION`、`AGENTS.md` 与机器可读 Framework Manifest v1。
+- Manifest 明确区分设计、实现、运行验证和产品验收状态，防止设计能力被误判为可装配实现。
+
 ## v1.3
 
 ### ADD（新增）

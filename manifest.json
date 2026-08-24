@@ -1,0 +1,71 @@
+{
+  "schemaVersion": "framework-manifest-v1",
+  "framework": {
+    "id": "composable-game-framework",
+    "name": "Composable Game Framework",
+    "version": "1.3",
+    "status": "DESIGN_ONLY"
+  },
+  "catalogs": {
+    "capabilities": [
+      { "id": "gameplay.combat", "status": "DESIGN_ONLY", "document": "03-gameplay/combat.md" },
+      { "id": "gameplay.ai", "status": "DESIGN_ONLY", "document": "03-gameplay/ai.md" },
+      { "id": "gameplay.quest-dialogue", "status": "DESIGN_ONLY", "document": "03-gameplay/quest-dialogue.md" },
+      { "id": "gameplay.loot-equipment-affix", "status": "DESIGN_ONLY", "document": "03-gameplay/loot-equipment-affix.md" },
+      { "id": "gameplay.farming-fishing-crafting", "status": "DESIGN_ONLY", "document": "03-gameplay/farming-fishing-crafting.md" },
+      { "id": "gameplay.relationship-schedule", "status": "DESIGN_ONLY", "document": "03-gameplay/relationship-schedule.md" },
+      { "id": "gameplay.puzzle-minigame", "status": "DESIGN_ONLY", "document": "03-gameplay/puzzle-minigame.md" },
+      { "id": "infrastructure.save", "status": "DESIGN_ONLY", "document": "04-infrastructure/save-snapshot-migration.md" },
+      { "id": "infrastructure.data-config", "status": "DESIGN_ONLY", "document": "04-infrastructure/data-config-dsl.md" },
+      { "id": "infrastructure.command-query-event", "status": "DESIGN_ONLY", "document": "04-infrastructure/event-command-query.md" },
+      { "id": "infrastructure.observability", "status": "DESIGN_ONLY", "document": "04-infrastructure/debug-observability.md" },
+      { "id": "infrastructure.testing-performance", "status": "DESIGN_ONLY", "document": "04-infrastructure/testing-performance.md" }
+    ],
+    "features": [
+      { "id": "domain.attribute-modifier", "version": "1.3", "status": "DESIGN_ONLY", "capabilities": [], "dependencies": [], "document": "02-domain/attribute-modifier.md" },
+      { "id": "domain.effect-ability", "version": "1.3", "status": "DESIGN_ONLY", "capabilities": [], "dependencies": ["domain.attribute-modifier"], "document": "02-domain/effect-ability.md" },
+      { "id": "domain.interaction", "version": "1.3", "status": "DESIGN_ONLY", "capabilities": [], "dependencies": [], "document": "02-domain/interaction.md" },
+      { "id": "domain.item-inventory", "version": "1.3", "status": "DESIGN_ONLY", "capabilities": [], "dependencies": [], "document": "02-domain/item-inventory.md" },
+      { "id": "domain.progression", "version": "1.3", "status": "DESIGN_ONLY", "capabilities": [], "dependencies": ["domain.attribute-modifier"], "document": "02-domain/progression.md" },
+      { "id": "feature.combat", "version": "1.3", "status": "DESIGN_ONLY", "capabilities": ["gameplay.combat"], "dependencies": ["domain.attribute-modifier", "domain.effect-ability"], "document": "03-gameplay/combat.md" },
+      { "id": "feature.ai", "version": "1.3", "status": "DESIGN_ONLY", "capabilities": ["gameplay.ai"], "dependencies": [], "document": "03-gameplay/ai.md" },
+      { "id": "feature.quest-dialogue", "version": "1.3", "status": "DESIGN_ONLY", "capabilities": ["gameplay.quest-dialogue"], "dependencies": [], "document": "03-gameplay/quest-dialogue.md" },
+      { "id": "feature.loot-equipment-affix", "version": "1.3", "status": "DESIGN_ONLY", "capabilities": ["gameplay.loot-equipment-affix"], "dependencies": ["domain.item-inventory"], "document": "03-gameplay/loot-equipment-affix.md" },
+      { "id": "feature.farming-fishing-crafting", "version": "1.3", "status": "DESIGN_ONLY", "capabilities": ["gameplay.farming-fishing-crafting"], "dependencies": ["domain.item-inventory"], "document": "03-gameplay/farming-fishing-crafting.md" },
+      { "id": "feature.relationship-schedule", "version": "1.3", "status": "DESIGN_ONLY", "capabilities": ["gameplay.relationship-schedule"], "dependencies": [], "document": "03-gameplay/relationship-schedule.md" },
+      { "id": "feature.puzzle-minigame", "version": "1.3", "status": "DESIGN_ONLY", "capabilities": ["gameplay.puzzle-minigame"], "dependencies": [], "document": "03-gameplay/puzzle-minigame.md" }
+    ],
+    "rulesets": [
+      { "id": "ruleset.legend", "version": "1.3", "status": "DESIGN_ONLY", "document": "06-products/legend-reference.md" },
+      { "id": "ruleset.diablo", "version": "1.3", "status": "DESIGN_ONLY", "document": "06-products/diablo-reference.md" },
+      { "id": "ruleset.life-sim", "version": "1.3", "status": "DESIGN_ONLY", "document": "06-products/lifesim-reference.md" },
+      { "id": "ruleset.hybrid", "version": "1.3", "status": "DESIGN_ONLY", "document": "06-products/hybrid-reference.md" },
+      { "id": "ruleset.minigame", "version": "1.3", "status": "DESIGN_ONLY", "document": "06-products/minigame-reference.md" }
+    ],
+    "commands": [],
+    "queries": [],
+    "events": [],
+    "effects": []
+  },
+  "saveSchemas": [],
+  "compatibility": {
+    "engines": [
+      { "id": "cocos-creator", "versionRange": ">=3.8", "status": "DESIGN_ONLY", "document": "05-cocos/cocos-adapter.md" }
+    ]
+  },
+  "protectedAreas": [
+    "foundation-core",
+    "save-protocol",
+    "entity-identity",
+    "feature-lifecycle",
+    "command-contract",
+    "registry-protocol"
+  ],
+  "evidence": {
+    "design": "DOCUMENTED",
+    "implementation": "NOT_IMPLEMENTED",
+    "runtimeVerification": "NOT_RUN",
+    "productAcceptance": "NOT_RUN"
+  },
+  "documentCount": 49
+}

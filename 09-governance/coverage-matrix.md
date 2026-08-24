@@ -107,4 +107,4 @@ MMO 网络同步
 | Framework Gap Analysis | `07-ai-game-studio/framework-gap-analysis.md` |
 | Framework Contract Verification | `07-ai-game-studio/framework-contract-verification.md` |
 | Framework Upstream | `07-ai-game-studio/framework-upstream.md` |
-| Changelog | `09-governance/CHANGELOG.md` |
+| Changelog | `CHANGELOG.md` |
