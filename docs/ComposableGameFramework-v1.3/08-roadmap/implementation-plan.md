@@ -1,0 +1,232 @@
+# Implementation Plan（实施规划）
+
+> 本文只定义工程顺序，不包含具体代码。
+
+## Phase 0：协议冻结
+
+目标：
+
+```text
+确认 Core / Domain / Feature / Ruleset / Product 边界
+确认命名
+确认文档基线
+```
+
+产出：
+
+```text
+架构文档冻结版
+核心术语表
+目录约定
+```
+
+## Phase 1：Foundation Core（基础核心）
+
+优先：
+
+```text
+Entity Identity
+Tag
+Command
+Query
+Event
+Lifecycle
+Registry
+Dependency
+Clock 基础
+Error Model
+Random Source
+```
+
+验收：
+
+```text
+无 Cocos 依赖
+基础协议单测
+```
+
+## Phase 2：Shared Domain（共享领域）
+
+实现：
+
+```text
+Attribute
+Modifier
+Effect
+Ability
+Item
+Inventory
+Interaction
+Time
+World State
+Progression
+```
+
+验收：
+
+```text
+规则可 Headless Test
+结构化错误
+配置校验
+```
+
+## Phase 3：Feature Runtime（功能运行时）
+
+实现：
+
+```text
+Feature Registry
+Dependency Graph
+Lifecycle
+Capability
+Application Layer
+Save Boundary
+```
+
+## Phase 4：Cocos + Hybrid ECS
+
+实现：
+
+```text
+Cocos Adapter
+Binding Layer
+ECS Runtime
+Input Bridge
+Physics Adapter
+Resource Adapter
+Scene / Map Bridge
+```
+
+## Phase 5：Legend Vertical Slice（传奇纵向切片）
+
+最小验证：
+
+```text
+角色
+怪物
+战斗
+技能
+装备
+掉落
+Boss
+强化
+地图
+存档
+```
+
+目的：验证战斗型产品。
+
+## Phase 6：Diablo Vertical Slice（暗黑纵向切片）
+
+增加：
+
+```text
+Affix
+Build
+Dungeon
+Talent
+大量 Loot
+复杂 Modifier
+```
+
+目的：验证规则复杂度和高频 Runtime。
+
+## Phase 7：LifeSim Vertical Slice（生活模拟纵向切片）
+
+增加：
+
+```text
+Calendar
+Farming
+Fishing
+Mining
+Relationship
+Dialogue
+Schedule
+Weather
+Day Transition
+```
+
+目的：验证框架不是“伪通用 ARPG”。
+
+## Phase 8：Cross-product Refactor（跨产品收敛）
+
+只下沉经过三个产品验证的稳定共性。
+
+目标：
+
+```text
+消除重复
+拒绝过度抽象
+冻结 v1 Core
+```
+
+## Phase 9：AI Game Studio 接入
+
+实现：
+
+```text
+GameSpec
+Feature Assembler
+Schema Generator
+Content Generator
+Validation Pipeline
+AI Repair Boundary
+```
+
+## Phase 10：工具化
+
+按真实需求补：
+
+```text
+Item Editor
+Quest Editor
+Dialogue Editor
+Skill Editor
+Feature Assembler
+Debug Inspector
+```
+
+原则：
+
+> 先 Runtime 协议，后编辑器。
+
+
+## 补充：Minigame Vertical Slice（小游戏纵向切片）
+
+在 Legend / Diablo / LifeSim 大型验证之前，优先增加一个低成本非 RPG 验证：
+
+```text
+Tile-Match Minigame
+```
+
+用于验证：
+
+```text
+Core 是否真正通用
+Feature 是否可裁剪
+Ruleset 是否可替换
+Save / Config / Presentation 是否独立
+AI 是否可生成并验证结构化关卡
+```
+
+
+## 补充：AI Game Studio × Framework Integration
+
+正式接入按以下子阶段：
+
+```text
+Framework Manifest
+↓
+Framework Resolver
+↓
+FrameworkAssemblySpec
+↓
+Framework Gap Analysis
+↓
+Framework Contract Verification
+↓
+Protected Core Agent Policy
+↓
+Framework Upstream Workflow
+```
