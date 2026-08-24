@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "framework-capability-implementation-evidence-v1",
+  "capabilityId": "core.entity-identity-registry",
+  "frameworkVersion": "1.4",
+  "sourceRevision": "3af71dbd57c2c5c956c5dc098a731aeffb00831f",
+  "status": "IMPLEMENTED",
+  "source": [
+    "src/foundation-core/entityId.ts",
+    "src/foundation-core/entityRegistry.ts",
+    "src/foundation-core/result.ts",
+    "src/foundation-core/index.ts"
+  ],
+  "tests": ["tests/foundation-core/entityRegistry.test.ts"],
+  "checks": [
+    { "name": "typecheck", "command": "pnpm typecheck", "status": "PASSED" },
+    { "name": "headless-tests", "command": "pnpm test", "status": "PASSED", "testCount": 10 },
+    { "name": "build", "command": "pnpm build", "status": "PASSED" }
+  ],
+  "runtime": { "node": "22.12.0", "pnpm": "10.33.2" },
+  "recordedAt": "2026-08-24T12:20:48Z"
+}

@@ -3,23 +3,28 @@
   "framework": {
     "id": "composable-game-framework",
     "name": "Composable Game Framework",
-    "version": "1.4",
+    "version": "1.4.1",
     "status": "DESIGN_ONLY"
   },
   "catalogs": {
     "capabilities": [
       {
         "id": "core.entity-identity-registry",
+        "version": "1.4",
         "status": "IMPLEMENTED",
         "document": "01-architecture/entity-model.md",
+        "publicApi": {
+          "exports": ["package.composable-game-framework"],
+          "commands": [],
+          "queries": [],
+          "events": [],
+          "effects": [],
+          "saveSchemas": []
+        },
         "evidence": {
-          "source": [
-            "src/foundation-core/entityId.ts",
-            "src/foundation-core/entityRegistry.ts"
-          ],
-          "tests": ["tests/foundation-core/entityRegistry.test.ts"],
-          "commands": ["pnpm typecheck", "pnpm test", "pnpm build"],
-          "runtime": "node-22-headless"
+          "implementationReceiptSha256": "0b8b5db5aec0704370d5013c6b3b6055ffe99c072baa2480bc3e2ca191a149d4",
+          "implementationReceiptPath": "evidence/core-entity-identity-registry-implementation-v1.json",
+          "sourceRevision": "3af71dbd57c2c5c956c5dc098a731aeffb00831f"
         }
       },
       { "id": "gameplay.combat", "status": "DESIGN_ONLY", "document": "03-gameplay/combat.md" },
@@ -64,12 +69,39 @@
   "saveSchemas": [],
   "contracts": [
     {
+      "id": "framework-manifest",
+      "schemaVersion": "framework-manifest-v1",
+      "schemaPath": "specs/framework-manifest-v1.schema.json",
+      "evidence": "MACHINE_SCHEMA_ONLY"
+    },
+    {
       "id": "framework-assembly-spec",
       "schemaVersion": "framework-assembly-spec-v1",
       "schemaPath": "specs/framework-assembly-spec-v1.schema.json",
       "evidence": "MACHINE_SCHEMA_ONLY"
+    },
+    {
+      "id": "framework-integration-verification-receipt",
+      "schemaVersion": "framework-integration-verification-receipt-v1",
+      "schemaPath": "specs/framework-integration-verification-receipt-v1.schema.json",
+      "evidence": "MACHINE_SCHEMA_ONLY"
+    },
+    {
+      "id": "framework-change-proposal",
+      "schemaVersion": "framework-change-proposal-v1",
+      "schemaPath": "specs/framework-change-proposal-v1.schema.json",
+      "evidence": "MACHINE_SCHEMA_ONLY"
     }
   ],
+  "publicApi": {
+    "status": "DESIGN_ONLY",
+    "exports": [],
+    "commands": [],
+    "queries": [],
+    "events": [],
+    "effects": [],
+    "saveSchemas": []
+  },
   "compatibility": {
     "engines": [
       { "id": "cocos-creator", "versionRange": ">=3.8", "status": "DESIGN_ONLY", "document": "05-cocos/cocos-adapter.md" }
@@ -83,6 +115,10 @@
     "command-contract",
     "registry-protocol"
   ],
+  "protectedPathRules": {
+    "mode": "DENY_ALL_FRAMEWORK_MUTATION",
+    "rules": []
+  },
   "evidence": {
     "design": "DOCUMENTED",
     "implementation": "PARTIALLY_IMPLEMENTED",

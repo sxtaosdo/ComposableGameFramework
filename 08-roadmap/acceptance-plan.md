@@ -149,3 +149,16 @@ Gap Analysis 结果结构化
 普通生产 Agent 不得修改 Protected Core
 Integration 后执行 Framework Contract Verification
 ```
+
+合同 Schema 最小验收：
+
+```text
+VERSION 与 manifest.framework.version 精确一致
+Manifest 可发现全部 v1 Schema 且 schemaVersion / schemaPath 一致
+Framework 顶层 DESIGN_ONLY 仅允许 NOT_IMPLEMENTED 或 PARTIALLY_IMPLEMENTED，且始终拒绝 Framework mutation 与生产装配
+IMPLEMENTED 条件要求实现证据与非空 Public API
+VERIFIED 条件额外要求 Runtime Verification evidence
+Engine Selection 只能显式来自 Owner Approved GameSpec
+Integration Receipt 的 PASSED / BLOCKED 与 productionEligible 一致
+Framework Change Proposal 不自动授权执行
+```

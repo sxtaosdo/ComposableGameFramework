@@ -273,4 +273,15 @@ Protected Core Agent Policy
 Framework Upstream Workflow
 ```
 
-当前合同层已具备 Manifest v1、FrameworkAssemblySpec v1 机器 Schema、Resolver / Gap / Verification 底座，Foundation Core 已实现首个 Entity Identity / Registry 切片。生产接入的最小下一步是在已批准 GameSpec 后生成不可变装配请求，并在项目创建与 CODE 调度前执行只读 fail-closed 门禁；Engine Runtime 与其余能力实现仍未开始。
+当前合同层已具备 Manifest v1、FrameworkAssemblySpec v1 机器 Schema、Resolver / Gap / Verification 底座，Foundation Core 已实现首个 Entity Identity / Registry 切片。v1.4.1 补齐生产 v2 的不可变装配请求、前置与后置只读门禁合同；Engine Runtime 与其余能力实现仍未开始。
+
+v1.4.1 合同切片补齐：
+
+```text
+Framework Manifest v1 Schema
+FrameworkAssemblySpec v1 Explicit Engine Selection / Exact Version Semantics
+Framework Integration Verification Receipt v1
+Framework Change Proposal v1
+```
+
+这些 Schema 只建立合同，不晋级 Framework 顶层、Public API 或 Engine Adapter。`core.entity-identity-registry` 保持远端既有 `IMPLEMENTED` 证据；其余能力继续 `DESIGN_ONLY`。Runtime 实现、项目创建、CODE 调度与 Protected Core 修改均不属于本切片。

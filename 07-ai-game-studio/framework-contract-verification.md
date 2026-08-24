@@ -41,3 +41,7 @@ No Authority Violation
 当前只有 `core.entity-identity-registry` 达到 `IMPLEMENTED`，Framework 顶层和其余能力仍为 `DESIGN_ONLY`。装配请求超出该 Core 能力时，验证器的正确结果仍是明确缺口或 `BLOCKED`，不是装配通过。
 
 Reverse-Spec receipt 证明产品需求依据；Framework Gap receipt 证明 P0002 能否满足已批准需求。二者必须独立保存，任一失败都不能由另一类证据补齐。
+
+机器收据入口为 [`../specs/framework-integration-verification-receipt-v1.schema.json`](../specs/framework-integration-verification-receipt-v1.schema.json)。收据必须绑定 GameSpec、FrameworkAssemblySpec、Framework Gap receipt、Manifest SHA-256、P0002 Git revision 与产品候选 revision，并逐项记录 Public API、Engine Compatibility、Forbidden Imports、Protected Paths 和 Authority 检查。
+
+`PASSED` 必须同时满足：所有适用检查非失败、无 Protected Path Mutation、无 failure reason 且 `productionEligible=true`。否则只能输出 `BLOCKED`；缺失收据或绑定漂移同样 fail-closed。

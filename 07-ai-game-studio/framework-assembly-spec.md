@@ -24,9 +24,14 @@ Manifest Schema / SHA-256
 P0002 Git Revision
 Required Maturity
 Required Capability / Feature / Ruleset
+Optional Explicit Engine Selection
 ```
 
 Resolver 判断结果不写回 FrameworkAssemblySpec，而进入独立的 Framework Gap receipt。
+
+v1 保留字段名 `frameworkVersionConstraint`，但语义固定为**精确版本相等**：必须与绑定 Manifest 的 `framework.version` 完全一致，不支持范围、通配符或兼容回退。
+
+`engineSelection` 为必填字段，并且只能复制已批准 GameSpec 中 Owner 明确选择的精确 Engine ID、版本及 `OWNER_APPROVED_GAME_SPEC` 来源；不得从 Manifest 的 Engine Compatibility、其他项目或历史主线推断。缺失显式选择时必须阻断。
 
 ## 3. 设计扩展字段
 

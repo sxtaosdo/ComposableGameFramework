@@ -1,5 +1,18 @@
 # CHANGELOG（变更日志）
 
+## v1.4.1（Framework 生产门禁合同）
+
+### ADD（新增）
+
+- 新增 `Framework Manifest v1`、`Framework Integration Verification Receipt v1` 与 `Framework Change Proposal v1` JSON Schema。
+- 补齐已批准 GameSpec 到不可变 FrameworkAssemblySpec、Framework Gap 与集成后只读复验的合同。
+
+### CHANGE（修改）
+
+- `FrameworkAssemblySpec v1` 要求来自 Owner 已批准 GameSpec 的显式 Engine Selection，并采用精确 Framework 版本语义。
+- Framework 顶层、Public API 与 Engine Compatibility 继续 `DESIGN_ONLY`；既有 `core.entity-identity-registry` 单项保持 `IMPLEMENTED`，不得据此放行完整 Framework 装配。
+- Framework Change Proposal 固定为 Review 输入，不授权 AI 修改 Protected Core。
+
 ## v1.4（Foundation Core 首个源码切片）
 
 ### ADD（新增）

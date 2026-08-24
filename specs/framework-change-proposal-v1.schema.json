@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://shidai3.local/schemas/framework-change-proposal-v1.schema.json",
+  "title": "Framework Change Proposal v1",
+  "description": "Review-only proposal produced from a Framework Gap. It never authorizes automatic P0002 mutation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "proposalId",
+    "status",
+    "runId",
+    "projectId",
+    "gameSpecSha256",
+    "assemblySpecSha256",
+    "frameworkGapReceiptSha256",
+    "frameworkId",
+    "frameworkVersion",
+    "manifestSha256",
+    "frameworkGitRevision",
+    "changeClass",
+    "summary",
+    "requestedChanges",
+    "reuseEvidence",
+    "protectedAreaImpacts",
+    "executionAuthorized",
+    "createdAt",
+    "artifactSha256"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "framework-change-proposal-v1" },
+    "proposalId": { "$ref": "#/$defs/identifier" },
+    "status": { "enum": ["DRAFT", "REVIEW_REQUIRED", "APPROVED", "REJECTED"] },
+    "runId": { "type": "string", "minLength": 1 },
+    "projectId": { "type": "string", "minLength": 1 },
+    "gameSpecSha256": { "$ref": "#/$defs/sha256" },
+    "assemblySpecSha256": { "$ref": "#/$defs/sha256" },
+    "frameworkGapReceiptSha256": { "$ref": "#/$defs/sha256" },
+    "frameworkId": { "$ref": "#/$defs/identifier" },
+    "frameworkVersion": { "$ref": "#/$defs/version" },
+    "manifestSha256": { "$ref": "#/$defs/sha256" },
+    "frameworkGitRevision": { "$ref": "#/$defs/gitRevision" },
+    "changeClass": {
+      "enum": ["CONFIG", "RULESET", "PRODUCT", "FRAMEWORK_FEATURE", "SHARED_DOMAIN", "FOUNDATION_CORE"]
+    },
+    "summary": { "type": "string", "minLength": 1 },
+    "requestedChanges": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["areaId", "description", "publicApiImpact", "engineCompatibilityImpact"],
+        "properties": {
+          "areaId": { "$ref": "#/$defs/identifier" },
+          "pathPatterns": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/relativePath" },
+            "uniqueItems": true
+          },
+          "description": { "type": "string", "minLength": 1 },
+          "publicApiImpact": { "enum": ["NONE", "ADDITIVE", "BREAKING"] },
+          "engineCompatibilityImpact": { "enum": ["NONE", "ADDITIVE", "BREAKING"] }
+        }
+      }
+    },
+    "reuseEvidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["projectId", "gameSpecSha256", "evidenceSha256"],
+        "properties": {
+          "projectId": { "type": "string", "minLength": 1 },
+          "gameSpecSha256": { "$ref": "#/$defs/sha256" },
+          "evidenceSha256": { "$ref": "#/$defs/sha256" }
+        }
+      }
+    },
+    "protectedAreaImpacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["areaId", "pathPatterns", "justification"],
+        "properties": {
+          "areaId": { "$ref": "#/$defs/identifier" },
+          "pathPatterns": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "$ref": "#/$defs/relativePath" },
+            "uniqueItems": true
+          },
+          "justification": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "architectureReviewReceiptSha256": { "$ref": "#/$defs/sha256" },
+    "ownerApprovalReceiptSha256": { "$ref": "#/$defs/sha256" },
+    "executionAuthorized": {
+      "const": false,
+      "description": "A proposal or approval receipt does not authorize automatic framework mutation."
+    },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "artifactSha256": { "$ref": "#/$defs/sha256" }
+  },
+  "allOf": [
+    {
+      "if": { "type": "object", "required": ["changeClass"], "properties": { "changeClass": { "enum": ["SHARED_DOMAIN", "FOUNDATION_CORE"] } } },
+      "then": { "properties": { "reuseEvidence": { "type": "array", "minItems": 2 } } }
+    },
+    {
+      "if": { "type": "object", "required": ["changeClass"], "properties": { "changeClass": { "const": "FOUNDATION_CORE" } } },
+      "then": { "properties": { "protectedAreaImpacts": { "type": "array", "minItems": 1 } } }
+    },
+    {
+      "if": { "type": "object", "required": ["status"], "properties": { "status": { "const": "APPROVED" } } },
+      "then": {
+        "required": ["architectureReviewReceiptSha256", "ownerApprovalReceiptSha256"],
+        "properties": {
+          "architectureReviewReceiptSha256": { "$ref": "#/$defs/sha256" },
+          "ownerApprovalReceiptSha256": { "$ref": "#/$defs/sha256" }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]*$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+(?:\\.\\d+)?(?:[-+][0-9A-Za-z.-]+)?$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "gitRevision": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{40}$"
+    },
+    "relativePath": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._*-]+)*$"
+    }
+  }
+}
