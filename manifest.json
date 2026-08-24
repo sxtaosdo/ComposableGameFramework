@@ -3,12 +3,25 @@
   "framework": {
     "id": "composable-game-framework",
     "name": "Composable Game Framework",
-    "version": "1.3.1",
+    "version": "1.4",
     "status": "DESIGN_ONLY"
   },
   "catalogs": {
     "capabilities": [
-      { "id": "core.entity-identity-registry", "status": "DESIGN_ONLY", "document": "01-architecture/entity-model.md" },
+      {
+        "id": "core.entity-identity-registry",
+        "status": "IMPLEMENTED",
+        "document": "01-architecture/entity-model.md",
+        "evidence": {
+          "source": [
+            "src/foundation-core/entityId.ts",
+            "src/foundation-core/entityRegistry.ts"
+          ],
+          "tests": ["tests/foundation-core/entityRegistry.test.ts"],
+          "commands": ["pnpm typecheck", "pnpm test", "pnpm build"],
+          "runtime": "node-22-headless"
+        }
+      },
       { "id": "gameplay.combat", "status": "DESIGN_ONLY", "document": "03-gameplay/combat.md" },
       { "id": "gameplay.ai", "status": "DESIGN_ONLY", "document": "03-gameplay/ai.md" },
       { "id": "gameplay.quest-dialogue", "status": "DESIGN_ONLY", "document": "03-gameplay/quest-dialogue.md" },
@@ -72,7 +85,7 @@
   ],
   "evidence": {
     "design": "DOCUMENTED",
-    "implementation": "NOT_IMPLEMENTED",
+    "implementation": "PARTIALLY_IMPLEMENTED",
     "runtimeVerification": "NOT_RUN",
     "productAcceptance": "NOT_RUN"
   },

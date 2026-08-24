@@ -8,14 +8,16 @@
 
 1. `README.md`：了解框架定位和目录。
 2. `VERSION` 与 `manifest.json`：确认机器合同版本、能力成熟度和证据状态。
-3. 仅按任务读取对应编号目录；不得把未声明状态的设计文档当作已实现能力。
-4. 作为 shidai3 的 `P0002/` submodule 使用时，再读取父仓库 `../AI_CONTEXT.md` 和目标产品的适用 `AGENTS.md`。
+3. 涉及源码时读取根 `package.json`，再按 Manifest 证据路径进入对应 `src/` 与 `tests/` 文件。
+4. 仅按任务读取对应编号目录；不得把未声明状态的设计文档当作已实现能力。
+5. 作为 shidai3 的 `P0002/` submodule 使用时，再读取父仓库 `../AI_CONTEXT.md` 和目标产品的适用 `AGENTS.md`。
 
 ## 证据边界
 
-- 当前仓库是技术设计与机器合同基线，不代表已有 Framework 源码、运行验证或产品验收。
+- 当前仓库已有首个 Foundation Core 源码切片，但不代表完整 Framework、Engine Runtime 或产品验收已经完成。
 - `DESIGN_ONLY` 能力只能用于规划和缺口分析，不能被 Resolver 判定为可装配。
 - 只有具备实现证据的 `IMPLEMENTED` 能力才能进入开发装配；要求运行验收时必须达到 `VERIFIED`。
+- 当前仅 `core.entity-identity-registry` 为 `IMPLEMENTED`；其他能力仍以 Manifest 的 `DESIGN_ONLY` 为准。
 - 代码阅读、设计声明、测试结果和产品验收必须分别报告，不得混称。
 
 ## 修改规则
@@ -39,4 +41,5 @@
 - 校验 `VERSION` 与 Manifest 版本一致。
 - 校验 Manifest 中引用的文档存在、依赖 ID 可解析、目录成熟度不会被降级绕过。
 - 校验 `README.md` 相对链接、Markdown 数量与 `manifest.json.documentCount`。
+- TypeScript Core 修改运行 `pnpm typecheck`、`pnpm test` 与 `pnpm build`，并使用 Node.js 22 验证。
 - 提交前运行 `git diff --check`，并明确未执行的源码、Runtime 或产品验收层级。

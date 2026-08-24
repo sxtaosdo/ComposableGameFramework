@@ -29,4 +29,6 @@ Framework Manifest 是 AI Game Studio 的规划输入合同。
 
 每个能力必须声明 `DESIGN_ONLY / IMPLEMENTED / VERIFIED / DEPRECATED`。`DESIGN_ONLY` 只证明设计存在，不得被解析为可装配实现；需要运行验收的产品只能消费 `VERIFIED` 能力。
 
-当前 P0002 只有设计文档，Manifest 中能力均为 `DESIGN_ONLY`，实现、Runtime 验证和产品验收均为 `NOT_*` 状态。
+`IMPLEMENTED` 条目必须携带可定位的源码、测试与验证命令。单个能力实现时，Framework 整体状态可以继续保持 `DESIGN_ONLY`，全局实现证据使用 `PARTIALLY_IMPLEMENTED`，防止局部源码被误判为完整框架交付。
+
+当前只有 `core.entity-identity-registry` 达到 `IMPLEMENTED`；其余能力仍为 `DESIGN_ONLY`。Engine Runtime 验证和产品验收仍为 `NOT_RUN`。

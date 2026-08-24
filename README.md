@@ -7,7 +7,7 @@
 
 本文档集属于 `P0002` Game Framework。`07-ai-game-studio/` 定义框架侧装配合同；AI 生产标准由 `P0003` 管理，工具实现位于 `P9000`。
 
-当前内容是技术设计和机器可读合同基线，不代表已有 Framework 源码、运行验证或产品验收。能力成熟度以 [`manifest.json`](manifest.json) 为准；当前能力均为 `DESIGN_ONLY`。
+当前仓库包含技术设计、机器可读合同，以及首个 Foundation Core 源码切片。能力成熟度以 [`manifest.json`](manifest.json) 为准；目前只有 `core.entity-identity-registry` 达到 `IMPLEMENTED`，其余能力仍为 `DESIGN_ONLY`，尚无 Engine Runtime 或产品验收证据。
 
 ## 1. 目标
 
@@ -81,6 +81,12 @@ Engine Adapter（引擎适配层）
 - [World & Time（世界与时间）](01-architecture/world-time.md)
 - [Engine Boundary（引擎边界）](01-architecture/engine-boundary.md)
 - [Application Layer（应用编排层）](01-architecture/application-layer.md)
+
+### Foundation Core Source（基础核心源码）
+
+- [Entity Identity（实体身份）](src/foundation-core/entityId.ts)
+- [Entity Registry（实体注册表）](src/foundation-core/entityRegistry.ts)
+- [Headless Tests（无渲染测试）](tests/foundation-core/entityRegistry.test.ts)
 
 ### Shared Domain（共享领域）
 

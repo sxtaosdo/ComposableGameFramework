@@ -68,6 +68,18 @@ Entity Identity
 
 该切片不同时引入 Command / Query / Event Bus、Save、ECS 或 Engine Adapter。
 
+实现证据：
+
+```text
+Status: IMPLEMENTED
+Source: src/foundation-core/entityId.ts
+        src/foundation-core/entityRegistry.ts
+Test:   tests/foundation-core/entityRegistry.test.ts
+Verify: pnpm typecheck
+        pnpm test
+        pnpm build
+```
+
 验收：
 
 ```text
@@ -261,4 +273,4 @@ Protected Core Agent Policy
 Framework Upstream Workflow
 ```
 
-当前合同层已具备 Manifest v1、FrameworkAssemblySpec v1 机器 Schema、Resolver / Gap / Verification 底座。生产接入的最小下一步是在已批准 GameSpec 后生成不可变装配请求，并在项目创建与 CODE 调度前执行只读 fail-closed 门禁；Framework Runtime 与能力实现仍未开始。
+当前合同层已具备 Manifest v1、FrameworkAssemblySpec v1 机器 Schema、Resolver / Gap / Verification 底座，Foundation Core 已实现首个 Entity Identity / Registry 切片。生产接入的最小下一步是在已批准 GameSpec 后生成不可变装配请求，并在项目创建与 CODE 调度前执行只读 fail-closed 门禁；Engine Runtime 与其余能力实现仍未开始。

@@ -38,6 +38,6 @@ No Authority Violation
 
 这些检查尽量由确定性程序完成，而不是交给 LLM 主观判断。
 
-当前 P0002 能力均为 `DESIGN_ONLY`，因此验证器的正确结果是明确缺口或 `BLOCKED`，不是装配通过。
+当前只有 `core.entity-identity-registry` 达到 `IMPLEMENTED`，Framework 顶层和其余能力仍为 `DESIGN_ONLY`。装配请求超出该 Core 能力时，验证器的正确结果仍是明确缺口或 `BLOCKED`，不是装配通过。
 
 Reverse-Spec receipt 证明产品需求依据；Framework Gap receipt 证明 P0002 能否满足已批准需求。二者必须独立保存，任一失败都不能由另一类证据补齐。

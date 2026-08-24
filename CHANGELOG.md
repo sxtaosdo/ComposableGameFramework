@@ -1,5 +1,18 @@
 # CHANGELOG（变更日志）
 
+## v1.4（Foundation Core 首个源码切片）
+
+### ADD（新增）
+
+- 新增 TypeScript + Node.js 22 Headless 工程与 pnpm / Vitest 验证链。
+- 实现不透明 `EntityId`、通用 `EntityRegistry` 与结构化 Result / Error。
+- 覆盖无效 ID、注册、查询、移除、重复注册、目标不存在与 `undefined` Payload。
+
+### CHANGE（修改）
+
+- `core.entity-identity-registry` 从 `DESIGN_ONLY` 晋级为 `IMPLEMENTED`。
+- Framework 整体继续保持 `DESIGN_ONLY`；Engine Runtime 与产品验收继续保持 `NOT_RUN`。
+
 ## v1.3.1（FrameworkAssemblySpec v1）
 
 ### ADD（新增）
