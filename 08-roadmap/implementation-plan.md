@@ -230,3 +230,5 @@ Protected Core Agent Policy
 ↓
 Framework Upstream Workflow
 ```
+
+当前合同层已具备 Manifest v1、FrameworkAssemblySpec v1 机器 Schema、Resolver / Gap / Verification 底座。生产接入的最小下一步是在已批准 GameSpec 后生成不可变装配请求，并在项目创建与 CODE 调度前执行只读 fail-closed 门禁；Framework Runtime 与能力实现仍未开始。

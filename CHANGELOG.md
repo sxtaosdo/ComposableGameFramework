@@ -1,5 +1,17 @@
 # CHANGELOG（变更日志）
 
+## v1.3.1（FrameworkAssemblySpec v1）
+
+### ADD（新增）
+
+- 新增 `FrameworkAssemblySpec v1` JSON Schema，绑定已批准 GameSpec、批准收据、Manifest SHA-256 与 P0002 Git revision。
+- 明确 Framework Gap receipt 与 Reverse-Spec receipt 独立，且装配门禁位于项目创建和 CODE 调度之前。
+
+### CHANGE（修改）
+
+- Resolver 改为消费不可变 FrameworkAssemblySpec，不再把其描述为 Resolver 的隐式生成结果。
+- 当前 Framework 与能力仍全部为 `DESIGN_ONLY`；机器 Schema 的存在不代表 Runtime 已实现。
+
 ## v1.3（仓库结构收口）
 
 ### CHANGE（修改）

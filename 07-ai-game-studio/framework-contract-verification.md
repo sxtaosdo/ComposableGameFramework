@@ -2,7 +2,21 @@
 
 ## 1. 位置
 
-AI Game Studio 的 Integration（集成）之后、最终 Game Acceptance（游戏验收）之前。
+分为两道只读门禁：
+
+```text
+已批准 GameSpec
+↓
+FrameworkAssemblySpec / Resolver / Gap Receipt
+↓
+项目创建与 CODE 调度前门禁
+
+Integration
+↓
+最终 Game Acceptance 前合同复验
+```
+
+前置门禁阻止未满足的框架需求产生 Runtime 副作用；后置门禁验证实际集成结果没有偏离同一合同快照。
 
 ## 2. 确定性门禁
 
@@ -25,3 +39,5 @@ No Authority Violation
 这些检查尽量由确定性程序完成，而不是交给 LLM 主观判断。
 
 当前 P0002 能力均为 `DESIGN_ONLY`，因此验证器的正确结果是明确缺口或 `BLOCKED`，不是装配通过。
+
+Reverse-Spec receipt 证明产品需求依据；Framework Gap receipt 证明 P0002 能否满足已批准需求。二者必须独立保存，任一失败都不能由另一类证据补齐。
