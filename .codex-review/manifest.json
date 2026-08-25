@@ -1,0 +1,30 @@
+{
+  "acceptance_mapping": [
+    "工作树差异逐字节等于 ba9ae8d..766e481；合同校验、pnpm typecheck/test/build/sample:headless 通过；R2 design/final PASS；guarded commit 精确等于 766e481b2e8598a9dae698631a14b86184fc57c4；远端 origin/gpt/p0002-framework-mvp-r2 live SHA 同值；run 达到 DONE 且工作树干净。"
+  ],
+  "changed_paths": [],
+  "created_at": "2026-08-25T10:34:45+00:00",
+  "repository": {
+    "base_sha": "ba9ae8d5de0cd5be1e566960f8f94d8e26538978",
+    "review_branch": "codex-review/p0002-bind-delivery-v3/design-r01",
+    "snapshot_sha": "ba9ae8d5de0cd5be1e566960f8f94d8e26538978",
+    "url": "git@github.com:sxtaosdo/ComposableGameFramework.git"
+  },
+  "resolved_push_endpoint_hash": "38b9ad24a076d017ce35fb1436d451005776a78dbf9098dcd64026677eae6789",
+  "review_epoch": 1,
+  "review_input_hash": "8084296f0b0e9cf3406e9b5012f578a254130b71ddf8725920cf1d41d568864e",
+  "review_type": "design",
+  "risk": "R2",
+  "round": 1,
+  "run_id": "p0002-bind-delivery-v3-20260825",
+  "schema": "gpt-codex-review-packet-v1",
+  "task_contract": {
+    "path": ".codex-review/request.md",
+    "sha256": "0ca575db9da4e2253c9f336e8fa05c496625612f4b9272da14ff0ae3b0af7b6c"
+  },
+  "task_id": "p0002-bind-delivery-v3",
+  "validation": {
+    "evidence_path": ".codex-review/evidence.md",
+    "evidence_sha256": "a03da3d0ec8ff8c917af3249b48e9d382301ce3af4e2c4771e608b6b763aed13"
+  }
+}
