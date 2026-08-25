@@ -1,0 +1,30 @@
+{
+  "acceptance_mapping": [
+    "最终 tree 在所有任务路径上与 766e481b2e8598a9dae698631a14b86184fc57c4 完全一致；pnpm typecheck、pnpm test、pnpm build、pnpm sample:headless 与合同校验通过；R2 design/final Git-only 审查 PASS；commit 仅 fast-forward 推送 P0002 origin/main 并验证 live remote SHA；工作树干净。"
+  ],
+  "changed_paths": [],
+  "created_at": "2026-08-25T10:29:35+00:00",
+  "repository": {
+    "base_sha": "bfff11ace55860d7037fdf09d2aa51ccd702b885",
+    "review_branch": "codex-review/p0002-child-delivery-v2/design-r01",
+    "snapshot_sha": "bfff11ace55860d7037fdf09d2aa51ccd702b885",
+    "url": "git@github.com:sxtaosdo/ComposableGameFramework.git"
+  },
+  "resolved_push_endpoint_hash": "38b9ad24a076d017ce35fb1436d451005776a78dbf9098dcd64026677eae6789",
+  "review_epoch": 1,
+  "review_input_hash": "daa09a3fe06aa96a85a017f0bb0364cc775ea037405305d4fbe56d3eb960f3e9",
+  "review_type": "design",
+  "risk": "R2",
+  "round": 1,
+  "run_id": "p0002-child-delivery-v2-20260825",
+  "schema": "gpt-codex-review-packet-v1",
+  "task_contract": {
+    "path": ".codex-review/request.md",
+    "sha256": "7206ed8a80556db29bb3aab72bcdcd0d07b98c81efb6132b022b56a77332f3b0"
+  },
+  "task_id": "p0002-child-delivery-v2",
+  "validation": {
+    "evidence_path": ".codex-review/evidence.md",
+    "evidence_sha256": "a03da3d0ec8ff8c917af3249b48e9d382301ce3af4e2c4771e608b6b763aed13"
+  }
+}
