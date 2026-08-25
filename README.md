@@ -7,7 +7,7 @@
 
 本文档集属于 `P0002` Game Framework。`07-ai-game-studio/` 定义框架侧装配合同；AI 生产标准由 `P0003` 管理，工具实现位于 `P9000`。
 
-当前仓库包含技术设计、机器可读合同，以及首个 Foundation Core 源码切片。能力成熟度以 [`manifest.json`](manifest.json) 为准；目前只有 `core.entity-identity-registry` 达到 `IMPLEMENTED`，其余能力仍为 `DESIGN_ONLY`，尚无 Engine Runtime 或产品验收证据。
+当前仓库包含技术设计、机器可读合同、Framework MVP 源码与 Tile-Match Headless 纵向切片。能力成熟度以 [`manifest.json`](manifest.json) 为准；MVP 单项能力可达到 `IMPLEMENTED`，但 Framework 顶层、Cocos Creator Runtime 与产品验收仍保持 `DESIGN_ONLY` / `NOT_RUN`，不得据此放行生产装配。
 
 ## 1. 目标
 
@@ -87,6 +87,33 @@ Engine Adapter（引擎适配层）
 - [Entity Identity（实体身份）](src/foundation-core/entityId.ts)
 - [Entity Registry（实体注册表）](src/foundation-core/entityRegistry.ts)
 - [Headless Tests（无渲染测试）](tests/foundation-core/entityRegistry.test.ts)
+
+### Framework MVP Quick Start
+
+产品代码只从包根入口导入公开协议，不引用 `src/` 内部相对路径：
+
+```ts
+import {
+  FeatureRuntime,
+  MessageRuntime,
+  SaveCoordinator,
+} from "@shidai3/composable-game-framework";
+
+const messages = new MessageRuntime();
+const save = new SaveCoordinator("1.5.0");
+const runtime = new FeatureRuntime();
+runtime.capabilities.provide("framework.messages", messages);
+runtime.capabilities.provide("framework.save", save);
+```
+
+Feature 通过公开 Capability / Command / Query / Event 协议协作；Cocos 工程在适配层提供输入与表现 Port，Gameplay 状态仍由产品 Feature 持有。验证最小纵向切片：
+
+```bash
+pnpm typecheck
+pnpm test
+pnpm build
+pnpm sample:headless
+```
 
 ### Shared Domain（共享领域）
 

@@ -1,5 +1,19 @@
 # CHANGELOG（变更日志）
 
+## v1.5.0（Framework MVP 实现切片）
+
+### ADD（新增）
+
+- 实现确定性 Clock / Random、Tag、Command / Query / Event 与结构化失败协议。
+- 实现 Feature 依赖解析、生命周期、Capability Registry、Data 校验和统一 Snapshot 协调。
+- 新增无 `cc` 依赖的 Cocos Creator Adapter 边界，以及可 Headless 执行的 Tile-Match 纵向切片。
+- 新增显式根 Public API、快速接入说明和 Core / Runtime / Save / Adapter / Sample 测试。
+
+### CHANGE（修改）
+
+- MVP 已实现能力以单项 `IMPLEMENTED` 证据登记；Framework 顶层、Cocos Runtime Compatibility 与 Product Acceptance 仍保持 `DESIGN_ONLY` / `NOT_RUN`。
+- `core.entity-identity-registry` 保持既有受保护实现，不引入产品逻辑。
+
 ## v1.4.1（Framework 生产门禁合同）
 
 ### ADD（新增）

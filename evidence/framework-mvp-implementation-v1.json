@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "framework-mvp-implementation-evidence-v1",
+  "frameworkVersion": "1.5.0",
+  "sourceRevision": "aca3c1118b30418e8ac76e061e54dd65b92e76f7",
+  "status": "IMPLEMENTED",
+  "capabilityIds": [
+    "core.foundation-primitives",
+    "core.feature-runtime",
+    "engine.cocos-adapter-boundary",
+    "gameplay.puzzle-minigame",
+    "infrastructure.command-query-event",
+    "infrastructure.data-config",
+    "infrastructure.save"
+  ],
+  "featureIds": ["feature.puzzle-minigame"],
+  "rulesetIds": ["ruleset.minigame"],
+  "source": [
+    "src/foundation-core/",
+    "src/runtime/",
+    "src/data/",
+    "src/save/",
+    "src/adapters/cocos/",
+    "src/examples/tile-match/",
+    "src/index.ts"
+  ],
+  "tests": [
+    "tests/foundation-core/",
+    "tests/runtime/",
+    "tests/save/",
+    "tests/adapters/",
+    "tests/examples/"
+  ],
+  "checks": [
+    { "name": "typecheck", "command": "pnpm typecheck", "status": "PASSED" },
+    { "name": "headless-tests", "command": "pnpm test", "status": "PASSED", "testCount": 24 },
+    { "name": "build", "command": "pnpm build", "status": "PASSED" },
+    { "name": "headless-sample", "command": "node dist/examples/tile-match/run.js", "status": "PASSED" }
+  ],
+  "runtime": { "node": "22.23.2", "pnpm": "10.33.2" },
+  "cocosVerification": {
+    "staticAdapterBoundary": "PASSED",
+    "creatorRuntime": "NOT_RUN",
+    "productAcceptance": "NOT_RUN"
+  },
+  "recordedAt": "2026-08-25T06:42:22Z"
+}
