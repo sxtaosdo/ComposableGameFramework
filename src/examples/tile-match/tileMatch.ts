@@ -142,6 +142,7 @@ export class TileMatchFeature implements Feature {
     const registered = save.value.register(this.session);
     if (!registered.ok) return failure({ code: registered.error.code, featureId: this.id });
     this.unregisterSave = registered.value;
+    context.onCleanup(this.unregisterSave);
     return success(undefined);
   }
 
@@ -151,7 +152,6 @@ export class TileMatchFeature implements Feature {
 
   public deactivate(): void {
     this.session.deactivate();
-    this.unregisterSave?.();
     this.unregisterSave = undefined;
   }
 }

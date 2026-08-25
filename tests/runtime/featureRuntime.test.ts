@@ -13,6 +13,7 @@ function feature(id: string, dependencies: readonly string[], log: string[], fai
       const provided = context.capabilities.provide(`capability:${id}`, id);
       if (!provided.ok) return failure({ code: provided.error.code, featureId: id });
       cleanup = provided.value;
+      context.onCleanup(cleanup);
       return success(undefined);
     },
     activate() {
@@ -21,7 +22,6 @@ function feature(id: string, dependencies: readonly string[], log: string[], fai
     },
     deactivate() {
       log.push(`deactivate:${id}`);
-      cleanup?.();
       cleanup = undefined;
     },
   };
@@ -68,5 +68,25 @@ describe("FeatureRuntime", () => {
     expect(log).toEqual(["register:a", "activate:a", "register:b", "activate:b", "deactivate:b", "deactivate:a"]);
     expect(runtime.capabilities.get("capability:a").ok).toBe(false);
     expect(runtime.capabilities.get("capability:b").ok).toBe(false);
+  });
+
+  it("cleans up partial registration side effects when register fails", () => {
+    const runtime = new FeatureRuntime();
+    runtime.add({
+      id: "partial",
+      dependencies: [],
+      register(context) {
+        const provided = context.capabilities.provide("partial-capability", true);
+        if (!provided.ok) return failure({ code: provided.error.code, featureId: "partial" });
+        context.onCleanup(provided.value);
+        return failure({ code: "REGISTER_FAILED", featureId: "partial" });
+      },
+      activate() { return success(undefined); },
+      deactivate() {},
+    });
+
+    expect(runtime.activate()).toEqual({ ok: false, error: { code: "REGISTER_FAILED", featureId: "partial" } });
+    expect(runtime.capabilities.get("partial-capability").ok).toBe(false);
+    expect(runtime.activate()).toEqual({ ok: false, error: { code: "REGISTER_FAILED", featureId: "partial" } });
   });
 });

@@ -3,6 +3,7 @@ import { CapabilityRegistry } from "./capabilityRegistry.js";
 
 export interface FeatureContext {
   readonly capabilities: CapabilityRegistry;
+  onCleanup(cleanup: () => void): void;
 }
 
 export interface Feature {
@@ -27,7 +28,11 @@ export interface FeatureOperationError {
 export class FeatureRuntime {
   public readonly capabilities = new CapabilityRegistry();
   private readonly features = new Map<string, Feature>();
-  private active: Feature[] = [];
+  private active: Array<{
+    readonly feature: Feature;
+    readonly context: FeatureContext;
+    readonly cleanups: Array<() => void>;
+  }> = [];
 
   public add(feature: Feature): Result<void, FeatureGraphError> {
     if (this.features.has(feature.id)) {
@@ -42,26 +47,33 @@ export class FeatureRuntime {
     if (!order.ok) {
       return order;
     }
-    const context = { capabilities: this.capabilities };
+    if (this.active.length > 0) return success(undefined);
     for (const feature of order.value) {
+      const cleanups: Array<() => void> = [];
+      const context: FeatureContext = {
+        capabilities: this.capabilities,
+        onCleanup: (cleanup) => cleanups.push(cleanup),
+      };
       const registered = feature.register(context);
       if (!registered.ok) {
-        this.rollback(context);
+        this.runCleanups(cleanups);
+        this.rollback();
         return registered;
       }
       const activated = feature.activate(context);
       if (!activated.ok) {
         feature.deactivate(context);
-        this.rollback(context);
+        this.runCleanups(cleanups);
+        this.rollback();
         return activated;
       }
-      this.active.push(feature);
+      this.active.push({ feature, context, cleanups });
     }
     return success(undefined);
   }
 
   public deactivate(): void {
-    this.rollback({ capabilities: this.capabilities });
+    this.rollback();
   }
 
   public resolveOrder(): Result<readonly Feature[], FeatureGraphError> {
@@ -100,11 +112,16 @@ export class FeatureRuntime {
     return success(ordered);
   }
 
-  private rollback(context: FeatureContext): void {
-    for (const feature of [...this.active].reverse()) {
-      feature.deactivate(context);
+  private rollback(): void {
+    for (const active of [...this.active].reverse()) {
+      active.feature.deactivate(active.context);
+      this.runCleanups(active.cleanups);
     }
     this.active = [];
   }
-}
 
+  private runCleanups(cleanups: Array<() => void>): void {
+    for (const cleanup of [...cleanups].reverse()) cleanup();
+    cleanups.length = 0;
+  }
+}

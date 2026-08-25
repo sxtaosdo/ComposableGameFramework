@@ -106,7 +106,9 @@ runtime.capabilities.provide("framework.messages", messages);
 runtime.capabilities.provide("framework.save", save);
 ```
 
-Feature 通过公开 Capability / Command / Query / Event 协议协作；Cocos 工程在适配层提供输入与表现 Port，Gameplay 状态仍由产品 Feature 持有。验证最小纵向切片：
+Feature 通过公开 Capability / Command / Query / Event 协议协作，并用 `FeatureContext.onCleanup` 登记注册副作用，Runtime 在注册失败、激活失败和停用时统一逆序清理。Cocos 工程在适配层持有 Creator `Node` / Input / Component 类型，并把 Component 的 `onLoad` / `update` / `onDestroy` 委托给 `CocosComponentLifecycleHost`；Gameplay 状态仍由产品 Feature 持有。
+
+验证最小纵向切片：
 
 ```bash
 pnpm typecheck

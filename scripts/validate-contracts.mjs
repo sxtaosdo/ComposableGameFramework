@@ -18,6 +18,16 @@ async function verifyReceipt(path, expectedSha256) {
   if (!absolutePath.startsWith(`${root}/`)) fail(`Evidence receipt escapes P0002: ${path}`);
   const bytes = await readFile(absolutePath);
   if (sha256(bytes) !== expectedSha256) fail(`Evidence receipt hash mismatch: ${path}`);
+  return JSON.parse(bytes.toString("utf8"));
+}
+
+async function verifySourceRevision(revision) {
+  if (typeof revision !== "string" || !/^[0-9a-f]{40}$/.test(revision)) fail(`Invalid source revision: ${revision}`);
+  try {
+    await execFileAsync("git", ["cat-file", "-e", `${revision}^{commit}`], { cwd: root });
+  } catch {
+    fail(`Unresolvable source revision: ${revision}`);
+  }
 }
 
 function checkLocalRefs(schema, node = schema) {
@@ -84,7 +94,9 @@ if (manifest.framework.status === "DESIGN_ONLY") {
 
 for (const entry of catalogs) {
   if (entry.status === "IMPLEMENTED" || entry.status === "VERIFIED") {
-    await verifyReceipt(entry.evidence?.implementationReceiptPath, entry.evidence?.implementationReceiptSha256);
+    const receipt = await verifyReceipt(entry.evidence?.implementationReceiptPath, entry.evidence?.implementationReceiptSha256);
+    if (receipt.sourceRevision !== entry.evidence?.sourceRevision) fail(`Receipt source revision mismatch: ${entry.id}`);
+    await verifySourceRevision(entry.evidence?.sourceRevision);
   }
   if (entry.status === "VERIFIED") {
     await verifyReceipt(entry.evidence?.runtimeVerificationReceiptPath, entry.evidence?.runtimeVerificationReceiptSha256);

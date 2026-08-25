@@ -13,6 +13,8 @@
 
 - MVP 已实现能力以单项 `IMPLEMENTED` 证据登记；Framework 顶层、Cocos Runtime Compatibility 与 Product Acceptance 仍保持 `DESIGN_ONLY` / `NOT_RUN`。
 - `core.entity-identity-registry` 保持既有受保护实现，不引入产品逻辑。
+- Feature 注册副作用改由 Runtime 作用域统一清理，并补齐注册失败回滚测试。
+- Cocos Adapter 增加 Creator Component 生命周期、Node 与 Input event 静态集成边界；Creator Runtime 仍未运行。
 
 ## v1.4.1（Framework 生产门禁合同）
 

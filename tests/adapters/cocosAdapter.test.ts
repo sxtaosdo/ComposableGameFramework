@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { CocosAdapter } from "../../src/adapters/cocos/index.js";
+import { CocosAdapter, CocosComponentLifecycleHost, CocosEventInputPort } from "../../src/adapters/cocos/index.js";
 
 describe("CocosAdapter", () => {
   it("owns boot, input, update, presentation, and shutdown without cc runtime types", () => {
@@ -22,5 +22,35 @@ describe("CocosAdapter", () => {
     expect(rendered).toEqual([0, 3]);
     expect(updates).toEqual([0.5]);
     expect(handler).toBeUndefined();
+  });
+
+  it("binds Creator-style event and Component lifecycle seams", () => {
+    let listener: ((event: { amount: number }) => void) | undefined;
+    const target = {
+      on: (_type: string, handler: (event: { amount: number }) => void) => { listener = handler; },
+      off: () => { listener = undefined; },
+    };
+    let state = 0;
+    const updates: number[] = [];
+    const adapter = new CocosAdapter({
+      input: new CocosEventInputPort(target, "touch-end", (event) => event.amount),
+      presentation: { render: () => undefined },
+      dispatchIntent: (amount: number) => { state += amount; },
+      read: () => state,
+      update: (delta) => updates.push(delta),
+    });
+    const host = new CocosComponentLifecycleHost(
+      { node: { name: "Board", active: true }, enabled: true },
+      adapter,
+    );
+
+    host.onLoad();
+    listener?.({ amount: 2 });
+    host.update(1 / 60);
+    host.onDestroy();
+
+    expect(state).toBe(2);
+    expect(updates).toEqual([1 / 60]);
+    expect(listener).toBeUndefined();
   });
 });
