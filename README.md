@@ -1,13 +1,13 @@
 # Composable Game Framework（可组合游戏框架）
 
-状态: Accepted（设计与合同基线）
+状态: Accepted（Framework 已实现，P10-Cook DEVELOPMENT 验证完成）
 
 > 本仓库文档定义一套面向 RPG 与 Simulation（模拟）玩法的可组合游戏框架。
 > 第一阶段以 Cocos Creator + 2D/2.5D + Mobile First（移动端优先）为主要实现目标，单机优先，同时保留未来多人、3D 和跨引擎边界。
 
 本文档集属于 `P0002` Game Framework。`07-ai-game-studio/` 定义框架侧装配合同；AI 生产标准由 `P0003` 管理，工具实现位于 `P9000`。
 
-当前仓库包含技术设计、机器可读合同、Framework MVP 源码与 Tile-Match Headless 纵向切片。能力成熟度以 [`manifest.json`](manifest.json) 为准；MVP 单项能力可达到 `IMPLEMENTED`，但 Framework 顶层、Cocos Creator Runtime 与产品验收仍保持 `DESIGN_ONLY` / `NOT_RUN`，不得据此放行生产装配。
+当前仓库包含技术设计、机器可读合同、Framework MVP 源码与 Tile-Match Headless 纵向切片。P10-Cook 已通过 Cocos Creator 3.8.8 的 DEVELOPMENT 验证：Framework 与 Public API 为 `IMPLEMENTED`，Cocos 3.8.8 兼容性及该产品实际覆盖的六项基础能力为 `VERIFIED`。Framework 顶层不晋级 `VERIFIED`；未被 P10-Cook 覆盖的 Tile-Match、ARPG、LifeSim 等能力保持原状态，微信开发者工具与真机仍为 `NOT_RUN`，Release Gate 保持阻断。能力成熟度与证据路径以 [`manifest.json`](manifest.json) 为准。
 
 ## 1. 目标
 

@@ -38,7 +38,7 @@ No Authority Violation
 
 这些检查尽量由确定性程序完成，而不是交给 LLM 主观判断。
 
-当前只有 `core.entity-identity-registry` 达到 `IMPLEMENTED`，Framework 顶层和其余能力仍为 `DESIGN_ONLY`。装配请求超出该 Core 能力时，验证器的正确结果仍是明确缺口或 `BLOCKED`，不是装配通过。
+P10-Cook 已使 Framework 与 Public API 达到 `IMPLEMENTED`，Cocos Creator 3.8.8 compatibility 以及 `core.foundation-primitives`、`core.feature-runtime`、`engine.cocos-adapter-boundary`、`infrastructure.command-query-event`、`infrastructure.data-config`、`infrastructure.save` 达到 `VERIFIED`。该证据只覆盖 P10-Cook DEVELOPMENT 装配；Framework 顶层不晋级 `VERIFIED`，Tile-Match、ARPG、LifeSim 等未覆盖能力不随之晋级，D4/D5 与 Release Gate 仍保持阻断。装配请求超出 Manifest 已声明成熟度和证据层级时，验证器的正确结果仍是明确缺口或 `BLOCKED`。
 
 Reverse-Spec receipt 证明产品需求依据；Framework Gap receipt 证明 P0002 能否满足已批准需求。二者必须独立保存，任一失败都不能由另一类证据补齐。
 

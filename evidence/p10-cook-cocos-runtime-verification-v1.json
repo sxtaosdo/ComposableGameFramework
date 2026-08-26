@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "p10-cook-cocos-runtime-verification-evidence-v1",
+  "frameworkVersion": "1.5.0",
+  "sourceRevision": "766e481b2e8598a9dae698631a14b86184fc57c4",
+  "status": "VERIFIED",
+  "productId": "p4000-p10-cook",
+  "productBaselineRevision": "a4a6e2a9a49cdf620d8da631589143d4beebe47b",
+  "productContentSha256": "af203c16710bd9e87917ab9b68b7616a8459b824bad1d0b08e0e8d248c570567",
+  "engine": { "id": "cocos-creator", "version": "3.8.8" },
+  "verifiedCapabilityIds": [
+    "core.foundation-primitives",
+    "core.feature-runtime",
+    "engine.cocos-adapter-boundary",
+    "infrastructure.command-query-event",
+    "infrastructure.data-config",
+    "infrastructure.save"
+  ],
+  "coverage": [
+    "package-root-public-api",
+    "feature-registration-activation-cleanup",
+    "command-query-event",
+    "config-validation",
+    "framework-snapshot-save-recovery",
+    "cocos-component-lifecycle",
+    "boot-bundle-boundary",
+    "multi-viewport",
+    "success-failure-pause-resume"
+  ],
+  "diagnostics": {
+    "creatorCompileErrors": 0,
+    "consoleErrors": 0,
+    "consoleWarnings": 0,
+    "pageErrors": 0,
+    "requestFailures": 0,
+    "httpErrors": 0
+  },
+  "d4WechatDevtools": "NOT_RUN",
+  "d5PhysicalDevice": "NOT_RUN",
+  "releaseEligible": false,
+  "recordedAt": "2026-08-26T10:24:00.000Z"
+}

@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "p10-cook-development-acceptance-evidence-v1",
+  "status": "ACCEPTED",
+  "scope": "DEVELOPMENT",
+  "productId": "p4000-p10-cook",
+  "frameworkVersion": "1.5.0",
+  "productContentSha256": "af203c16710bd9e87917ab9b68b7616a8459b824bad1d0b08e0e8d248c570567",
+  "gameSpecSha256": "8924cc44bb26fc2c7a66faaf32ba132ab606ff2b7ffc33dceddda452e93824f2",
+  "initialAssemblySpecSha256": "1cb1a12e74d4b10ebe9e9793afd0fa60d0357d22aa2202923610dd0058c06af9",
+  "initialGapReceiptSha256": "be8d823d5aa031b5c11d5605abc34d5079dfd70dfdb007cdc6358dc502c1598c",
+  "preservedBehavior": {
+    "restaurants": 6,
+    "levels": 240,
+    "successFailure": "PASSED",
+    "progressionUpgradeRenovationSettings": "PASSED",
+    "legacySaveCompatibility": "PASSED",
+    "visualDirection": "PRESERVED"
+  },
+  "d3CreatorPreview": "PASSED",
+  "d4WechatDevtools": "NOT_RUN",
+  "d5PhysicalDevice": "NOT_RUN",
+  "releaseGate": "BLOCKED",
+  "recordedAt": "2026-08-26T10:24:00.000Z"
+}

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "p10-cook-framework-implementation-evidence-v1",
+  "frameworkVersion": "1.5.0",
+  "sourceRevision": "766e481b2e8598a9dae698631a14b86184fc57c4",
+  "status": "IMPLEMENTED",
+  "capabilityIds": [
+    "core.foundation-primitives",
+    "core.feature-runtime",
+    "engine.cocos-adapter-boundary",
+    "infrastructure.command-query-event",
+    "infrastructure.data-config",
+    "infrastructure.save"
+  ],
+  "publicApi": "package.composable-game-framework",
+  "sourceChanged": false,
+  "reusedEvidenceSha256": "1b3c2f17724738e980ad976498127257e90cf89b125d8e0a0843e7c7821e584c",
+  "checks": [
+    { "name": "contracts", "command": "pnpm contracts", "status": "PASSED" },
+    { "name": "typecheck", "command": "pnpm typecheck", "status": "PASSED" },
+    { "name": "tests", "command": "pnpm test", "status": "PASSED", "testCount": 26 },
+    { "name": "build", "command": "pnpm build", "status": "PASSED" },
+    { "name": "headless-sample", "command": "pnpm sample:headless", "status": "PASSED" }
+  ],
+  "runtime": { "node": "22.23.2", "pnpm": "10.33.2" },
+  "recordedAt": "2026-08-26T10:24:00.000Z"
+}

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "framework-change-proposal-v1",
+  "proposalId": "p10-cook-runtime-evidence-promotion-v1",
+  "status": "REVIEW_REQUIRED",
+  "runId": "p4000-p10-cook-p0002-v4",
+  "projectId": "p4000-p10-cook",
+  "gameSpecSha256": "8924cc44bb26fc2c7a66faaf32ba132ab606ff2b7ffc33dceddda452e93824f2",
+  "assemblySpecSha256": "1cb1a12e74d4b10ebe9e9793afd0fa60d0357d22aa2202923610dd0058c06af9",
+  "frameworkGapReceiptSha256": "be8d823d5aa031b5c11d5605abc34d5079dfd70dfdb007cdc6358dc502c1598c",
+  "frameworkId": "composable-game-framework",
+  "frameworkVersion": "1.5.0",
+  "manifestSha256": "3e66659b96634b7214788518e11218782dc3f6a57b86cc9b2bf8345d85dda463",
+  "frameworkGitRevision": "766e481b2e8598a9dae698631a14b86184fc57c4",
+  "changeClass": "FRAMEWORK_FEATURE",
+  "summary": "Promote only the public API, Cocos 3.8.8 compatibility and six framework capabilities exercised by P10-Cook D3 evidence.",
+  "requestedChanges": [
+    {
+      "areaId": "manifest-runtime-evidence",
+      "pathPatterns": ["manifest.json", "README.md", "AGENTS.md", "07-ai-game-studio/framework-contract-verification.md", "evidence/*"],
+      "description": "Synchronize the manifest and governance text with bounded P10-Cook runtime evidence.",
+      "publicApiImpact": "NONE",
+      "engineCompatibilityImpact": "ADDITIVE"
+    }
+  ],
+  "reuseEvidence": [],
+  "protectedAreaImpacts": [],
+  "executionAuthorized": false,
+  "createdAt": "2026-08-26T10:24:00.000Z",
+  "artifactSha256": "eb0763138d2e50ac67a7858ea9ed31b4e7fc3fa82647926f8348e4c7427f7e10"
+}
