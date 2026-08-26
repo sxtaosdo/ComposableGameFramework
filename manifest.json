@@ -43,7 +43,7 @@
         "evidence": {
           "implementationReceiptSha256": "b25a195ba0756b4c47b786c21aa3ae88008292f71865e7fda97398eff713e5dc",
           "implementationReceiptPath": "evidence/p10-cook-framework-implementation-v1.json",
-          "runtimeVerificationReceiptSha256": "183f39fed55ec4e7260a3dfdf2902a9a2ff88023113e0537ac7faec15b5aed0b",
+          "runtimeVerificationReceiptSha256": "d9a13a7ea7d975da247211c0637f3b2bd72cfd9809375368ec17dfc203e9a2dc",
           "runtimeVerificationReceiptPath": "evidence/p10-cook-cocos-runtime-verification-v1.json",
           "sourceRevision": "766e481b2e8598a9dae698631a14b86184fc57c4"
         }
@@ -64,7 +64,7 @@
         "evidence": {
           "implementationReceiptSha256": "b25a195ba0756b4c47b786c21aa3ae88008292f71865e7fda97398eff713e5dc",
           "implementationReceiptPath": "evidence/p10-cook-framework-implementation-v1.json",
-          "runtimeVerificationReceiptSha256": "183f39fed55ec4e7260a3dfdf2902a9a2ff88023113e0537ac7faec15b5aed0b",
+          "runtimeVerificationReceiptSha256": "d9a13a7ea7d975da247211c0637f3b2bd72cfd9809375368ec17dfc203e9a2dc",
           "runtimeVerificationReceiptPath": "evidence/p10-cook-cocos-runtime-verification-v1.json",
           "sourceRevision": "766e481b2e8598a9dae698631a14b86184fc57c4"
         }
@@ -85,7 +85,7 @@
         "evidence": {
           "implementationReceiptSha256": "b25a195ba0756b4c47b786c21aa3ae88008292f71865e7fda97398eff713e5dc",
           "implementationReceiptPath": "evidence/p10-cook-framework-implementation-v1.json",
-          "runtimeVerificationReceiptSha256": "183f39fed55ec4e7260a3dfdf2902a9a2ff88023113e0537ac7faec15b5aed0b",
+          "runtimeVerificationReceiptSha256": "d9a13a7ea7d975da247211c0637f3b2bd72cfd9809375368ec17dfc203e9a2dc",
           "runtimeVerificationReceiptPath": "evidence/p10-cook-cocos-runtime-verification-v1.json",
           "sourceRevision": "766e481b2e8598a9dae698631a14b86184fc57c4"
         }
@@ -104,17 +104,17 @@
       {
         "id": "infrastructure.save", "version": "1.5.0", "status": "VERIFIED", "document": "04-infrastructure/save-snapshot-migration.md",
         "publicApi": { "exports": ["package.composable-game-framework"], "commands": [], "queries": [], "events": [], "effects": [], "saveSchemas": ["framework-snapshot-v1"] },
-        "evidence": { "implementationReceiptSha256": "b25a195ba0756b4c47b786c21aa3ae88008292f71865e7fda97398eff713e5dc", "implementationReceiptPath": "evidence/p10-cook-framework-implementation-v1.json", "runtimeVerificationReceiptSha256": "183f39fed55ec4e7260a3dfdf2902a9a2ff88023113e0537ac7faec15b5aed0b", "runtimeVerificationReceiptPath": "evidence/p10-cook-cocos-runtime-verification-v1.json", "sourceRevision": "766e481b2e8598a9dae698631a14b86184fc57c4" }
+        "evidence": { "implementationReceiptSha256": "b25a195ba0756b4c47b786c21aa3ae88008292f71865e7fda97398eff713e5dc", "implementationReceiptPath": "evidence/p10-cook-framework-implementation-v1.json", "runtimeVerificationReceiptSha256": "d9a13a7ea7d975da247211c0637f3b2bd72cfd9809375368ec17dfc203e9a2dc", "runtimeVerificationReceiptPath": "evidence/p10-cook-cocos-runtime-verification-v1.json", "sourceRevision": "766e481b2e8598a9dae698631a14b86184fc57c4" }
       },
       {
         "id": "infrastructure.data-config", "version": "1.5.0", "status": "VERIFIED", "document": "04-infrastructure/data-config-dsl.md",
         "publicApi": { "exports": ["package.composable-game-framework"], "commands": [], "queries": [], "events": [], "effects": [], "saveSchemas": [] },
-        "evidence": { "implementationReceiptSha256": "b25a195ba0756b4c47b786c21aa3ae88008292f71865e7fda97398eff713e5dc", "implementationReceiptPath": "evidence/p10-cook-framework-implementation-v1.json", "runtimeVerificationReceiptSha256": "183f39fed55ec4e7260a3dfdf2902a9a2ff88023113e0537ac7faec15b5aed0b", "runtimeVerificationReceiptPath": "evidence/p10-cook-cocos-runtime-verification-v1.json", "sourceRevision": "766e481b2e8598a9dae698631a14b86184fc57c4" }
+        "evidence": { "implementationReceiptSha256": "b25a195ba0756b4c47b786c21aa3ae88008292f71865e7fda97398eff713e5dc", "implementationReceiptPath": "evidence/p10-cook-framework-implementation-v1.json", "runtimeVerificationReceiptSha256": "d9a13a7ea7d975da247211c0637f3b2bd72cfd9809375368ec17dfc203e9a2dc", "runtimeVerificationReceiptPath": "evidence/p10-cook-cocos-runtime-verification-v1.json", "sourceRevision": "766e481b2e8598a9dae698631a14b86184fc57c4" }
       },
       {
         "id": "infrastructure.command-query-event", "version": "1.5.0", "status": "VERIFIED", "document": "04-infrastructure/event-command-query.md",
         "publicApi": { "exports": ["package.composable-game-framework"], "commands": [], "queries": [], "events": [], "effects": [], "saveSchemas": [] },
-        "evidence": { "implementationReceiptSha256": "b25a195ba0756b4c47b786c21aa3ae88008292f71865e7fda97398eff713e5dc", "implementationReceiptPath": "evidence/p10-cook-framework-implementation-v1.json", "runtimeVerificationReceiptSha256": "183f39fed55ec4e7260a3dfdf2902a9a2ff88023113e0537ac7faec15b5aed0b", "runtimeVerificationReceiptPath": "evidence/p10-cook-cocos-runtime-verification-v1.json", "sourceRevision": "766e481b2e8598a9dae698631a14b86184fc57c4" }
+        "evidence": { "implementationReceiptSha256": "b25a195ba0756b4c47b786c21aa3ae88008292f71865e7fda97398eff713e5dc", "implementationReceiptPath": "evidence/p10-cook-framework-implementation-v1.json", "runtimeVerificationReceiptSha256": "d9a13a7ea7d975da247211c0637f3b2bd72cfd9809375368ec17dfc203e9a2dc", "runtimeVerificationReceiptPath": "evidence/p10-cook-cocos-runtime-verification-v1.json", "sourceRevision": "766e481b2e8598a9dae698631a14b86184fc57c4" }
       },
       { "id": "infrastructure.observability", "status": "DESIGN_ONLY", "document": "04-infrastructure/debug-observability.md" },
       { "id": "infrastructure.testing-performance", "status": "DESIGN_ONLY", "document": "04-infrastructure/testing-performance.md" }
@@ -200,7 +200,7 @@
         "evidence": {
           "implementationReceiptSha256": "b25a195ba0756b4c47b786c21aa3ae88008292f71865e7fda97398eff713e5dc",
           "implementationReceiptPath": "evidence/p10-cook-framework-implementation-v1.json",
-          "runtimeVerificationReceiptSha256": "183f39fed55ec4e7260a3dfdf2902a9a2ff88023113e0537ac7faec15b5aed0b",
+          "runtimeVerificationReceiptSha256": "d9a13a7ea7d975da247211c0637f3b2bd72cfd9809375368ec17dfc203e9a2dc",
           "runtimeVerificationReceiptPath": "evidence/p10-cook-cocos-runtime-verification-v1.json",
           "sourceRevision": "766e481b2e8598a9dae698631a14b86184fc57c4"
         }
@@ -237,13 +237,13 @@
     "runtimeVerification": {
       "status": "VERIFIED",
       "receiptPath": "evidence/p10-cook-cocos-runtime-verification-v1.json",
-      "receiptSha256": "183f39fed55ec4e7260a3dfdf2902a9a2ff88023113e0537ac7faec15b5aed0b"
+      "receiptSha256": "d9a13a7ea7d975da247211c0637f3b2bd72cfd9809375368ec17dfc203e9a2dc"
     },
     "productAcceptance": {
       "status": "ACCEPTED",
       "receiptPath": "evidence/p10-cook-development-acceptance-v1.json",
-      "receiptSha256": "08aa88c0efe8f827e0bfb6772525ee15afd2293338fa67f13246d625b3b3b2a9"
+      "receiptSha256": "905df101f3fc66130982f280a3c53d580c3e78ab0f08d2c9f0ba95e08e966a5a"
     }
   },
-  "documentCount": 50
+  "documentCount": 51
 }

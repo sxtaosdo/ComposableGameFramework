@@ -4,7 +4,7 @@
   "scope": "DEVELOPMENT",
   "productId": "p4000-p10-cook",
   "frameworkVersion": "1.5.0",
-  "productContentSha256": "af203c16710bd9e87917ab9b68b7616a8459b824bad1d0b08e0e8d248c570567",
+  "productContentSha256": "de1a577461446df23f58a35be5ad4fb34bd7212d4a05bb22648747a8d5f96664",
   "gameSpecSha256": "8924cc44bb26fc2c7a66faaf32ba132ab606ff2b7ffc33dceddda452e93824f2",
   "initialAssemblySpecSha256": "1cb1a12e74d4b10ebe9e9793afd0fa60d0357d22aa2202923610dd0058c06af9",
   "initialGapReceiptSha256": "be8d823d5aa031b5c11d5605abc34d5079dfd70dfdb007cdc6358dc502c1598c",

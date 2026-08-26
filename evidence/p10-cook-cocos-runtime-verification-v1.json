@@ -5,7 +5,7 @@
   "status": "VERIFIED",
   "productId": "p4000-p10-cook",
   "productBaselineRevision": "a4a6e2a9a49cdf620d8da631589143d4beebe47b",
-  "productContentSha256": "af203c16710bd9e87917ab9b68b7616a8459b824bad1d0b08e0e8d248c570567",
+  "productContentSha256": "de1a577461446df23f58a35be5ad4fb34bd7212d4a05bb22648747a8d5f96664",
   "engine": { "id": "cocos-creator", "version": "3.8.8" },
   "verifiedCapabilityIds": [
     "core.foundation-primitives",
