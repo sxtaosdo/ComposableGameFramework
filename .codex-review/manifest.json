@@ -1,0 +1,30 @@
+{
+  "acceptance_mapping": [
+    "Merge all effective source content into 09-governance/engineering-standards with traceable source revision and four-path coverage; avoid copying the example repository; preserve Foundation and every manifest protectedAreas/protectedPathRules path byte-for-byte; prohibit a second UI/resource/bundle/audio/event/lifecycle/MVC/MVVM/object-pool runtime and require mk.uiManage.regis/open/close, mk.asset, mk.bundle; document official stable installation via Cocos Store plugin then npm i under extensions/MKFramework then editor menu stable version and restart; pin evidence fields for store version v1.0.8, source Cocos Store 6426, Creator minimum 3.8.6, verification date 2026-08-27, official install/UI/bundle URLs, and require re-verification for future upgrades; update README AGENTS manifest CHANGELOG VERSION and exact documentCount; validate links, source coverage, contracts, Node 22 typecheck/tests/build/headless, git diff check; commit and push only P0002 main then verify remote SHA"
+  ],
+  "changed_paths": [],
+  "created_at": "2026-08-27T06:33:44+00:00",
+  "repository": {
+    "base_sha": "dade075e3392e88cf3afe6a6598984120e2ba7a0",
+    "review_branch": "codex-review/p0002-engineering-standards-migration-r2/design-r01",
+    "snapshot_sha": "dade075e3392e88cf3afe6a6598984120e2ba7a0",
+    "url": "git@github.com:sxtaosdo/ComposableGameFramework.git"
+  },
+  "resolved_push_endpoint_hash": "38b9ad24a076d017ce35fb1436d451005776a78dbf9098dcd64026677eae6789",
+  "review_epoch": 1,
+  "review_input_hash": "6cb8f18b01d1c1596d9d79140fb7d3a4f80f028cba8396472343625f784b5fc5",
+  "review_type": "design",
+  "risk": "R2",
+  "round": 1,
+  "run_id": "20260827T063344Z-bbe14805",
+  "schema": "gpt-codex-review-packet-v1",
+  "task_contract": {
+    "path": ".codex-review/request.md",
+    "sha256": "ad48ca65de4331dd1153ae1b2733358d2210c0c632d57150c0f63da428eb3bc2"
+  },
+  "task_id": "p0002-engineering-standards-migration-r2",
+  "validation": {
+    "evidence_path": ".codex-review/evidence.md",
+    "evidence_sha256": "a03da3d0ec8ff8c917af3249b48e9d382301ce3af4e2c4771e608b6b763aed13"
+  }
+}

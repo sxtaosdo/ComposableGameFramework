@@ -1,0 +1,7 @@
+# design review
+
+Task: Migrate four Accepted engineering standards from shidai3 repository git@github.com:sxtaosdo/shidai3.git at exact source revision 765fbf8a997ed7c8dd61971a4831fb8b01b14331 (docs/code/code.md, docs/code/cocosCode.md, docs/code/godotCode.md, docs/git.md) into P0002 governance; make P0002 the technical-standard authority; define MKFramework from official docs/store as the default Cocos capability provider
+
+Acceptance: Merge all effective source content into 09-governance/engineering-standards with traceable source revision and four-path coverage; avoid copying the example repository; preserve Foundation and every manifest protectedAreas/protectedPathRules path byte-for-byte; prohibit a second UI/resource/bundle/audio/event/lifecycle/MVC/MVVM/object-pool runtime and require mk.uiManage.regis/open/close, mk.asset, mk.bundle; document official stable installation via Cocos Store plugin then npm i under extensions/MKFramework then editor menu stable version and restart; pin evidence fields for store version v1.0.8, source Cocos Store 6426, Creator minimum 3.8.6, verification date 2026-08-27, official install/UI/bundle URLs, and require re-verification for future upgrades; update README AGENTS manifest CHANGELOG VERSION and exact documentCount; validate links, source coverage, contracts, Node 22 typecheck/tests/build/headless, git diff check; commit and push only P0002 main then verify remote SHA
+
+Scope: 09-governance/engineering-standards, AGENTS.md, CHANGELOG.md, README.md, VERSION, manifest.json
