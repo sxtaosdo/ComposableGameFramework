@@ -44,11 +44,11 @@ UI
 Feature-specific
 ```
 
-具体策略后续工程设计。
+后续 MKFramework 产品统一通过 `mk.asset` 与 `mk.bundle` 实现资源、Bundle 和场景生命周期；P0002 只保留逻辑资源 ID 与装配合同，不复制同类 Runtime。
 
 ## 5. 对象池
 
-放在 Runtime / Presentation 侧。
+后续 MKFramework 产品优先使用其对象池能力，不在 P0002 新建第二套对象池。
 
 对象池只是优化，不参与业务身份。
 

@@ -18,6 +18,8 @@ Game Logic
 
 UI 不直接修改 Domain State。
 
+后续 MKFramework 动态 UI 统一使用 `mk.uiManage.regis/open/close`；不得直接实例化 Prefab 绕过管理层。此规则不代表当前已完成 MKFramework Runtime 接入。
+
 推荐：
 
 ```text

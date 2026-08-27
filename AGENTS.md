@@ -11,6 +11,7 @@
 3. 涉及源码时读取根 `package.json`，再按 Manifest 证据路径进入对应 `src/` 与 `tests/` 文件。
 4. 仅按任务读取对应编号目录；不得把未声明状态的设计文档当作已实现能力。
 5. 作为 shidai3 的 `P0002/` submodule 使用时，再读取父仓库 `../AI_CONTEXT.md` 和目标产品的适用 `AGENTS.md`。
+6. 编码前读取 `09-governance/engineering-standards/` 的通用规范和 Owner 指定的引擎规范。
 
 ## 证据边界
 
@@ -28,6 +29,7 @@
 - 不为未来实现预建空目录；`framework/`、`examples/`、`specs/`、`validation/` 只在有真实产物时创建。
 - 单个产品需求默认不得修改 Foundation Core；回流必须先有至少两个独立真实复用场景并经过架构 Review。
 - AI 不得自动修改 Foundation Core、Save Protocol、Entity Identity、Feature Lifecycle、Command Contract 或 Registry Protocol。
+- Cocos 产品默认复用 MKFramework 的 UI、资源、Bundle、音频、事件、视图生命周期、MVC/MVVM 与对象池能力；P0002 不建立第二套同类 Runtime。该规范不等于已完成 MKFramework Runtime 接入。
 
 ## 边界
 
@@ -44,3 +46,4 @@
 - 校验 `README.md` 相对链接、Markdown 数量与 `manifest.json.documentCount`。
 - TypeScript Core 修改运行 `pnpm typecheck`、`pnpm test` 与 `pnpm build`，并使用 Node.js 22 验证。
 - 提交前运行 `git diff --check`，并明确未执行的源码、Runtime 或产品验收层级。
+- 工程规范变更运行 `node scripts/validate-engineering-standards.mjs`。
