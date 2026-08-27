@@ -4,6 +4,8 @@
 
 Cocos Creator 是第一套 Engine Adapter（引擎适配器）。
 
+对后续 Cocos 产品，MKFramework 是表现层与基础设施的规范性默认 Provider；详见[工程规范](../09-governance/engineering-standards/cocos-creator.md)。当前 `VERIFIED` 只绑定既有 P10-Cook 证据，不表示已经完成 MKFramework Runtime 接入；该接入仍为 `NOT_RUN`。
+
 它负责将框架接口映射到：
 
 ```text
@@ -60,6 +62,8 @@ Intent / Command
 根据表现型 Event 播放声音。
 
 业务 Feature 不引用具体 AudioClip。
+
+后续 MKFramework 产品优先桥接其既有音频能力，不在 P0002 创建第二套音频 Runtime。
 
 ## 6. Platform Adapter（平台适配）
 
