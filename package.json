@@ -1,6 +1,6 @@
 {
   "name": "@shidai3/composable-game-framework",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "private": true,
   "type": "module",
   "exports": {
@@ -17,6 +17,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "contracts": "node scripts/validate-contracts.mjs",
+    "standards": "node scripts/validate-engineering-standards.mjs",
     "sample:headless": "node dist/examples/tile-match/run.js",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json"

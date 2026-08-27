@@ -1,5 +1,19 @@
 # CHANGELOG（变更日志）
 
+## v1.5.1（工程规范权威迁移）
+
+### ADD（新增）
+
+- 将 shidai3 四份根工程规范的有效技术内容迁入 `09-governance/engineering-standards/`，并以机器映射区分迁移、替换与生产治理排除项。
+- 固定 MKFramework 官方稳定安装、版本、来源与 Creator 兼容证据要求。
+- 新增工程规范来源覆盖、相对链接与 Protected Core 零变化校验。
+
+### CHANGE（修改）
+
+- MKFramework 成为后续 Cocos 表现层/基础设施的规范性默认 Provider；P0002 禁止复制其已有 Runtime 能力。
+- 当前 Cocos `VERIFIED` 证据语义不变；MKFramework Runtime 接入与产品验收仍为 `NOT_RUN`。
+- P0002 继续使用三段 SemVer；父仓专用四段版本与生产治理不迁入。
+
 ## v1.5.0（Framework MVP 实现切片）
 
 ### ADD（新增）
