@@ -1,0 +1,47 @@
+{
+  "acceptance_mapping": [
+    "Scope classification is explicit and machine-readable: technical coding engine and repository-neutral Git principles migrate; Agent single-turn behavior direct-to-main workflow review-packet workflow parent X.Y.Z.W hooks and other AI/production governance are excluded with source anchors and authority destinations shidai3/P0003. Add source-map JSON covering every heading/rule block of all four source files with status migrated replaced or excluded and target/authority, plus deterministic scripts/validate-engineering-standards.mjs verifying source revision/path list mapping completeness target existence Markdown relative links documentCount and zero diff for manifest protectedAreas/protectedPathRules versus baseline dade075e3392e88cf3afe6a6598984120e2ba7a0. MKFramework is normative future Cocos presentation/infrastructure provider only; current engine.cocos-adapter-boundary and Creator 3.8.8 VERIFIED semantics stay limited to existing evidence; no src change no provider integration no new runtime evidence and adoption remains NOT_RUN until product/runtime verification. P0002 retains engine-neutral Command Query Event Save Feature Registry runtime ownership; future Cocos adapters bridge to MK-owned UI asset bundle audio view lifecycle MVC MVVM object pool without duplicating them; require mk.uiManage.regis/open/close mk.asset mk.bundle. Record official Store app 6426 stable v1.0.8 minimum Creator 3.8.6 and official install UI bundle URLs verified 2026-08-27 with refresh requirements. Version exactly 1.5.1 synchronized across VERSION package.json manifest README CHANGELOG. Validate new migration validator contracts Node 22 typecheck test build headless diff check. Foundation and protected paths byte-identical; no example repo copy; commit and guarded push P0002 main then verify remote SHA."
+  ],
+  "changed_paths": [
+    "05-cocos/cocos-adapter.md",
+    "05-cocos/input-ui-presentation.md",
+    "05-cocos/scene-resource.md",
+    "09-governance/engineering-standards/README.md",
+    "09-governance/engineering-standards/cocos-creator.md",
+    "09-governance/engineering-standards/general-code.md",
+    "09-governance/engineering-standards/git.md",
+    "09-governance/engineering-standards/godot.md",
+    "09-governance/engineering-standards/source-map.json",
+    "AGENTS.md",
+    "CHANGELOG.md",
+    "README.md",
+    "VERSION",
+    "manifest.json",
+    "package.json",
+    "scripts/validate-engineering-standards.mjs"
+  ],
+  "created_at": "2026-08-27T06:47:54+00:00",
+  "repository": {
+    "base_sha": "dade075e3392e88cf3afe6a6598984120e2ba7a0",
+    "review_branch": "codex-review/p0002-engineering-standards-migration-r4/final-r02",
+    "snapshot_sha": "409b1d02fdf24694e06bb17c03043854096fd239",
+    "url": "git@github.com:sxtaosdo/ComposableGameFramework.git"
+  },
+  "resolved_push_endpoint_hash": "38b9ad24a076d017ce35fb1436d451005776a78dbf9098dcd64026677eae6789",
+  "review_epoch": 1,
+  "review_input_hash": "c112a804f63bdd2aac24541bc0e1d939af3684635017e02b8bf37ecca8b76ef6",
+  "review_type": "final",
+  "risk": "R2",
+  "round": 2,
+  "run_id": "20260827T064754Z-ea2cdc07",
+  "schema": "gpt-codex-review-packet-v1",
+  "task_contract": {
+    "path": ".codex-review/request.md",
+    "sha256": "b9eb018807448cab15d567562cf7cb369ce7e1fe06f42c3d8ef157d9d698f330"
+  },
+  "task_id": "p0002-engineering-standards-migration-r4",
+  "validation": {
+    "evidence_path": ".codex-review/evidence.md",
+    "evidence_sha256": "5d594d2ea50d475598e99c07cfa87f9d714ed674735a191e17f9d9fc0477cf28"
+  }
+}
