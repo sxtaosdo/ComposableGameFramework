@@ -1,0 +1,33 @@
+{
+  "acceptance_mapping": [
+    "Exact diff from 342dd867 to delivered c5d2381, standards validation already PASS, Protected Core zero, remote main equals c5d2381, produce delivered child run for parent binding"
+  ],
+  "changed_paths": [
+    "09-governance/engineering-standards/cocos-creator.md",
+    "CHANGELOG.md"
+  ],
+  "created_at": "2026-08-27T10:45:48+00:00",
+  "repository": {
+    "base_sha": "342dd8675e6f97ade3709edb92d7f994a9ec0b4b",
+    "review_branch": "codex-review/p0002-parent-child-binding-r2/final-r01",
+    "snapshot_sha": "a9eff226a1449ef1d484988cb4fbc9996da5de42",
+    "url": "git@github.com:sxtaosdo/ComposableGameFramework.git"
+  },
+  "resolved_push_endpoint_hash": "38b9ad24a076d017ce35fb1436d451005776a78dbf9098dcd64026677eae6789",
+  "review_epoch": 1,
+  "review_input_hash": "258b498e265a7f3b2e40b943f9f417a7c001d243d6dec7f7ed0dee5fcfd28a93",
+  "review_type": "final",
+  "risk": "R2",
+  "round": 1,
+  "run_id": "20260827T104548Z-c481e43a",
+  "schema": "gpt-codex-review-packet-v1",
+  "task_contract": {
+    "path": ".codex-review/request.md",
+    "sha256": "edd046840be6f8976093f92438d4823cecf8b00a61f7350b1ca69f86e5d34584"
+  },
+  "task_id": "p0002-parent-child-binding-r2",
+  "validation": {
+    "evidence_path": ".codex-review/evidence.md",
+    "evidence_sha256": "284c0d050593fcf7580b95912f43cefcf45975009ea592d9bacb65b3bd10f5a8"
+  }
+}
