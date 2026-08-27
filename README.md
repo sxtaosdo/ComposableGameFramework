@@ -2,7 +2,7 @@
 
 状态: Accepted（Framework 已实现，P10-Cook DEVELOPMENT 验证完成）
 
-**当前版本：`v1.5.1`**
+**当前版本：`v1.5.2`**
 
 > 本仓库文档定义一套面向 RPG 与 Simulation（模拟）玩法的可组合游戏框架。
 > 第一阶段以 Cocos Creator + 2D/2.5D + Mobile First（移动端优先）为主要实现目标，单机优先，同时保留未来多人、3D 和跨引擎边界。
