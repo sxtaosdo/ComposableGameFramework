@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "engineering-standards-source-map-v1",
+  "sourceRepository": "git@github.com:sxtaosdo/shidai3.git",
+  "sourceRevision": "765fbf8a997ed7c8dd61971a4831fb8b01b14331",
+  "normalization": "Headings and rules may be consolidated without changing technical meaning; repository-specific production governance is excluded with an authority destination.",
+  "sources": [
+    {
+      "path": "docs/code/code.md",
+      "mappings": [
+        {"source": "适用范围", "status": "migrated", "target": "general-code.md#适用范围"},
+        {"source": "编码前思考", "status": "migrated", "target": "general-code.md#编码前"},
+        {"source": "简洁优先", "status": "migrated", "target": "general-code.md#实现原则"},
+        {"source": "精准修改", "status": "migrated", "target": "general-code.md#实现原则"},
+        {"source": "目标驱动执行", "status": "migrated", "target": "general-code.md#编码前"},
+        {"source": "单轮闭环", "status": "excluded", "authority": "shidai3/P0003 production governance"},
+        {"source": "通用编码规范", "status": "migrated", "target": "general-code.md#实现原则"},
+        {"source": "类", "status": "migrated", "target": "general-code.md#实现原则"},
+        {"source": "禁止事项", "status": "migrated", "target": "general-code.md#禁止事项"}
+      ]
+    },
+    {
+      "path": "docs/code/cocosCode.md",
+      "mappings": [
+        {"source": "适用范围", "status": "migrated", "target": "cocos-creator.md"},
+        {"source": "语言", "status": "migrated", "target": "cocos-creator.md#语言与组件", "rules": ["typescript-strict", "no-any", "es6-compatible", "avoid-unstable-syntax"]},
+        {"source": "代码风格", "status": "replaced", "target": "general-code.md#实现原则", "rules": ["small-functions", "low-coupling", "composition", "naming", "class-size", "comments", "complexity-only-abstraction"]},
+        {"source": "Runtime 规则", "status": "migrated", "target": "cocos-creator.md#语言与组件"},
+        {"source": "框架（按项目选用，不混用）", "status": "replaced", "target": "cocos-creator.md#能力所有权"},
+        {"source": "组件与 Prefab", "status": "migrated", "target": "cocos-creator.md#语言与组件", "rules": ["prefab-script", "ccclass-match", "property-binding", "avoid-find", "onload-validate", "start-init", "ondestroy-cleanup", "static-ui-prefab", "dynamic-content-code"]},
+        {"source": "UI 与场景", "status": "replaced", "target": "cocos-creator.md#固定-api", "rules": ["popup-prefab", "managed-open-close", "main-layout-split", "gameplay-ui-node-separation", "feature-ui-prefab-composition"]},
+        {"source": "Bundle 与资源", "status": "migrated", "target": "cocos-creator.md#bundle-与资源"},
+        {"source": "验证与工具", "status": "excluded", "authority": "target product Accepted verification contract"},
+        {"source": "禁止事项", "status": "replaced", "target": "general-code.md#禁止事项"}
+      ]
+    },
+    {
+      "path": "docs/code/godotCode.md",
+      "mappings": [
+        {"source": "Godot 规则", "status": "migrated", "target": "godot.md"}
+      ]
+    },
+    {
+      "path": "docs/git.md",
+      "mappings": [
+        {"source": "Commit 类型", "status": "migrated", "target": "git.md#提交"},
+        {"source": "Commit 规则", "status": "migrated", "target": "git.md#提交"},
+        {"source": "版本号规则（每次提交必遵守）", "status": "excluded", "authority": "shidai3 parent repository version contract"},
+        {"source": "分支规则", "status": "excluded", "authority": "shidai3/P0003 production governance"},
+        {"source": "submodule 独立交付原则", "status": "migrated", "target": "git.md#提交"}
+      ]
+    }
+  ]
+}
