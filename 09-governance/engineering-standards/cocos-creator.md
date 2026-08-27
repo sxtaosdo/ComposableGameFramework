@@ -20,6 +20,11 @@ P0002 持有引擎无关的 Feature、Registry、Command、Query、Event、Save 
 
 适配层只负责把 P0002 Intent / Command / Query / Event 与 MKFramework 表现能力桥接；不得把 MK 的视图事件反向变成 Gameplay 状态权威。
 
+## 场景与设计分辨率
+
+- 游戏默认采用单场景；只有 Owner 主动声明多场景需求时才扩展场景结构。
+- 移动端默认设计分辨率为 `750×1334`；具体产品另有 Accepted 规格时以产品规格为准。
+
 ## 固定 API
 
 - 动态 UI 统一使用 `mk.uiManage.regis`、`mk.uiManage.open`、`mk.uiManage.close`。
@@ -46,3 +51,9 @@ P0002 持有引擎无关的 Feature、Registry、Command、Query、Event、Save 
 当前官方稳定证据：插件 `v1.0.8`，Store 标注 Creator 最低版本 `v3.8.6`；P0002 产品接入仍必须以目标项目实际 Creator 版本验证。升级前必须重新记录精确版本、Cocos Store 来源、Creator 兼容范围、核对日期及 Runtime/产品证据。
 
 官方依据：[安装](https://mkframework.muzzik.cc/docs/getting-started/install)、[UI 管理](https://mkframework.muzzik.cc/docs/getting-started/quick-start-guide/ui-manage)、[Bundle](https://mkframework.muzzik.cc/docs/module/asset/bundle)。不得复制完整示例仓库。
+
+## 验证与工具
+
+- Creator Preview 运行验证遵守父仓 `governance/cocos_preview_verification.md`。
+- AI 辅助编辑使用父仓 `P8000/cocos-mcp/`（Creator 3.8.8 MCP）；不得通过 Dashboard 或其他 Creator 工程绕过项目身份门。
+- 各产品的 typecheck / smoke 命令以产品 README 为准；修改后先运行任务约定的命令行验证，再执行 Preview。

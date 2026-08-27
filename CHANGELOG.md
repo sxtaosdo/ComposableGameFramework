@@ -11,6 +11,7 @@
 ### CHANGE（修改）
 
 - MKFramework 成为后续 Cocos 表现层/基础设施的规范性默认 Provider；P0002 禁止复制其已有 Runtime 能力。
+- 补齐原根 Cocos 规范中的默认单场景、移动端 `750×1334` 与父仓 Creator MCP 验证工具约束。
 - 当前 Cocos `VERIFIED` 证据语义不变；MKFramework Runtime 接入与产品验收仍为 `NOT_RUN`。
 - P0002 继续使用三段 SemVer；父仓专用四段版本与生产治理不迁入。
 
