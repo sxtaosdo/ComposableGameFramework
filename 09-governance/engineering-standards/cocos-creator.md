@@ -15,8 +15,52 @@
 ## 语言
 
 - 使用严格类型的 TypeScript 编写代码。
-- 变量、方法、返回值须有严格类型定义；原则上禁止 `any`。
+- `tsconfig.json` 必须启用 `compilerOptions.strict: true`；不得通过关闭 `strictNullChecks`、`strictFunctionTypes`、`strictPropertyInitialization`、`noImplicitAny` 等 strict 子规则规避严格模式。
+- 新增或修改代码必须在严格模式下通过项目约定的 typecheck；不得通过降低 TypeScript 严格度解决类型错误。
+- 变量、方法参数、返回值和公共 API 须具备可推导或显式的可靠类型；原则上禁止 `any`。确需使用 `any` 时必须限制在最小边界，并说明无法使用 `unknown`、泛型或具体类型的原因。
+- 对外部不可信数据优先使用 `unknown`，完成运行时校验和类型收窄后再进入业务层。
+- 不使用 `@ts-ignore`、双重类型断言等方式常态化绕过类型系统；确有不可避免的兼容边界时必须局部化并留下原因。
 - 语法满足 ES6；不使用过于新或过于小众、目标 Creator 工具链无法稳定处理的语法。
+
+## TypeScript 代码组织
+
+- 默认采用**类优先，而不是类强制**的组织方式：行为跟随状态，辅助方法跟随所属类，只有真正跨领域复用且无状态的能力才独立导出。
+- 相关的状态、配置、辅助方法和业务行为应优先封装到职责明确的 `class` 中，避免把一个完整职责拆成大量模块级 `export function`、`export const` 和可变变量。
+- 如果一个函数只被一个类使用，默认应成为该类的 `private` 方法，而不是文件顶部的独立函数。
+- 如果一组函数共享同一组状态、生命周期或共同完成一个业务职责，应优先建模为一个 `class`，而不是包含大量 exported functions 的 module。
+- 与对象生命周期或状态强相关的数据应作为实例字段存在；不要使用模块级可变变量保存对象状态。
+- 无状态但只服务于该类的工具逻辑可使用 `private static`；不要仅因为方法较短就拆成模块级函数。
+- Controller、Manager、Service、System、Repository、Adapter、Runtime、Session 等具有明确状态或生命周期的模块，默认使用 `class` 组织。
+- 模块对外只暴露完成职责所需的最小稳定 API。除明确需要跨模块访问外，字段、方法和常量优先使用 `private` / `protected`，避免为了“以后可能复用”增加 export。
+- `interface`、`type`、协议 DTO、枚举/字面量类型等纯类型合同可以独立导出，不要求包装进类。
+- 真正通用、无状态、与具体类和领域对象无关的纯函数，可以进入独立 utility 模块；不得为了形式上的“函数式”拆散本应内聚的类。
+- 新增模块级 export 前必须能够说明跨模块消费者或公共合同需求；没有明确需求时不增加新的模块级 export。
+
+推荐：
+
+```ts
+export class PlayerController {
+  private speed = 10;
+
+  public update(dt: number): void {
+    this.updateMovement(dt);
+  }
+
+  private updateMovement(dt: number): void {
+    // ...
+  }
+}
+```
+
+避免无明确跨模块需求时写成：
+
+```ts
+export const DEFAULT_SPEED = 10;
+
+export function updatePlayer(): void {}
+export function updateMovement(): void {}
+export function calculateDirection(): void {}
+```
 
 ## 代码风格
 
