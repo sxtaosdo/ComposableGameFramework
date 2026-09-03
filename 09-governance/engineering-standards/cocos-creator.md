@@ -106,7 +106,7 @@ P0002 持有引擎无关的 Feature、Registry、Command、Query、Event、Save 
 
 ## UI 与场景
 
-
+- 静态资源直接摆放到场景或预制体中，不要用代码创建
 
 ### 设计分辨率
 
