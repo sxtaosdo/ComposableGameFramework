@@ -32,6 +32,8 @@ Presentation Ready
 
 不能保存引擎对象。
 
+上述限制针对领域数据；Presentation 的场景/Prefab 可以保存所属资源边界内的真实 SpriteFrame 等引擎引用。静态 UI 的组装、动态加载例外与验收见 [Cocos 工程规范](../09-governance/engineering-standards/cocos-creator.md#静态-ui-优先组装)，不得因此引入跨 Bundle 静态引用。
+
 ## 4. Bundle（资源包）
 
 由 Product / Presentation Pack 组织：

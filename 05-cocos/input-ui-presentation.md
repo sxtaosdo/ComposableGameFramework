@@ -18,6 +18,8 @@ Game Logic
 
 UI 不直接修改 Domain State。
 
+UI 制作遵循 [Cocos 工程规范：静态 UI 优先组装](../09-governance/engineering-standards/cocos-creator.md#静态-ui-优先组装)：固定结构、布局和图片引用优先保存在场景/Prefab，动态数据和换图复用已有节点；重复条目按项目框架实例化预制结构，保留有实际理由的运行时例外。
+
 后续 MKFramework 动态 UI 统一使用 `mk.uiManage.regis/open/close`；不得直接实例化 Prefab 绕过管理层。此规则不代表当前已完成 MKFramework Runtime 接入。
 
 推荐：
