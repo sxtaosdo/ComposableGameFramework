@@ -15,11 +15,10 @@
 
 ## 证据边界
 
-- 当前仓库已有 Framework MVP 源码与 P10-Cook Cocos Creator 3.8.8 DEVELOPMENT 运行证据，但不代表完整 Framework 或 Release 产品验收已经完成。
+- 当前能力、兼容性与证据状态以 [`manifest.json`](manifest.json) 及其引用证据为准，不在本规则文件维护进度快照。
 - `DESIGN_ONLY` 能力只能用于规划和缺口分析，不能被 Resolver 判定为可装配。
 - 只有具备实现证据的 `IMPLEMENTED` 能力才能进入开发装配；要求运行验收时必须达到 `VERIFIED`。
-- P10-Cook 实际使用并由 Runtime 证据覆盖的六项基础能力为 `VERIFIED`；`core.entity-identity-registry` 与未被本产品覆盖的已实现能力保持 `IMPLEMENTED`，其余能力以 Manifest 为准。
-- Framework 与 Public API 为 `IMPLEMENTED`，Cocos Creator 3.8.8 compatibility 为 `VERIFIED`；Framework 顶层不得据此晋级 `VERIFIED`，D4/D5 与 Release 仍未放行。
+- Framework 顶层、Public API、各能力与引擎兼容性的成熟度分别核验；局部 Runtime 证据不能替代整体、D4/D5 或 Release 的独立验收。
 - 代码阅读、设计声明、测试结果和产品验收必须分别报告，不得混称。
 
 ## 修改规则
