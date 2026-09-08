@@ -86,7 +86,7 @@ export function calculateDirection(): void {}
 
 | 项目               | 框架                | 说明                                                                                                          |
 | ---------------- | ----------------- | ----------------------------------------------------------------------------------------------------------- |
-| P4000            | P0002（正式 runtime） | 见 `P4000/docs/runtime/p10_p0002_refactor_contract_v1.json`；`P4000/p10-cook/XFORGE_FREEZE.md` 仅作历史 Review 记录 |
+| P4000            | P0002（正式 runtime） | 见 `P4000/docs/runtime/p10_p0002_refactor_contract_v1.json`；`P4000/cook/XFORGE_FREEZE.md` 仅作历史 Review 记录 |
 | P1060            | Oops Framework    | 历史资产，extensions 内已集成                                                                                        |
 | 其他 / 后续 Cocos 产品 | MKFramework       | [官方文档](https://mkframework.muzzik.cc/docs/introduce) · [GitHub](https://github.com/1226085293/MKFramework)  |
 
