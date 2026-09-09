@@ -3,7 +3,7 @@
   "framework": {
     "id": "composable-game-framework",
     "name": "Composable Game Framework",
-    "version": "1.6.3",
+    "version": "1.6.4",
     "status": "IMPLEMENTED"
   },
   "catalogs": {
