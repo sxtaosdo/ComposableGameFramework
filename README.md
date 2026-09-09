@@ -2,7 +2,7 @@
 
 状态: Accepted（Framework 已实现，P10-Cook DEVELOPMENT 验证完成）
 
-**当前版本：`v1.5.2`**
+**当前版本：`v1.6.0`**
 
 > 本仓库文档定义一套面向 RPG 与 Simulation（模拟）玩法的可组合游戏框架。
 > 第一阶段以 Cocos Creator + 2D/2.5D + Mobile First（移动端优先）为主要实现目标，单机优先，同时保留未来多人、3D 和跨引擎边界。
@@ -109,6 +109,8 @@ runtime.capabilities.provide("framework.save", save);
 ```
 
 Feature 通过公开 Capability / Command / Query / Event 协议协作，并用 `FeatureContext.onCleanup` 登记注册副作用，Runtime 在注册失败、激活失败和停用时统一逆序清理。Cocos 工程在适配层持有 Creator `Node` / Input / Component 类型，并把 Component 的 `onLoad` / `update` / `onDestroy` 委托给 `CocosComponentLifecycleHost`；Gameplay 状态仍由产品 Feature 持有。
+
+需要阶段推进时，产品可从包根导入 `IState<T>` 与 `StateMachine<T>`；Context 和状态类仍由产品拥有，完整约束见 [Runtime Model（运行模型）](01-architecture/runtime-model.md)。
 
 验证最小纵向切片：
 

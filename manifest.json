@@ -3,7 +3,7 @@
   "framework": {
     "id": "composable-game-framework",
     "name": "Composable Game Framework",
-    "version": "1.5.2",
+    "version": "1.6.0",
     "status": "IMPLEMENTED"
   },
   "catalogs": {
@@ -67,6 +67,25 @@
           "runtimeVerificationReceiptSha256": "d9a13a7ea7d975da247211c0637f3b2bd72cfd9809375368ec17dfc203e9a2dc",
           "runtimeVerificationReceiptPath": "evidence/p10-cook-cocos-runtime-verification-v1.json",
           "sourceRevision": "766e481b2e8598a9dae698631a14b86184fc57c4"
+        }
+      },
+      {
+        "id": "core.state-machine",
+        "version": "1.6.0",
+        "status": "IMPLEMENTED",
+        "document": "01-architecture/runtime-model.md",
+        "publicApi": {
+          "exports": ["package.composable-game-framework"],
+          "commands": [],
+          "queries": [],
+          "events": [],
+          "effects": [],
+          "saveSchemas": []
+        },
+        "evidence": {
+          "implementationReceiptSha256": "075c06ba4fd083173b80803e2e890786367840eb1c7d91194d74768decbd8bfc",
+          "implementationReceiptPath": "evidence/state-machine-implementation-v1.json",
+          "sourceRevision": "8ed324397bc55dfe098ff3344e53a4398b5f4db8"
         }
       },
       {
