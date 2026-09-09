@@ -1,5 +1,13 @@
 # CHANGELOG（变更日志）
 
+## v1.6.7（Cocos 状态、MK 与测试边界）
+
+### CHANGE（修改）
+
+- 明确功能 MVC、玩法 Model、AppModel 的状态边界：AppModel 只会话，PageState/弹窗直接调用玩法 Model 的具名命令，产品专有玩法不提前抽取通用接口。
+- 已接入 MKFramework 的项目直接使用 MK UI、资源、Bundle、音频、事件、对象池和 MVC；动态弹窗采用 Control/Model/View 三件套，禁止仅转发 MK 的产品包装类。
+- 启动资源加载归 LoadingState；测试目录、文件、类和对外自动化方法采用可识别的 `test` / `Test` 命名。
+
 ## v1.6.6（小游戏关卡会话接口）
 
 ### ADD（新增）

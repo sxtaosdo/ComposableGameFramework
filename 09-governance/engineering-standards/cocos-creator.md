@@ -78,15 +78,18 @@ export function calculateDirection(): void {}
 - Gameplay Entity、ECS Entity 与 Cocos Node 分离。
 - 会话/页面流程、玩法模拟与表现/UI 状态分别由唯一的模型或 Runtime Owner 持有。跨层只传递只读投影、快照、Command 或 Event；不得让 UI 缓存或改写可变玩法状态，也不得用平行 Model 复制同一份权威状态。
 - Application、Presenter 或 Controller 只按具名入口编排状态 Owner 的操作与顺序，不承载玩法公式，也不直接改写其他 Owner 的内部字段。视图事件是请求来源，不是 Gameplay 或会话状态的权威。
+- 功能表现使用其自身的 MVC；玩法 Model 持有棋盘、道具、局内事件等玩法状态；AppModel 只持启动、当前页面、选关和配置就绪等会话状态。AppModel 不得承载玩法字段，也不得持有玩法 Model 的可变状态。
+- PageState 与弹窗通过玩法 Model 的具名方法执行本功能玩法命令，不经 AppModel / Application 的 `dispatch(intent)` 或薄转发门面。产品独有玩法不预建通用接口；只有已被独立产品实际复用的会话合同才可抽象。
 
 ### 配置、主流程与测试边界
 
 - 关卡、数值、掉落、文本等可编辑业务配置必须存放在所属 Bundle 的独立 JSON；TypeScript 只维护类型、读取、运行时校验与消费逻辑，不内联配置数据。
 - JSON 由现有资源接口加载后必须先完成结构和领域校验；加载、解析或校验失败时不得进入 Gameplay，产品在 Loading 状态显示可见错误并停止流程。
 - 用户可见的一级流程页面（例如 Loading、Home、Play）使用项目已有状态机管理。状态类直接导入目标状态，并以 `this.context.StateMachine.changeState(TargetState)` 切换；不得使用字符串路由、转发聚合文件或页面映射表。弹窗、短暂特效和局部交互不强制成为一级状态。
+- 启动阶段的资源加载属于 LoadingState：例如音频预载、关卡 JSON 读取/校验、弹窗注册。Presenter 只完成依赖接线，不承担这些加载流程。
 - 关卡型 Puzzle / Minigame 可选用 `@shidai3/composable-game-framework/minigame` 的 `CasualLevelSession` 作为会话具名入口；该接口不是全体 Cocos 产品默认，也不适用于 MMO / MUD / ARPG。
 - 非弹窗业务按功能建立目录；一个功能有两个及以上实现类时，类文件必须集中在该功能目录，不分散在同级脚本目录。
-- 单元测试、Mock、Fixture 和运行时自动化桥接放入专用测试目录；桥接以专用类维护，业务启动入口最多调用其安装入口，业务功能目录不包含断言、Mock 或测试流程。
+- 单元测试、Mock、Fixture 和运行时自动化桥接放入专用测试目录；桥接以专用类维护，业务启动入口最多调用其安装入口，业务功能目录不包含断言、Mock 或测试流程。测试目录、文件、类和对外自动化方法均使用 `test` / `Test` 可识别命名，不混入玩法核心 API。
 
 
 
@@ -105,6 +108,8 @@ export function calculateDirection(): void {}
 P0002 持有引擎无关的 Feature、Registry、Command、Query、Event、Save 与 Gameplay 合同。对后续 Cocos 产品，MKFramework 是表现层和基础设施的默认 Capability Provider；其已有 UI、资源、Bundle、音频、事件、视图生命周期、MVC/MVVM、对象池等能力必须优先使用。P0002 只提供标准、合同、验收门和经证明确实缺失的能力，禁止形成第二套同类 Runtime。
 
 适配层只负责把 P0002 Intent / Command / Query / Event 与 MKFramework 表现能力桥接；不得把 MK 的视图事件反向变成 Gameplay 状态权威。
+
+当项目已接入 MKFramework 时，UI、资源、Bundle、音频、事件、对象池与 MVC 分别直接使用其对应能力（如 `mk.uiManage`、`mk.asset`、`mk.bundle`、`mk.audio`）。不得建立只转发 MK 调用的产品包装类；改动触及此类包装时应删除。动态弹窗使用 `MVCControlBase`、`MVCModelBase`、`MVCViewBase` 三件套：State 直接调用 `mk.uiManage.open` / `close`，View 的 `init` 只接收展示 Model，按钮事件由 Control 绑定并回调具名会话方法。AppModel 与玩法 Model 保持纯 TypeScript，不继承 MK 基类。
 
 ## 组件与 Prefab
 
