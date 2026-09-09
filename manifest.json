@@ -3,7 +3,7 @@
   "framework": {
     "id": "composable-game-framework",
     "name": "Composable Game Framework",
-    "version": "1.6.5",
+    "version": "1.6.6",
     "status": "IMPLEMENTED"
   },
   "catalogs": {
@@ -119,6 +119,25 @@
         "id": "gameplay.puzzle-minigame", "version": "1.5.0", "status": "IMPLEMENTED", "document": "03-gameplay/puzzle-minigame.md",
         "publicApi": { "exports": ["package.composable-game-framework"], "commands": ["tile.swap"], "queries": ["tile.board"], "events": ["tile.match-resolved"], "effects": [], "saveSchemas": ["tile-match"] },
         "evidence": { "implementationReceiptSha256": "1b3c2f17724738e980ad976498127257e90cf89b125d8e0a0843e7c7821e584c", "implementationReceiptPath": "evidence/framework-mvp-implementation-v1.json", "sourceRevision": "ba9ae8d5de0cd5be1e566960f8f94d8e26538978" }
+      },
+      {
+        "id": "minigame.casual-level-session",
+        "version": "1.6.6",
+        "status": "IMPLEMENTED",
+        "document": "03-gameplay/puzzle-minigame.md",
+        "publicApi": {
+          "exports": ["package.composable-game-framework/minigame"],
+          "commands": [],
+          "queries": [],
+          "events": [],
+          "effects": [],
+          "saveSchemas": []
+        },
+        "evidence": {
+          "implementationReceiptSha256": "eb260222c7cc2278d4a75308d9527556700dd5731b5caedfc9ba45ae7f40e6e8",
+          "implementationReceiptPath": "evidence/minigame-casual-level-session-implementation-v1.json",
+          "sourceRevision": "bba0ad314026c0ac27b8cad2f08cc05cba26e8e7"
+        }
       },
       {
         "id": "infrastructure.save", "version": "1.5.0", "status": "VERIFIED", "document": "04-infrastructure/save-snapshot-migration.md",

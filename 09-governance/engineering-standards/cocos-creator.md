@@ -84,6 +84,7 @@ export function calculateDirection(): void {}
 - 关卡、数值、掉落、文本等可编辑业务配置必须存放在所属 Bundle 的独立 JSON；TypeScript 只维护类型、读取、运行时校验与消费逻辑，不内联配置数据。
 - JSON 由现有资源接口加载后必须先完成结构和领域校验；加载、解析或校验失败时不得进入 Gameplay，产品在 Loading 状态显示可见错误并停止流程。
 - 用户可见的一级流程页面（例如 Loading、Home、Play）使用项目已有状态机管理。状态类直接导入目标状态，并以 `this.context.StateMachine.changeState(TargetState)` 切换；不得使用字符串路由、转发聚合文件或页面映射表。弹窗、短暂特效和局部交互不强制成为一级状态。
+- 关卡型 Puzzle / Minigame 可选用 `@shidai3/composable-game-framework/minigame` 的 `CasualLevelSession` 作为会话具名入口；该接口不是全体 Cocos 产品默认，也不适用于 MMO / MUD / ARPG。
 - 非弹窗业务按功能建立目录；一个功能有两个及以上实现类时，类文件必须集中在该功能目录，不分散在同级脚本目录。
 - 单元测试、Mock、Fixture 和运行时自动化桥接放入专用测试目录；桥接以专用类维护，业务启动入口最多调用其安装入口，业务功能目录不包含断言、Mock 或测试流程。
 

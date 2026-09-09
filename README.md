@@ -112,6 +112,14 @@ Feature 通过公开 Capability / Command / Query / Event 协议协作，并用 
 
 需要阶段推进时，产品可从包根导入 `IState<T>` 与 `StateMachine<T>`；Context 和状态类仍由产品拥有，完整约束见 [Runtime Model（运行模型）](01-architecture/runtime-model.md)。
 
+关卡型 Puzzle / Minigame 的主玩法会话接口 `CasualLevelSession` 从子路径导入，不从包根导出：
+
+```ts
+import type { CasualLevelSession } from "@shidai3/composable-game-framework/minigame";
+```
+
+该接口仅服务关卡型小游戏（Loading → Home → Play → Retry / Next / Home），不适用于 MMO、MUD、ARPG 等大型持久世界。详见 [Puzzle / Minigame](03-gameplay/puzzle-minigame.md)。
+
 验证最小纵向切片：
 
 ```bash

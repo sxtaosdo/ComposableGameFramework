@@ -100,6 +100,7 @@ MMO 网络同步
 |---|---|
 | Application Layer | `01-architecture/application-layer.md` |
 | Puzzle / Minigame | `03-gameplay/puzzle-minigame.md` |
+| CasualLevelSession（小游戏关卡会话） | `03-gameplay/puzzle-minigame.md` |
 | Minigame Product | `06-products/minigame-reference.md` |
 | Framework Manifest | `07-ai-game-studio/framework-manifest.md` |
 | Framework Resolver | `07-ai-game-studio/framework-resolver.md` |

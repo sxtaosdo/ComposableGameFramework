@@ -102,6 +102,30 @@ Workflow / State Machine（工作流 / 状态机）
 
 只有出现大量高频实体、物理、弹幕等场景时才启用 ECS Runtime（ECS 运行时）。
 
+### 关卡会话公共接口（`CasualLevelSession`）
+
+关卡型 Puzzle / Minigame 产品可从子路径导入主玩法会话接口：
+
+```ts
+import type { CasualLevelSession } from "@shidai3/composable-game-framework/minigame";
+```
+
+该接口覆盖一级流程：
+
+```text
+Loading → Home → Play → Retry / Next Level / Home
+```
+
+方法：`bootReady`、`startLevel`、`reset`、`retry`、`nextLevel`、`showHome`。
+
+实现类由产品拥有（例如 Presenter / Session Context）；Framework 只提供接口合同，不持有玩法状态。
+
+**适用：** 关卡型休闲 / Puzzle / Minigame（无持久世界、可按关重置）。
+
+**不适用：** MMO、MUD、ARPG、开放世界、持久角色会话或跨 Feature 副本事务。那些继续使用 Application Layer / Feature Runtime，不得把本接口当成全局会话合同。
+
+该接口**不**从包根 `@shidai3/composable-game-framework` 导出，也**不**进入 `src/runtime/`；全局 Runtime 仍只有 `IState` / `StateMachine` 等通用机制。
+
 ## 6. 关卡数据
 
 建议数据化：

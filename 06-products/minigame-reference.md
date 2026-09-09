@@ -47,6 +47,14 @@ Headless Simulation（无渲染模拟）可跑完整局
 Save / Retry / Restore 可恢复
 ```
 
+装配关卡会话时从子路径导入，不从包根导入：
+
+```ts
+import type { CasualLevelSession } from "@shidai3/composable-game-framework/minigame";
+```
+
+`CasualLevelSession` 是关卡型小游戏的主玩法会话合同，不适用于 MMO / MUD / ARPG。页面状态机仍从包根导入 `IState` / `StateMachine`。
+
 ## 6. AI Game Studio 价值
 
 优先自动化：

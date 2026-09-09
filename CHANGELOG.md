@@ -1,5 +1,12 @@
 # CHANGELOG（变更日志）
 
+## v1.6.6（小游戏关卡会话接口）
+
+### ADD（新增）
+
+- 新增 `@shidai3/composable-game-framework/minigame` 子路径与 `CasualLevelSession`：关卡型 Puzzle / Minigame 的主玩法会话（Loading → Home → Play → Retry / Next / Home）。
+- 该接口不从包根导出，不进入全局 Runtime；明确不适用于 MMO、MUD、ARPG、开放世界或持久角色会话。
+
 ## v1.6.5（Cocos 弹窗编排边界澄清）
 
 ### CHANGE（修改）
