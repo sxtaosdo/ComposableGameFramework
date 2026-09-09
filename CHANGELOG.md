@@ -1,5 +1,12 @@
 # CHANGELOG（变更日志）
 
+## v1.6.3（Cocos 状态 Owner 与验证链）
+
+### CHANGE（修改）
+
+- 要求会话/页面流程、玩法模拟与表现/UI 状态各有唯一 Owner；Application、Presenter、Controller 只能通过具名入口编排，视图事件不得成为业务状态权威。
+- 明确 Cocos 代码验证须区分项目声明工具链内的命令行校验、Creator 编译诊断和 Preview 运行验证；宿主版本不在项目声明范围内时不可替代正式验证。
+
 ## v1.6.2（Cocos 弹窗生命周期规范）
 
 ### CHANGE（修改）

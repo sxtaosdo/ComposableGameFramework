@@ -76,6 +76,8 @@ export function calculateDirection(): void {}
 
 - **UI 不持有 Gameplay 状态**：UI 只读 ReadModel / 快照；命令经 Controller 下发，只消费 ReadModel / 快照并下发 Command。
 - Gameplay Entity、ECS Entity 与 Cocos Node 分离。
+- 会话/页面流程、玩法模拟与表现/UI 状态分别由唯一的模型或 Runtime Owner 持有。跨层只传递只读投影、快照、Command 或 Event；不得让 UI 缓存或改写可变玩法状态，也不得用平行 Model 复制同一份权威状态。
+- Application、Presenter 或 Controller 只按具名入口编排状态 Owner 的操作与顺序，不承载玩法公式，也不直接改写其他 Owner 的内部字段。视图事件是请求来源，不是 Gameplay 或会话状态的权威。
 
 ### 配置、主流程与测试边界
 
@@ -213,7 +215,8 @@ P0002 持有引擎无关的 Feature、Registry、Command、Query、Event、Save 
 
 - Preview 运行验证遵守父仓 `governance/cocos_preview_verification.md`。
 - AI 辅助编辑使用父仓 `P8000/cocos-mcp/`（Creator 3.8.8 MCP）；不得通过 Dashboard 或其他 Creator 工程绕过项目身份门。
-- 各产品的 typecheck / smoke 命令以产品 README 为准；修改后先运行任务约定的命令行验证，再执行 Preview。
+- 各产品的 typecheck / smoke 命令与 Node、Creator 版本以产品 README/配置为准；当前环境不在声明范围时，结果只能作为兼容性提示，不能替代该范围内的验证。
+- 修改 TypeScript 后，先运行项目约定的命令行验证，再确认 Creator 编译诊断无错误，最后执行受影响路径的 Preview。三者分别证明静态类型、Creator 导入/组件注册与运行行为，不可相互替代。
 
 
 
