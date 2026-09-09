@@ -1,5 +1,11 @@
 # CHANGELOG（变更日志）
 
+## v1.6.5（Cocos 弹窗编排边界澄清）
+
+### CHANGE（修改）
+
+- 澄清弹窗目录约束不要求从页面 State 抽出打开、关闭或事件后的流程编排；`script/` 要求收纳弹窗专用 MVC，专用 Controller/Host 只在实际存在时归入该目录。
+
 ## v1.6.4（Cocos 弹窗功能目录）
 
 ### CHANGE（修改）

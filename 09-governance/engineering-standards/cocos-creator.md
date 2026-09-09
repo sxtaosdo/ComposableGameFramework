@@ -174,8 +174,8 @@ P0002 持有引擎无关的 Feature、Registry、Command、Query、Event、Save 
 
 ### 弹窗
 
-- 每个弹窗是独立的功能目录，采用 `<popup-name>/script/`、`<popup-name>/prefab/`、`<popup-name>/image/` 三层结构：`script/` 放该弹窗的 View、Model、Controller 及其专用 Adapter/协议；`prefab/` 放该弹窗的所有 Prefab；`image/` 放只服务该弹窗的图片与 SpriteFrame 来源。专用音频等其他资源可按项目既有资源目录管理。
-- 引用该弹窗专用 View、Model、Prefab 或只编排其打开/关闭/事件的脚本，必须位于该弹窗的 `script/`；仅真正跨多个功能复用的 UI 网关、通用状态机或资源服务可留在共享目录。不得把同一弹窗的 MVC 脚本、Prefab、图片分散到通用 `scripts/`、`ui/` 或美术目录。
+- 每个弹窗是独立的功能目录，采用 `<popup-name>/script/`、`<popup-name>/prefab/`、`<popup-name>/image/` 三层结构：`script/` 放该弹窗的 View、Model，以及存在时的专用 Controller、Adapter/协议；`prefab/` 放该弹窗的所有 Prefab；`image/` 放只服务该弹窗的图片与 SpriteFrame 来源。专用音频等其他资源可按项目既有资源目录管理。
+- 弹窗专用 MVC 脚本、Prefab、图片不得分散到通用 `scripts/`、`ui/` 或美术目录。真正跨多个功能复用的 UI 网关、资源服务可留在共享目录；页面 State 可以保留弹窗打开、关闭和事件后的流程编排，无须为了目录结构另建 Controller 或 Host。
 - 每个弹窗为独立 Prefab；跨弹窗复用的通用图片可保留在共享资源位置，不复制进各弹窗目录。
 - 通过框架提供的 API 打开 / 关闭，不在业务代码中直接 `instantiate` 绕过管理层。
 - 动态 UI 统一使用 `mk.uiManage.regis`、`mk.uiManage.open`、`mk.uiManage.close`。
