@@ -6,3 +6,4 @@ export {
   type FeatureGraphError,
   type FeatureOperationError,
 } from "./featureRuntime.js";
+export { StateMachine, type IState } from "./stateMachine.js";
