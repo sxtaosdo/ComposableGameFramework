@@ -44,7 +44,8 @@
       "mappings": [
         {"source": "Commit 类型", "status": "migrated", "target": "git.md#commit-类型"},
         {"source": "Commit 规则", "status": "migrated", "target": "git.md#commit-规则"},
-        {"source": "版本号规则（每次提交必遵守）", "status": "excluded", "authority": "shidai3 parent repository version contract"},
+        {"source": "版本号规则（每次提交必遵守）", "status": "migrated", "target": "git.md#业务仓四段版本合同"},
+        {"source": "项目独立仓库要求", "status": "migrated", "target": "git.md#项目独立仓库要求"},
         {"source": "分支规则", "status": "excluded", "authority": "shidai3/P0003 production governance"},
         {"source": "submodule 独立交付原则", "status": "migrated", "target": "git.md#submodule-独立交付原则"}
       ]

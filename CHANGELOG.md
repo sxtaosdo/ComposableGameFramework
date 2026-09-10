@@ -1,5 +1,12 @@
 # CHANGELOG（变更日志）
 
+## v2.0.3（Git 独立仓与四段版本合同）
+
+### CHANGE（修改）
+
+- 工程规范 `git.md` 升格为跨项目 Git / 版本技术权威：业务仓必须独立 Git 仓库，并统一采用 `X.Y.Z.W` 版本门与 `vX.Y.Z.W: <概要>` subject；P0002 Framework 仍保留三段 SemVer 例外。
+- 废止「四段版本不迁入 P0002」边界；`source-map.json` 将版本号规则改为指向 `git.md`。
+
 ## v2.0.2（Creator assets meta）
 
 - 补齐 `assets/` 下 Creator `.meta`，保证作为 `shidai3` 扩展挂载时资源 UUID 稳定。

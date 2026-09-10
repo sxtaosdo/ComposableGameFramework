@@ -13,7 +13,7 @@ const expectedSections = {
   "docs/code/code.md": ["适用范围", "编码前思考", "简洁优先", "精准修改", "目标驱动执行", "单轮闭环", "通用编码规范", "类", "禁止事项"],
   "docs/code/cocosCode.md": ["适用范围", "语言", "代码风格", "Runtime 规则", "框架（按项目选用，不混用）", "组件与 Prefab", "UI 与场景", "Bundle 与资源", "验证与工具", "禁止事项"],
   "docs/code/godotCode.md": ["Godot 规则"],
-  "docs/git.md": ["Commit 类型", "Commit 规则", "版本号规则（每次提交必遵守）", "分支规则", "submodule 独立交付原则"]
+  "docs/git.md": ["Commit 类型", "Commit 规则", "版本号规则（每次提交必遵守）", "项目独立仓库要求", "分支规则", "submodule 独立交付原则"]
 };
 const expectedCocosRuleIds = {
   "语言": ["typescript-strict", "no-any", "es6-compatible", "avoid-unstable-syntax"],

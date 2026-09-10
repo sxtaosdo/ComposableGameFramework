@@ -2,6 +2,8 @@
 
 状态: Accepted
 
+本文件是 shidai3 各项目 Git / 版本技术合同的权威正文。父仓 `AGENTS.md` 只保留本仓操作入口与对本文的引用，不另立冲突正文。生产治理（直提分支、审查分支、Agent 闭环）仍由父仓与 P0003 管理。
+
 ## Commit 类型
 
 | 类型 | 用途 |
@@ -11,6 +13,8 @@
 | refactor | 重构 |
 | docs | 文档 |
 | chore | 杂项 |
+
+类型表用于变更分类指引。业务仓与父仓的正式 commit subject 以四段版本前缀为准（见下），不要求把 `feat` / `fix` 等类型前缀写入 subject。
 
 ---
 
@@ -24,14 +28,46 @@
 
 ---
 
+## 项目独立仓库要求
+
+凡被编号为独立项目的**代码仓库**（游戏产品、工具产品、可交付代码仓等）必须满足：
+
+- 拥有独立 Git remote，不得长期以父仓普通路径承载其源码。
+- 在 shidai3 工作区中仅以 submodule gitlink 挂载；父仓只提交已验证的 gitlink，不把该项目源码提交到父仓分支。
+- 功能变更先在该独立仓库按本仓版本门完成验证与交付，再由父仓更新 gitlink。
+
+存量仍嵌在父仓树内的路径（例如部分 `P0001/`、`P1000/`、`P3000/`、`P9000/workflow/`）视为**待合规**；拆仓另排任务，不因本文生效而自动完成迁移。
+
+参考已合规样板：`P4000/cook`、`P4000/colony-flow-food-hunt`（及既有工具/框架 submodule）。
+
+---
+
 ## submodule 独立交付原则
 
 - submodule 是独立仓库：功能代码先按该子仓库规则交付；主仓库只提交已验证的 gitlink 更新，不把子仓库源码提交到主仓库分支。
+- 交付顺序：子仓先 commit（必要时 push）→ 父仓再更新 gitlink（父仓使用自己的版本计数）。
+
+---
+
+## 业务仓四段版本合同
+
+除下文 Framework 例外外，业务仓（含挂载在 shidai3 下的产品仓、工具仓，以及父仓自身）统一遵守：
+
+- 版本格式 `X.Y.Z.W`。前三位仅由 Owner 决定；第四段 `W` 跨本仓全历史只增不减、永不重置（各仓计数互不共用）。
+- 根 `VERSION` 是机器事实源；README 顶部当前版本与 Commit subject 是同步镜像。
+- Commit subject 格式：`vX.Y.Z.W: <修改概要>`。
+- 提交前运行 `python3 scripts/git_version.py install`，启用本仓 `.githooks`；Hook 负责 bump / 校验并暂存版本文件。
+- 禁止用 `--no-verify` 绕过版本门。
+- 实现脚本可各仓自备副本（以 `P4000/cook`、`P4000/colony-flow-food-hunt` 的 `scripts/git_version.py` 为样板）；合同条文以本文为准。
+
+### Framework 例外（P0002）
+
+P0002 Framework 仓继续使用**三段 SemVer**：根 `VERSION`、`manifest.json.framework.version` 与 `CHANGELOG.md` 必须一致。P0002 不改用四段版本，也不强制采用业务仓的 `git_version.py` Hook。
 
 ---
 
 ## 版本与分支边界
 
-每个独立仓库遵守自身声明的版本和默认交付分支合同。P0002 使用三段 SemVer；本规范不迁入 shidai3 父仓专用的 `X.Y.Z.W`、`scripts/git_version.py` 或 `.githooks`。
-
-父仓版本号规则、直提 `main`、审查分支（`codex-review/*`、`smoke/*`）和 Agent 交付流程仍由父仓 `AGENTS.md` 与 P0003 治理。禁止把审查 packet 分支当作正式交付分支。
+- **技术合同**（独立仓、业务仓四段版本、Framework SemVer、commit 粒度、submodule 交付）：本文。
+- **生产治理**（直提 `main`、审查分支如 `codex-review/*` / `smoke/*`、Agent 交付流程）：父仓 `AGENTS.md` 与 P0003。禁止把审查 packet 分支当作正式交付分支。
+- 每个独立仓库的默认交付分支由该仓自身合同声明；未声明时以 Owner 指定为准。
