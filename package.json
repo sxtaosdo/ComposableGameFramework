@@ -2,7 +2,7 @@
   "package_version": 2,
   "name": "shidai3",
   "title": "Shidai3 Framework",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": true,
   "type": "module",
   "description": "Composable Game Framework as a Cocos Creator extension.",
@@ -14,7 +14,7 @@
   },
   "packageManager": "pnpm@10.33.2",
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json && node scripts/normalize-dist-imports.mjs",
     "contracts": "node scripts/validate-contracts.mjs",
     "standards": "node scripts/validate-engineering-standards.mjs",
     "sample:headless": "node dist/examples/tile-match/run.js",

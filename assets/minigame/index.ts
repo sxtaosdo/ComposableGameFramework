@@ -1,1 +1,1 @@
-export type { CasualLevelSession } from "./casualLevelSession.js";
+export type { CasualLevelSession } from "./casualLevelSession";

@@ -1,5 +1,9 @@
 # CHANGELOG（变更日志）
 
+## v2.0.1（Creator 源码解析修复）
+
+- Creator 直接加载 `assets/` 时使用无后缀的相对 TypeScript 导入；构建产物在 `dist/` 中恢复 Node 所需的 `.js` 后缀。
+
 ## v2.0.0（Creator 原生扩展）
 
 ### BREAKING CHANGE（破坏性修改）

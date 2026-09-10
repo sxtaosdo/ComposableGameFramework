@@ -1,5 +1,5 @@
-import type { EntityId } from "./entityId.js";
-import { failure, success, type Result } from "./result.js";
+import type { EntityId } from "./entityId";
+import { failure, success, type Result } from "./result";
 
 export interface DuplicateEntityIdError {
   readonly code: "DUPLICATE_ENTITY_ID";

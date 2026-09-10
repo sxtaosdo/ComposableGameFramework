@@ -1,1 +1,1 @@
-export { loadConfig, type ConfigValidationError, type ConfigValidator } from "./config.js";
+export { loadConfig, type ConfigValidationError, type ConfigValidator } from "./config";

@@ -1,9 +1,9 @@
-import { loadConfig, type ConfigValidationError } from "../../data/index.js";
-import { failure, success, type Result } from "../../foundation-core/result.js";
-import { MessageRuntime, type Event } from "../../foundation-core/messaging.js";
-import type { SaveSection } from "../../save/index.js";
-import type { Feature, FeatureContext, FeatureOperationError } from "../../runtime/index.js";
-import type { SaveCoordinator } from "../../save/index.js";
+import { loadConfig, type ConfigValidationError } from "../../data/index";
+import { failure, success, type Result } from "../../foundation-core/result";
+import { MessageRuntime, type Event } from "../../foundation-core/messaging";
+import type { SaveSection } from "../../save/index";
+import type { Feature, FeatureContext, FeatureOperationError } from "../../runtime/index";
+import type { SaveCoordinator } from "../../save/index";
 
 export type Tile = "A" | "B" | "C" | null;
 
