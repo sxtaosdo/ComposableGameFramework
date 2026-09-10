@@ -50,7 +50,7 @@ Save / Retry / Restore 可恢复
 装配关卡会话时从子路径导入，不从包根导入：
 
 ```ts
-import type { CasualLevelSession } from "@shidai3/composable-game-framework/minigame";
+import type { CasualLevelSession } from "db://shidai3/minigame/index";
 ```
 
 `CasualLevelSession` 是关卡型小游戏的主玩法会话合同，不适用于 MMO / MUD / ARPG。页面状态机仍从包根导入 `IState` / `StateMachine`。

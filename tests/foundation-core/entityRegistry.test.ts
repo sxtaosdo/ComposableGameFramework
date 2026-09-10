@@ -4,7 +4,7 @@ import {
   createEntityId,
   EntityRegistry,
   type EntityId,
-} from "../../src/foundation-core/index.js";
+} from "../../assets/foundation-core/index.js";
 
 function validEntityId(value: string): EntityId {
   const result = createEntityId(value);

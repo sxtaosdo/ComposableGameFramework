@@ -12,7 +12,7 @@ const created = TileMatchSession.create({
 }, messages);
 if (!created.ok) throw new Error(created.error.message);
 const session = created.value;
-const save = new SaveCoordinator("1.5.0");
+const save = new SaveCoordinator("2.0.0");
 const runtime = new FeatureRuntime();
 runtime.capabilities.provide("framework.save", save);
 runtime.add(new TileMatchFeature(session));

@@ -11,6 +11,14 @@ export class StateMachine<T> {
 
   public constructor(public context: T) {}
 
+  public get current(): IState<T> | null {
+    return this.currentState;
+  }
+
+  public is(StateClass: new () => IState<T>): boolean {
+    return this.currentState instanceof StateClass;
+  }
+
   public async addGlobalState(StateClass: new () => IState<T>): Promise<void> {
     if (this.globalStates.has(StateClass)) return;
     const state = new StateClass();

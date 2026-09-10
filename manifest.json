@@ -3,7 +3,7 @@
   "framework": {
     "id": "composable-game-framework",
     "name": "Composable Game Framework",
-    "version": "1.6.7",
+    "version": "2.0.0",
     "status": "IMPLEMENTED"
   },
   "catalogs": {
@@ -77,7 +77,7 @@
       },
       {
         "id": "core.state-machine",
-        "version": "1.6.0",
+        "version": "2.0.0",
         "status": "IMPLEMENTED",
         "document": "01-architecture/runtime-model.md",
         "publicApi": {
@@ -517,7 +517,8 @@
   "publicApi": {
     "status": "IMPLEMENTED",
     "exports": [
-      "package.composable-game-framework"
+      "extension.shidai3/index",
+      "extension.shidai3/minigame/index"
     ],
     "commands": [
       "message.execute"
@@ -574,43 +575,43 @@
       {
         "areaId": "foundation-core",
         "pathPatterns": [
-          "src/foundation-core/*"
+          "assets/foundation-core/*"
         ],
         "mutationPolicy": "CHANGE_PROPOSAL_AND_OWNER_APPROVAL_REQUIRED"
       },
       {
         "areaId": "save-protocol",
         "pathPatterns": [
-          "src/save/*"
+          "assets/save/*"
         ],
         "mutationPolicy": "CHANGE_PROPOSAL_AND_OWNER_APPROVAL_REQUIRED"
       },
       {
         "areaId": "entity-identity",
         "pathPatterns": [
-          "src/foundation-core/entityId.ts",
-          "src/foundation-core/entityRegistry.ts"
+          "assets/foundation-core/entityId.ts",
+          "assets/foundation-core/entityRegistry.ts"
         ],
         "mutationPolicy": "CHANGE_PROPOSAL_AND_OWNER_APPROVAL_REQUIRED"
       },
       {
         "areaId": "feature-lifecycle",
         "pathPatterns": [
-          "src/runtime/featureRuntime.ts"
+          "assets/runtime/featureRuntime.ts"
         ],
         "mutationPolicy": "CHANGE_PROPOSAL_AND_OWNER_APPROVAL_REQUIRED"
       },
       {
         "areaId": "command-contract",
         "pathPatterns": [
-          "src/foundation-core/messaging.ts"
+          "assets/foundation-core/messaging.ts"
         ],
         "mutationPolicy": "CHANGE_PROPOSAL_AND_OWNER_APPROVAL_REQUIRED"
       },
       {
         "areaId": "registry-protocol",
         "pathPatterns": [
-          "src/runtime/capabilityRegistry.ts"
+          "assets/runtime/capabilityRegistry.ts"
         ],
         "mutationPolicy": "CHANGE_PROPOSAL_AND_OWNER_APPROVAL_REQUIRED"
       }

@@ -1,19 +1,14 @@
 {
-  "name": "@shidai3/composable-game-framework",
-  "version": "1.6.7",
+  "package_version": 2,
+  "name": "shidai3",
+  "title": "Shidai3 Framework",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./minigame": {
-      "types": "./dist/minigame/index.d.ts",
-      "import": "./dist/minigame/index.js"
-    }
-  },
-  "files": ["dist"],
+  "description": "Composable Game Framework as a Cocos Creator extension.",
+  "author": "Shidai3",
+  "editor": ">=3.8.0",
+  "main": "./main.cjs",
   "engines": {
     "node": ">=22 <23"
   },
@@ -32,5 +27,13 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": ["esbuild"]
+  },
+  "contributions": {
+    "asset-db": {
+      "mount": {
+        "path": "./assets",
+        "readonly": true
+      }
+    }
   }
 }

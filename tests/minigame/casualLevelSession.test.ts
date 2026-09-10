@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import type { CasualLevelSession } from "../../src/minigame/index.js";
+import type { CasualLevelSession } from "../../assets/minigame/index.js";
 
 describe("CasualLevelSession", () => {
   it("accepts a dummy minigame session implementor", () => {
@@ -22,8 +22,8 @@ describe("CasualLevelSession", () => {
   });
 
   it("is imported from the minigame subpath, not as a global runtime contract", async () => {
-    const minigame = await import("../../src/minigame/index.js");
-    const runtime = await import("../../src/runtime/index.js");
+    const minigame = await import("../../assets/minigame/index.js");
+    const runtime = await import("../../assets/runtime/index.js");
 
     expect("CasualLevelSession" in minigame || typeof minigame === "object").toBe(true);
     expect("CasualLevelSession" in runtime).toBe(false);

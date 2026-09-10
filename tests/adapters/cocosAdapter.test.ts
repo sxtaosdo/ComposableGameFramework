@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { CocosAdapter, CocosComponentLifecycleHost, CocosEventInputPort } from "../../src/adapters/cocos/index.js";
+import { CocosAdapter, CocosComponentLifecycleHost, CocosEventInputPort } from "../../assets/adapters/cocos/index.js";
 
 describe("CocosAdapter", () => {
   it("owns boot, input, update, presentation, and shutdown without cc runtime types", () => {

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { failure, success } from "../../src/foundation-core/index.js";
-import { FeatureRuntime, type Feature, type FeatureContext } from "../../src/runtime/index.js";
+import { failure, success } from "../../assets/foundation-core/index.js";
+import { FeatureRuntime, type Feature, type FeatureContext } from "../../assets/runtime/index.js";
 
 function feature(id: string, dependencies: readonly string[], log: string[], fail = false): Feature {
   let cleanup: (() => void) | undefined;
