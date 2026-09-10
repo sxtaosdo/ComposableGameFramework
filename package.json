@@ -2,7 +2,7 @@
   "package_version": 2,
   "name": "shidai3",
   "title": "Shidai3 Framework",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "private": true,
   "type": "module",
   "description": "Composable Game Framework as a Cocos Creator extension.",
@@ -26,7 +26,9 @@
     "vitest": "3.2.4"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild"]
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   },
   "contributions": {
     "asset-db": {

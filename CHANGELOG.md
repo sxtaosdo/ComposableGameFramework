@@ -1,5 +1,9 @@
 # CHANGELOG（变更日志）
 
+## v2.0.2（Creator assets meta）
+
+- 补齐 `assets/` 下 Creator `.meta`，保证作为 `shidai3` 扩展挂载时资源 UUID 稳定。
+
 ## v2.0.1（Creator 源码解析修复）
 
 - Creator 直接加载 `assets/` 时使用无后缀的相对 TypeScript 导入；构建产物在 `dist/` 中恢复 Node 所需的 `.js` 后缀。
