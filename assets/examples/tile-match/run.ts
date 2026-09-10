@@ -1,8 +1,8 @@
-import { CocosAdapter } from "../../adapters/cocos/index.js";
-import { MessageRuntime } from "../../foundation-core/index.js";
-import { SaveCoordinator, serializeSnapshot } from "../../save/index.js";
-import { FeatureRuntime } from "../../runtime/index.js";
-import { TileMatchFeature, TileMatchSession, type TileState } from "./tileMatch.js";
+import { CocosAdapter } from "../../adapters/cocos/index";
+import { MessageRuntime } from "../../foundation-core/index";
+import { SaveCoordinator, serializeSnapshot } from "../../save/index";
+import { FeatureRuntime } from "../../runtime/index";
+import { TileMatchFeature, TileMatchSession, type TileState } from "./tileMatch";
 
 const messages = new MessageRuntime();
 const created = TileMatchSession.create({
@@ -12,7 +12,7 @@ const created = TileMatchSession.create({
 }, messages);
 if (!created.ok) throw new Error(created.error.message);
 const session = created.value;
-const save = new SaveCoordinator("2.0.0");
+const save = new SaveCoordinator("2.0.1");
 const runtime = new FeatureRuntime();
 runtime.capabilities.provide("framework.save", save);
 runtime.add(new TileMatchFeature(session));

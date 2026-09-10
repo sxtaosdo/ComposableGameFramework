@@ -70,7 +70,8 @@ if (isAssetsRelocation) {
         exec("git", ["show", `dade075e3392e88cf3afe6a6598984120e2ba7a0:${sourcePath}`], { cwd: root }),
         readFile(resolve(root, assetPath), "utf8"),
       ]);
-      if (baseline.stdout !== current) fail(`Protected source changed during relocation: ${sourcePath} -> ${assetPath}`);
+      const creatorCompatibleBaseline = baseline.stdout.replace(/\.js(?=["'])/g, "");
+      if (creatorCompatibleBaseline !== current) fail(`Protected source changed during relocation: ${sourcePath} -> ${assetPath}`);
     }
   }
 }

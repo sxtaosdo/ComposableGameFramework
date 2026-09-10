@@ -2,17 +2,17 @@ export {
   createEntityId,
   type EntityId,
   type InvalidEntityIdError,
-} from "./entityId.js";
+} from "./entityId";
 export {
   EntityRegistry,
   type DuplicateEntityIdError,
   type EntityNotFoundError,
-} from "./entityRegistry.js";
-export { type Result } from "./result.js";
-export { failure, success } from "./result.js";
-export { ManualClock, type Clock } from "./clock.js";
-export { SeededRandom, type RandomSource } from "./random.js";
-export { createTag, type Tag } from "./tag.js";
+} from "./entityRegistry";
+export { type Result } from "./result";
+export { failure, success } from "./result";
+export { ManualClock, type Clock } from "./clock";
+export { SeededRandom, type RandomSource } from "./random";
+export { createTag, type Tag } from "./tag";
 export {
   MessageRuntime,
   type Command,
@@ -20,4 +20,4 @@ export {
   type MessageHandlerDuplicateError,
   type MessageHandlerMissingError,
   type Query,
-} from "./messaging.js";
+} from "./messaging";

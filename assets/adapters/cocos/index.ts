@@ -8,4 +8,4 @@ export {
   type CocosInputPort,
   type CocosNodeLike,
   type CocosPresentationPort,
-} from "./cocosAdapter.js";
+} from "./cocosAdapter";

@@ -19,7 +19,7 @@ describe("tile-match vertical slice", () => {
     expect(messages.execute({ type: "tile.swap", payload: { from: 1, to: 4 } })).toMatchObject({ ok: true, value: { score: 3 } });
     expect(events).toEqual([{ type: "tile.match-resolved", payload: { cleared: 3, score: 3 } }]);
     expect(messages.query({ type: "tile.board", payload: {} })).toEqual({ ok: true, value: session.read() });
-    const save = new SaveCoordinator("2.0.0");
+    const save = new SaveCoordinator("2.0.1");
     save.register(session);
     const snapshot = save.capture();
     expect(snapshot.ok).toBe(true);

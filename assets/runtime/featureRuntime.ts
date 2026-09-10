@@ -1,5 +1,5 @@
-import { failure, success, type Result } from "../foundation-core/result.js";
-import { CapabilityRegistry } from "./capabilityRegistry.js";
+import { failure, success, type Result } from "../foundation-core/result";
+import { CapabilityRegistry } from "./capabilityRegistry";
 
 export interface FeatureContext {
   readonly capabilities: CapabilityRegistry;

@@ -1,4 +1,4 @@
-import { failure, success, type Result } from "../foundation-core/result.js";
+import { failure, success, type Result } from "../foundation-core/result";
 
 export interface ConfigValidationError {
   readonly code: "INVALID_CONFIG";

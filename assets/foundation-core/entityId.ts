@@ -1,4 +1,4 @@
-import { failure, success, type Result } from "./result.js";
+import { failure, success, type Result } from "./result";
 
 declare const entityIdBrand: unique symbol;
 
