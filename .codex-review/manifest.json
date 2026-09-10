@@ -1,0 +1,84 @@
+{
+  "acceptance": {
+    "path": ".codex-review/acceptance.md",
+    "sha256": "1d2944c5044908fc9ab824f4362a3324d0e5a7ee1cdda723efecf34e4807a227"
+  },
+  "acceptance_mapping": [
+    "P0002 typecheck, unit tests, build, contracts, standards, headless sample, and entry syntax pass; Node 22 verification remains unavailable locally."
+  ],
+  "changed_paths": [
+    "01-architecture/runtime-model.md",
+    "03-gameplay/puzzle-minigame.md",
+    "06-products/minigame-reference.md",
+    "09-governance/engineering-standards/cocos-creator.md",
+    "AGENTS.md",
+    "CHANGELOG.md",
+    "README.md",
+    "VERSION",
+    "assets/adapters/cocos/cocosAdapter.ts",
+    "assets/adapters/cocos/index.ts",
+    "assets/data/config.ts",
+    "assets/data/index.ts",
+    "assets/examples/tile-match/run.ts",
+    "assets/examples/tile-match/tileMatch.ts",
+    "assets/foundation-core/clock.ts",
+    "assets/foundation-core/entityId.ts",
+    "assets/foundation-core/entityRegistry.ts",
+    "assets/foundation-core/index.ts",
+    "assets/foundation-core/messaging.ts",
+    "assets/foundation-core/random.ts",
+    "assets/foundation-core/result.ts",
+    "assets/foundation-core/tag.ts",
+    "assets/index.ts",
+    "assets/minigame/casualLevelSession.ts",
+    "assets/minigame/index.ts",
+    "assets/runtime/capabilityRegistry.ts",
+    "assets/runtime/featureRuntime.ts",
+    "assets/runtime/index.ts",
+    "assets/runtime/stateMachine.ts",
+    "assets/save/index.ts",
+    "assets/save/saveCoordinator.ts",
+    "main.cjs",
+    "manifest.json",
+    "package.json",
+    "scripts/validate-engineering-standards.mjs",
+    "tests/adapters/cocosAdapter.test.ts",
+    "tests/examples/tileMatch.test.ts",
+    "tests/foundation-core/entityRegistry.test.ts",
+    "tests/foundation-core/primitives.test.ts",
+    "tests/minigame/casualLevelSession.test.ts",
+    "tests/runtime/featureRuntime.test.ts",
+    "tests/runtime/stateMachine.test.ts",
+    "tests/save/dataSave.test.ts",
+    "tsconfig.build.json",
+    "tsconfig.json"
+  ],
+  "created_at": "2026-09-10T03:00:00+00:00",
+  "repository": {
+    "base_sha": "99c55866535387ad7cb39efb8ebdb5893f378cad",
+    "review_branch": "codex-review/20260910T030000Z-7415d295/final-r01",
+    "snapshot_sha": "1ff17870eefb01cf42e6d36430e1041dd3c334f4",
+    "url": "git@github.com:sxtaosdo/ComposableGameFramework.git"
+  },
+  "resolved_push_endpoint_hash": "38b9ad24a076d017ce35fb1436d451005776a78dbf9098dcd64026677eae6789",
+  "review_epoch": 1,
+  "review_input_hash": "b70f85d8c2502035ec9633edd85b65019f0ba850c0056275ca01d523b771aa1d",
+  "review_type": "final",
+  "risk": "R2",
+  "round": 1,
+  "run_id": "20260910T030000Z-7415d295",
+  "schema": "gpt-codex-review-packet-v1",
+  "task": {
+    "path": ".codex-review/task.md",
+    "sha256": "6c0d7aceef67fb807cbe8e1eced1b97b7ef9dfa28bfdf3770a82b1eaec63e778"
+  },
+  "task_contract": {
+    "path": ".codex-review/request.md",
+    "sha256": "41f2397a960d5869681a7ab80d4776a001e85af6d4ffdfb1e24a7afedf82b33d"
+  },
+  "task_id": "20260910T030000Z-7415d295",
+  "validation": {
+    "evidence_path": ".codex-review/evidence.md",
+    "evidence_sha256": "406dbe49a7a248ca66f92f3b98121ee74eb4db5d3c9cf1270eab91ae29ac1148"
+  }
+}
