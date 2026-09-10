@@ -107,7 +107,7 @@ Workflow / State Machine（工作流 / 状态机）
 关卡型 Puzzle / Minigame 产品可从子路径导入主玩法会话接口：
 
 ```ts
-import type { CasualLevelSession } from "@shidai3/composable-game-framework/minigame";
+import type { CasualLevelSession } from "db://shidai3/minigame/index";
 ```
 
 该接口覆盖一级流程：
@@ -124,7 +124,7 @@ Loading → Home → Play → Retry / Next Level / Home
 
 **不适用：** MMO、MUD、ARPG、开放世界、持久角色会话或跨 Feature 副本事务。那些继续使用 Application Layer / Feature Runtime，不得把本接口当成全局会话合同。
 
-该接口**不**从包根 `@shidai3/composable-game-framework` 导出，也**不**进入 `src/runtime/`；全局 Runtime 仍只有 `IState` / `StateMachine` 等通用机制。
+该接口**不**从 `db://shidai3/index` 导出，也**不**进入 `assets/runtime/`；全局 Runtime 仍只有 `IState` / `StateMachine` 等通用机制。对使用该会话的关卡型小游戏，页面身份以 `StateMachine.current` 为唯一权威；不得维护 `screen`、`playState` 或 `catalogReady` 等平行镜像，资源就绪以实际已加载且校验通过的对象为准。
 
 ## 6. 关卡数据
 

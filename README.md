@@ -2,7 +2,7 @@
 
 状态: Accepted（Framework 已实现，P10-Cook DEVELOPMENT 验证完成）
 
-**当前版本：`v1.6.1`**
+**当前版本：`v2.0.0`**
 
 > 本仓库文档定义一套面向 RPG 与 Simulation（模拟）玩法的可组合游戏框架。
 > 第一阶段以 Cocos Creator + 2D/2.5D + Mobile First（移动端优先）为主要实现目标，单机优先，同时保留未来多人、3D 和跨引擎边界。
@@ -86,23 +86,23 @@ Engine Adapter（引擎适配层）
 
 ### Foundation Core Source（基础核心源码）
 
-- [Entity Identity（实体身份）](src/foundation-core/entityId.ts)
-- [Entity Registry（实体注册表）](src/foundation-core/entityRegistry.ts)
+- [Entity Identity（实体身份）](assets/foundation-core/entityId.ts)
+- [Entity Registry（实体注册表）](assets/foundation-core/entityRegistry.ts)
 - [Headless Tests（无渲染测试）](tests/foundation-core/entityRegistry.test.ts)
 
 ### Framework MVP Quick Start
 
-产品代码只从包根入口导入公开协议，不引用 `src/` 内部相对路径：
+Creator 产品只从扩展公开入口导入协议，不引用 `db://shidai3/` 内部路径：
 
 ```ts
 import {
   FeatureRuntime,
   MessageRuntime,
   SaveCoordinator,
-} from "@shidai3/composable-game-framework";
+} from "db://shidai3/index";
 
 const messages = new MessageRuntime();
-const save = new SaveCoordinator("1.5.0");
+const save = new SaveCoordinator("2.0.0");
 const runtime = new FeatureRuntime();
 runtime.capabilities.provide("framework.messages", messages);
 runtime.capabilities.provide("framework.save", save);
@@ -115,7 +115,7 @@ Feature 通过公开 Capability / Command / Query / Event 协议协作，并用 
 关卡型 Puzzle / Minigame 的主玩法会话接口 `CasualLevelSession` 从子路径导入，不从包根导出：
 
 ```ts
-import type { CasualLevelSession } from "@shidai3/composable-game-framework/minigame";
+import type { CasualLevelSession } from "db://shidai3/minigame/index";
 ```
 
 该接口仅服务关卡型小游戏（Loading → Home → Play → Retry / Next / Home），不适用于 MMO、MUD、ARPG 等大型持久世界。详见 [Puzzle / Minigame](03-gameplay/puzzle-minigame.md)。

@@ -87,7 +87,7 @@ export function calculateDirection(): void {}
 - JSON 由现有资源接口加载后必须先完成结构和领域校验；加载、解析或校验失败时不得进入 Gameplay，产品在 Loading 状态显示可见错误并停止流程。
 - 用户可见的一级流程页面（例如 Loading、Home、Play）使用项目已有状态机管理。状态类直接导入目标状态，并以 `this.context.StateMachine.changeState(TargetState)` 切换；不得使用字符串路由、转发聚合文件或页面映射表。弹窗、短暂特效和局部交互不强制成为一级状态。
 - 启动阶段的资源加载属于 LoadingState：例如音频预载、关卡 JSON 读取/校验、弹窗注册。Presenter 只完成依赖接线，不承担这些加载流程。
-- 关卡型 Puzzle / Minigame 可选用 `@shidai3/composable-game-framework/minigame` 的 `CasualLevelSession` 作为会话具名入口；该接口不是全体 Cocos 产品默认，也不适用于 MMO / MUD / ARPG。
+- 关卡型 Puzzle / Minigame 可选用 `db://shidai3/minigame/index` 的 `CasualLevelSession` 作为会话具名入口；该接口不是全体 Cocos 产品默认，也不适用于 MMO / MUD / ARPG。仅使用该会话的小游戏以 `StateMachine.current` 作为页面身份权威，不得并行维护 `screen`、`playState` 或 `catalogReady` 镜像。
 - 非弹窗业务按功能建立目录；一个功能有两个及以上实现类时，类文件必须集中在该功能目录，不分散在同级脚本目录。
 - 单元测试、Mock、Fixture 和运行时自动化桥接放入专用测试目录；桥接以专用类维护，业务启动入口最多调用其安装入口，业务功能目录不包含断言、Mock 或测试流程。测试目录、文件、类和对外自动化方法均使用 `test` / `Test` 可识别命名，不混入玩法核心 API。
 

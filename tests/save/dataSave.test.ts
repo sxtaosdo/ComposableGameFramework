@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 
-import { loadConfig } from "../../src/data/index.js";
-import { failure, success } from "../../src/foundation-core/index.js";
-import { SaveCoordinator, serializeSnapshot } from "../../src/save/index.js";
+import { loadConfig } from "../../assets/data/index.js";
+import { failure, success } from "../../assets/foundation-core/index.js";
+import { SaveCoordinator, serializeSnapshot } from "../../assets/save/index.js";
 
 describe("data and save boundaries", () => {
   it("accepts valid config and returns structured invalid-config errors", () => {

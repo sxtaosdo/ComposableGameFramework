@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 
-import { MessageRuntime, success } from "../../src/foundation-core/index.js";
-import { SaveCoordinator } from "../../src/save/index.js";
-import { MatchThreePolicy, TileMatchSession, validateLevel, type SwapPolicy } from "../../src/examples/tile-match/tileMatch.js";
+import { MessageRuntime, success } from "../../assets/foundation-core/index.js";
+import { SaveCoordinator } from "../../assets/save/index.js";
+import { MatchThreePolicy, TileMatchSession, validateLevel, type SwapPolicy } from "../../assets/examples/tile-match/tileMatch.js";
 
 const level = { width: 3, height: 3, tiles: ["A", "B", "A", "C", "A", "C", "B", "A", "B"] };
 
@@ -19,7 +19,7 @@ describe("tile-match vertical slice", () => {
     expect(messages.execute({ type: "tile.swap", payload: { from: 1, to: 4 } })).toMatchObject({ ok: true, value: { score: 3 } });
     expect(events).toEqual([{ type: "tile.match-resolved", payload: { cleared: 3, score: 3 } }]);
     expect(messages.query({ type: "tile.board", payload: {} })).toEqual({ ok: true, value: session.read() });
-    const save = new SaveCoordinator("1.5.0");
+    const save = new SaveCoordinator("2.0.0");
     save.register(session);
     const snapshot = save.capture();
     expect(snapshot.ok).toBe(true);
@@ -47,4 +47,3 @@ describe("tile-match vertical slice", () => {
     expect(messages.execute({ type: "tile.swap", payload: { from: 0, to: 1 } })).toMatchObject({ ok: true, value: { score: 99 } });
   });
 });
-

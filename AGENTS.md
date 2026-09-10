@@ -8,7 +8,7 @@
 
 1. `README.md`：了解框架定位和目录。
 2. `VERSION` 与 `manifest.json`：确认机器合同版本、能力成熟度和证据状态。
-3. 涉及源码时读取根 `package.json`，再按 Manifest 证据路径进入对应 `src/` 与 `tests/` 文件。
+3. 涉及源码时读取根 `package.json`，再按 Manifest 证据路径进入对应 `assets/` 与 `tests/` 文件。
 4. 仅按任务读取对应编号目录；不得把未声明状态的设计文档当作已实现能力。
 5. 作为 shidai3 的 `P0002/` submodule 使用时，再读取父仓库 `../AI_CONTEXT.md` 和目标产品的适用 `AGENTS.md`。
 6. 编码前读取 `09-governance/engineering-standards/` 的通用规范和 Owner 指定的引擎规范。

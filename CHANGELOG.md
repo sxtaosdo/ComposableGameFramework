@@ -1,5 +1,17 @@
 # CHANGELOG（变更日志）
 
+## v2.0.0（Creator 原生扩展）
+
+### BREAKING CHANGE（破坏性修改）
+
+- P0002 作为 `shidai3` Creator 扩展交付；产品从 `db://shidai3/index` 与 `db://shidai3/minigame/index` 导入，不再通过 npm 包名或 `node_modules` 消费框架。
+- 框架源码唯一维护于扩展 `assets/`，Node Headless 构建与测试直接消费同一份源码。
+
+### ADD（新增）
+
+- `StateMachine<T>` 新增只读 `current` 与 `is(StateClass)`；Context 由产品自行定义，不要求 Presenter。
+- 明确页面身份唯一来源规则只适用于采用 `CasualLevelSession` 的关卡型小游戏，不扩张为所有产品约束。
+
 ## v1.6.7（Cocos 状态、MK 与测试边界）
 
 ### CHANGE（修改）

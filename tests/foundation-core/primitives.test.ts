@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { ManualClock, MessageRuntime, SeededRandom, failure, success } from "../../src/foundation-core/index.js";
+import { ManualClock, MessageRuntime, SeededRandom, failure, success } from "../../assets/foundation-core/index.js";
 
 describe("deterministic primitives", () => {
   it("advances a manual clock only when directed", () => {
@@ -54,4 +54,3 @@ describe("MessageRuntime", () => {
     });
   });
 });
-

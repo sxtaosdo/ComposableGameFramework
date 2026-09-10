@@ -49,10 +49,31 @@ const manifest = JSON.parse(await readFile(resolve(root, "manifest.json"), "utf8
 const { stdout: baselineManifestText } = await exec("git", ["show", "dade075e3392e88cf3afe6a6598984120e2ba7a0:manifest.json"], { cwd: root });
 const baselineManifest = JSON.parse(baselineManifestText);
 if (JSON.stringify(manifest.protectedAreas) !== JSON.stringify(baselineManifest.protectedAreas)) fail("protectedAreas changed from baseline");
-if (JSON.stringify(manifest.protectedPathRules) !== JSON.stringify(baselineManifest.protectedPathRules)) fail("protectedPathRules changed from baseline");
-const protectedPatterns = manifest.protectedPathRules.rules.flatMap((rule) => rule.pathPatterns);
+const baselineRules = baselineManifest.protectedPathRules.rules;
+const protectedRules = manifest.protectedPathRules.rules;
+const isAssetsRelocation = baselineRules.length === protectedRules.length && baselineRules.every((rule, index) =>
+  rule.areaId === protectedRules[index].areaId
+  && rule.mutationPolicy === protectedRules[index].mutationPolicy
+  && JSON.stringify(rule.pathPatterns.map((pattern) => pattern.replace(/^src\//, "assets/"))) === JSON.stringify(protectedRules[index].pathPatterns),
+);
+if (!isAssetsRelocation && JSON.stringify(manifest.protectedPathRules) !== JSON.stringify(baselineManifest.protectedPathRules)) fail("protectedPathRules changed from baseline");
+const protectedPatterns = isAssetsRelocation ? baselineRules.flatMap((rule) => rule.pathPatterns) : protectedRules.flatMap((rule) => rule.pathPatterns);
 const { stdout: protectedDiff } = await exec("git", ["diff", "--name-only", "dade075e3392e88cf3afe6a6598984120e2ba7a0", "--", ...protectedPatterns], { cwd: root });
-if (protectedDiff.trim()) fail(`Protected paths changed:\n${protectedDiff}`);
+if (protectedDiff.trim() && !isAssetsRelocation) fail(`Protected paths changed:\n${protectedDiff}`);
+if (isAssetsRelocation) {
+  for (const pattern of protectedPatterns) {
+    const prefix = pattern.replace(/\*$/, "");
+    const { stdout: names } = await exec("git", ["ls-tree", "-r", "--name-only", "dade075e3392e88cf3afe6a6598984120e2ba7a0", "--", prefix], { cwd: root });
+    for (const sourcePath of names.trim().split("\n").filter(Boolean)) {
+      const assetPath = sourcePath.replace(/^src\//, "assets/");
+      const [baseline, current] = await Promise.all([
+        exec("git", ["show", `dade075e3392e88cf3afe6a6598984120e2ba7a0:${sourcePath}`], { cwd: root }),
+        readFile(resolve(root, assetPath), "utf8"),
+      ]);
+      if (baseline.stdout !== current) fail(`Protected source changed during relocation: ${sourcePath} -> ${assetPath}`);
+    }
+  }
+}
 
 const { stdout: markdownList } = await exec("git", ["ls-files", "-z", "--", "*.md"], { cwd: root, encoding: "utf8" });
 const markdownPaths = markdownList.split("\0").filter(Boolean);
