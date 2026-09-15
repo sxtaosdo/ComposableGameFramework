@@ -47,6 +47,12 @@
 - submodule 是独立仓库：功能代码先按该子仓库规则交付；主仓库只提交已验证的 gitlink 更新，不把子仓库源码提交到主仓库分支。
 - 交付顺序：子仓先 commit（必要时 push）→ 父仓再更新 gitlink（父仓使用自己的版本计数）。
 
+### 产品消费框架（Cocos → shidai3 / P0002）
+
+- 后续 Cocos 产品必须以 **git submodule** 将本框架仓挂到产品根的 `extensions/shidai3`；业务经 `db://shidai3/*` 消费，不 fork 框架源码进 `assets/`。
+- 框架改动只在框架仓交付；产品仓只更新已验证的 submodule gitlink 与版本钉。
+- **禁止**复制粘贴、rsync、vendor 或把框架树当普通文件提交进产品分支。细则与 MVP 强制消费见 [cocos-creator.md](cocos-creator.md)「MVP 起强制：消费 shidai3 / P0002」。
+
 ---
 
 ## 业务仓四段版本合同

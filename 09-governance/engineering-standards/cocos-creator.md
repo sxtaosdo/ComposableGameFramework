@@ -85,7 +85,7 @@ export function calculateDirection(): void {}
 
 - 关卡、数值、掉落、文本等可编辑业务配置必须存放在所属 Bundle 的独立 JSON；TypeScript 只维护类型、读取、运行时校验与消费逻辑，不内联配置数据。
 - JSON 由现有资源接口加载后必须先完成结构和领域校验；加载、解析或校验失败时不得进入 Gameplay，产品在 Loading 状态显示可见错误并停止流程。
-- 用户可见的一级流程页面（例如 Loading、Home、Play）使用项目已有状态机管理。状态类直接导入目标状态，并以 `this.context.StateMachine.changeState(TargetState)` 切换；不得使用字符串路由、转发聚合文件或页面映射表。弹窗、短暂特效和局部交互不强制成为一级状态。
+- **自 MVP 起强制**：用户可见的一级流程页面（例如 Loading、Home、Play / Explore）必须使用 `db://shidai3` 的 `StateMachine` 管理。状态类直接导入目标状态，并以 `this.context.StateMachine.changeState(TargetState)` 切换；不得使用字符串路由、转发聚合文件或页面映射表。不得以「灰盒 / 过渡 / 以后再接」豁免。弹窗、短暂特效和局部交互（如建造/对话/背包叠加态）不强制成为一级状态。
 - 启动阶段的资源加载属于 LoadingState：例如音频预载、关卡 JSON 读取/校验、弹窗注册。Presenter 只完成依赖接线，不承担这些加载流程。
 - 关卡型 Puzzle / Minigame 可选用 `db://shidai3/minigame/index` 的 `CasualLevelSession` 作为会话具名入口；该接口不是全体 Cocos 产品默认，也不适用于 MMO / MUD / ARPG。仅使用该会话的小游戏以 `StateMachine.current` 作为页面身份权威，不得并行维护 `screen`、`playState` 或 `catalogReady` 镜像。
 - 非弹窗业务按功能建立目录；一个功能有两个及以上实现类时，类文件必须集中在该功能目录，不分散在同级脚本目录。
@@ -106,6 +106,15 @@ export function calculateDirection(): void {}
 
 
 P0002 持有引擎无关的 Feature、Registry、Command、Query、Event、Save 与 Gameplay 合同。对后续 Cocos 产品，MKFramework 是表现层和基础设施的默认 Capability Provider；其已有 UI、资源、Bundle、音频、事件、视图生命周期、MVC/MVVM、对象池等能力必须优先使用。P0002 只提供标准、合同、验收门和经证明确实缺失的能力，禁止形成第二套同类 Runtime。
+
+### MVP 起强制：消费 shidai3 / P0002（后续 Cocos 产品）
+
+以下对「其他 / 后续 Cocos 产品」（表中以 MKFramework 为表现 Provider 者）自 **MVP 起强制**，不得以灰盒、过渡或「以后再接」豁免：
+
+1. **挂载方式**：产品仓必须以 **git submodule** 将本框架仓挂到 `extensions/shidai3`（Creator 扩展目录；`contributions.asset-db.mount` → `./assets`）。业务只 `import` `db://shidai3/*`。升级只更新 submodule gitlink 与产品版本钉。
+2. **禁止拷贝**：禁止把框架源码复制粘贴、rsync、vendor、解压进产品仓普通目录；禁止 fork 进 `assets/`；禁止把框架文件当产品文件提交进产品分支。README-only stub 或误 vendor 拷贝均视为违规，须改回 submodule。框架正文改动只在框架仓交付；产品仓只提交已验证 gitlink（见 [git.md](git.md)「产品消费框架」）。
+3. **全面消费已实现能力**：对 `manifest.json` / 扩展中状态为 `IMPLEMENTED`（或更高）且场景适用的能力，优先直接消费（含页面 `StateMachine`，以及适用的 Save、FeatureRuntime、Messaging 等）。禁止再扩自制 EventBus、第二套 UI / Bundle / 对象池 / 编排门面。现有平行实现只能收缩，不得新增借口。
+4. **排除**：关卡型 Puzzle / Minigame 可选用的 `CasualLevelSession` **不是** ARPG / MMO / MUD / 开放世界产品的默认；此类产品禁止硬套该会话。玩法权威仍属产品核心 class；本条禁止的是平行基础设施与已实现框架能力的重复造轮。
 
 适配层只负责把 P0002 Intent / Command / Query / Event 与 MKFramework 表现能力桥接；不得把 MK 的视图事件反向变成 Gameplay 状态权威。
 
@@ -221,9 +230,10 @@ P0002 持有引擎无关的 Feature、Registry、Command、Query、Event、Save 
 
 ## 验证与工具
 
-- Preview 运行验证遵守父仓 `governance/cocos_preview_verification.md`。
-- AI 辅助编辑使用父仓 `P8000/cocos-mcp/`（Creator 3.8.8 MCP）；不得通过 Dashboard 或其他 Creator 工程绕过项目身份门。
-- 各产品的 typecheck / smoke 命令与 Node、Creator 版本以产品 README/配置为准；当前环境不在声明范围时，结果只能作为兼容性提示，不能替代该范围内的验证。
+- **自 MVP 起强制**：涉及场景 / Prefab / `.meta` 的编辑，以及受影响路径的 Preview 验收，默认且优先通过父仓 `P8000/cocos-mcp/`（Creator 3.8.8 MCP）操作；必须绑定目标产品工程身份，不得通过 Dashboard 或其他 Creator 工程绕过身份门。
+- Preview 运行验证的事实记录与人工回退顺序遵守父仓 `governance/cocos_preview_verification.md`（Agent 自动化优先 MCP `preview_*`；人工 Refresh 仅 MCP 不可用时回退并记录原因）。
+- 不得以「灰盒 / MVP / 云端无 Creator」默认跳过 Preview。Creator 或 MCP 不可用时须显式记录阻塞，**不得宣称 Preview 已验收**。
+- 各产品的 typecheck / smoke 命令与 Node、Creator 版本以产品 README/配置为准；命令行 typecheck **不能**代替 Creator 编译诊断或 Preview。
 - 修改 TypeScript 后，先运行项目约定的命令行验证，再确认 Creator 编译诊断无错误，最后执行受影响路径的 Preview。三者分别证明静态类型、Creator 导入/组件注册与运行行为，不可相互替代。
 
 
@@ -231,6 +241,7 @@ P0002 持有引擎无关的 Feature、Registry、Command、Query、Event、Save 
 ## 禁止事项
 
 - 不为一次性需求创建抽象层或可配置性（与 [general-code.md](general-code.md) 一致）。
+- 禁止以 MVP / 灰盒为由跳过：cocos-mcp 编辑与 Preview、一级页面 `StateMachine`、`extensions/shidai3` submodule 挂载、对已实现框架能力的优先消费。
 
 
 

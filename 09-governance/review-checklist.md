@@ -76,3 +76,11 @@
 - [ ] 普通生产 Agent 是否禁止修改 Protected Core？
 - [ ] Integration 后是否执行 Framework Contract Verification？
 - [ ] Product Feature 回流是否满足至少两个真实复用场景？
+
+## Product Cocos MVP 门（后续 Cocos 产品）
+
+- [ ] 场景 / Prefab / Preview 是否经 `P8000/cocos-mcp`（绑定本工程）？无 Creator/MCP 时是否记录阻塞而非谎称已验收？
+- [ ] 一级页面是否用 `db://shidai3` `StateMachine`（Loading → Home → Play/Explore）？有无字符串路由壳？
+- [ ] `extensions/shidai3` 是否为框架仓 **git submodule**（非拷贝 / vendor / assets fork）？
+- [ ] 是否优先消费 Manifest 中已实现且适用的框架能力？有无平行 EventBus / UI / Bundle / 池 / 编排门面在扩？
+- [ ] ARPG 等非关卡小游戏是否误用 `CasualLevelSession`？

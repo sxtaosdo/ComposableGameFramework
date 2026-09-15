@@ -29,6 +29,7 @@
 - 单个产品需求默认不得修改 Foundation Core；回流必须先有至少两个独立真实复用场景并经过架构 Review。
 - AI 不得自动修改 Foundation Core、Save Protocol、Entity Identity、Feature Lifecycle、Command Contract 或 Registry Protocol。
 - Cocos 产品默认复用 MKFramework 的 UI、资源、Bundle、音频、事件、视图生命周期、MVC/MVVM 与对象池能力；P0002 不建立第二套同类 Runtime。该规范不等于已完成 MKFramework Runtime 接入。
+- 后续 Cocos 产品必须以 git submodule 挂载本仓到 `extensions/shidai3`，禁止拷贝/vendor；MVP 强制合同见 `09-governance/engineering-standards/cocos-creator.md`。
 
 ## 边界
 

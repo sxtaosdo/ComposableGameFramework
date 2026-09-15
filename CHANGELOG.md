@@ -1,5 +1,13 @@
 # CHANGELOG（变更日志）
 
+## v2.0.4（Cocos MVP 强制合同）
+
+### CHANGE（修改）
+
+- `cocos-creator.md`：自 MVP 起强制一级页面 `StateMachine`、经 `P8000/cocos-mcp` 编辑与 Preview、全面消费已实现 shidai3 能力；`extensions/shidai3` 必须以 git submodule 挂载，禁止拷贝/vendor。
+- `git.md`：补充「产品消费框架」——产品只更 submodule gitlink，框架正文只在框架仓交付。
+- `review-checklist.md`：新增 Product Cocos MVP 门短清单。
+
 ## v2.0.3（Git 独立仓与四段版本合同）
 
 ### CHANGE（修改）
