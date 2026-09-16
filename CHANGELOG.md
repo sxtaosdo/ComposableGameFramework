@@ -1,5 +1,11 @@
 # CHANGELOG（变更日志）
 
+## v2.0.5（XForge 历史记录清理）
+
+### CHANGE（修改）
+
+- `cocos-creator.md`：移除 P4000 行对 `P4000/cook/XFORGE_FREEZE.md` 的引用；该冻结记录属历史 Review 材料，已从产品仓删除，仅存于 Git 历史。
+
 ## v2.0.4（Cocos MVP 强制合同）
 
 ### CHANGE（修改）
