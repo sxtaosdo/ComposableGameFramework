@@ -28,6 +28,23 @@
 
 ---
 
+## Commit message 结构
+
+```text
+vX.Y.Z.W: <简短概要>
+
+Agent: <执行 agent>
+<可选：简要详情>
+```
+
+- subject 只写一句话概要，说明这次改了什么；不堆叠实现细节、文件清单或多个子项。
+- body 第一行必须是 `Agent: <执行 agent>`，写入本次提交的执行者；多个用英文逗号分隔。已知名称：`codex`、`cursor`、`dsh`；新增执行器直接写其名称。
+- body 其余内容可选，用一两句写关键细节；不写细节时只保留 `Agent` 行。
+- `commit-msg` Hook 校验 subject 版本前缀与 `Agent` 行，任一不符即拒绝提交。
+- P0002 Framework 仓沿用三段 SemVer、不装业务仓 Hook，但 commit message 仍按上述结构书写。
+
+---
+
 ## 项目独立仓库要求
 
 凡被编号为独立项目的**代码仓库**（游戏产品、工具产品、可交付代码仓等）必须满足：
@@ -61,7 +78,7 @@
 
 - 版本格式 `X.Y.Z.W`。前三位仅由 Owner 决定；第四段 `W` 跨本仓全历史只增不减、永不重置（各仓计数互不共用）。
 - 根 `VERSION` 是机器事实源；README 顶部当前版本与 Commit subject 是同步镜像。
-- Commit subject 格式：`vX.Y.Z.W: <修改概要>`。
+- Commit subject 格式：`vX.Y.Z.W: <简短概要>`；body 结构见「Commit message 结构」。
 - 提交前运行 `python3 scripts/git_version.py install`，启用本仓 `.githooks`；Hook 负责 bump / 校验并暂存版本文件。
 - 禁止用 `--no-verify` 绕过版本门。
 - 实现脚本可各仓自备副本（以 `P4000/cook`、`P4000/colony-flow-food-hunt` 的 `scripts/git_version.py` 为样板）；合同条文以本文为准。

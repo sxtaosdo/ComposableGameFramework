@@ -1,5 +1,11 @@
 # CHANGELOG（变更日志）
 
+## v2.0.6（Commit message 结构）
+
+### CHANGE（修改）
+
+- `git.md`：新增「Commit message 结构」。subject 保持一句话简短概要，不堆叠实现细节与文件清单；body 第一行必须是 `Agent: <执行 agent>`（已知名称 `codex` / `cursor` / `dsh`，多个逗号分隔），其余详情可选。`commit-msg` Hook 校验版本前缀与 `Agent` 行，缺失即拒绝提交；P0002 Framework 仓无 Hook，仍按同一结构书写。
+
 ## v2.0.5（XForge 历史记录清理）
 
 ### CHANGE（修改）
