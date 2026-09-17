@@ -3,7 +3,7 @@
   "framework": {
     "id": "composable-game-framework",
     "name": "Composable Game Framework",
-    "version": "2.0.6",
+    "version": "2.0.7",
     "status": "IMPLEMENTED"
   },
   "catalogs": {
@@ -636,5 +636,5 @@
       "receiptSha256": "905df101f3fc66130982f280a3c53d580c3e78ab0f08d2c9f0ba95e08e966a5a"
     }
   },
-  "documentCount": 56
+  "documentCount": 57
 }

@@ -1,5 +1,18 @@
 # CHANGELOG（变更日志）
 
+## v2.0.7（项目目录与美术资产维护规范）
+
+### ADD（新增）
+
+- `09-governance/engineering-standards/project-layout.md`：项目目录与美术资产维护权威正文。适用于所有项目，不限定 cook、P4000 或 Cocos；定义根目录白名单（新增一级业务目录仅 `art/`、`tests/`，其余须 Owner 批准）、art 的 `reference` / `work/<模块>/rNN` / `final` 三层结构与资源流向、manifest 最小字段与来源完整性、清理与保留边界、tests 归集，以及 P8000 通用工具边界。
+- `README.md`：目录条目与说明指向新正文。
+
+### CHANGE（修改）
+
+- 原 P4000/Cocos 限定的目录规范由本文统一替换，不再保留限定范围的旧正文为第二权威；各引擎仍按既有工程合同维护标准结构。
+- `manifest.json`：`documentCount` 56 → 57。
+
+> 规范落库不等于存量项目已完成迁移。cook/art 的实际整理状态见该仓迁移记录；本文不代为声明完成。
 ## v2.0.6（Commit message 结构）
 
 ### CHANGE（修改）
