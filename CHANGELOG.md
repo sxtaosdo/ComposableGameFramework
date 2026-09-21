@@ -1,5 +1,12 @@
 # CHANGELOG（变更日志）
 
+## v2.0.8（Headless 示例显式执行）
+
+### CHANGE（修改）
+
+- `assets/examples/tile-match/run.ts`：将 Headless 示例入口改为显式调用，避免 Cocos Creator 载入扩展 TypeScript 资产时触发示例运行和 Feature 依赖错误。
+- `package.json`：`sample:headless` 显式调用示例函数，保持 Node 样例输出行为。
+
 ## v2.0.7（项目目录与美术资产维护规范）
 
 ### ADD（新增）

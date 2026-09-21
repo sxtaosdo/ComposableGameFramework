@@ -2,11 +2,17 @@ import { describe, expect, it } from "vitest";
 
 import { MessageRuntime, success } from "../../assets/foundation-core/index.js";
 import { SaveCoordinator } from "../../assets/save/index.js";
+import { runTileMatchHeadlessSample } from "../../assets/examples/tile-match/run.js";
 import { MatchThreePolicy, TileMatchSession, validateLevel, type SwapPolicy } from "../../assets/examples/tile-match/tileMatch.js";
 
 const level = { width: 3, height: 3, tiles: ["A", "B", "A", "C", "A", "C", "B", "A", "B"] };
 
 describe("tile-match vertical slice", () => {
+  it("keeps the headless sample inert until explicitly invoked", () => {
+    const result = runTileMatchHeadlessSample();
+    expect(result).toMatchObject({ renders: 2, shutdown: true, restored: { score: 3 } });
+  });
+
   it("runs config -> command -> event -> query -> snapshot -> restore", () => {
     const messages = new MessageRuntime();
     const created = TileMatchSession.create(level, messages);

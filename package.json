@@ -17,7 +17,7 @@
     "build": "tsc -p tsconfig.build.json && node scripts/normalize-dist-imports.mjs",
     "contracts": "node scripts/validate-contracts.mjs",
     "standards": "node scripts/validate-engineering-standards.mjs",
-    "sample:headless": "node dist/examples/tile-match/run.js",
+    "sample:headless": "node -e \"import('./dist/examples/tile-match/run.js').then(({ runTileMatchHeadlessSample }) => { const result = runTileMatchHeadlessSample(); console.log(result.snapshot); console.log(JSON.stringify({ restored: result.restored, renders: result.renders, shutdown: result.shutdown })); })\"",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json"
   },
