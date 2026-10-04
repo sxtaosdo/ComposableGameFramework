@@ -1,5 +1,10 @@
 # CHANGELOG（变更日志）
 
+## 未发布（Cocos Preview 执行约束）
+
+- `09-governance/engineering-standards/cocos-creator.md`：补充项目批准的 CLI/MCP 唯一自动化入口、禁止通用浏览器绕行、工程核验至试玩取证的固定顺序、逐步结果校验、本轮源码与运行证据绑定，以及须 Owner 明确授权的 Agent 人工回退。
+- 区分规范要求与工具实现：入口权限、前置凭证校验及拒绝执行须有实际验证，不能仅凭文档宣称工具门禁或绝对遵从已实现。本轮仅更新规范，不修改框架 Runtime、工具或产品。
+
 ## v2.0.8（Headless 示例显式执行）
 
 ### CHANGE（修改）
