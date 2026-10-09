@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "framework-capability-implementation-evidence-v1",
+  "capabilityId": "infrastructure.auth-session",
+  "frameworkVersion": "2.1.0",
+  "sourceRevision": "dcb9e3a760e0eb1f602bfc843edc04970ed93ae6",
+  "baselineRevision": "ece34aee0479acf98232a385bfc68c0deddb72d0",
+  "status": "IMPLEMENTED",
+  "scope": "Independent memory-only credential/exchange ports and session lifecycle; headless implementation only.",
+  "source": [
+    "assets/auth/contracts.ts",
+    "assets/auth/authSession.ts",
+    "assets/auth/index.ts"
+  ],
+  "tests": ["tests/auth/authSession.test.ts"],
+  "sourceSha256": {
+    "assets/auth/authSession.ts": "7c44fd4c9a7d0e11dd9f2339c6756605b189a4ddef4d7ab81b71f76dbca00a56",
+    "assets/auth/contracts.ts": "a9424d25c470e10570e0c394ed739b1e2a603c8714156bca6fdcb3e3a9303b13",
+    "assets/auth/index.ts": "99dd25ccf30846a80c26b1634dbe526fc5fbfc023da3070bdc00fccb7c11bfb6",
+    "tests/auth/authSession.test.ts": "cdb92a191cfda9f80fae80bc23d21e3f90eb035b3414614344653900de857927"
+  },
+  "checks": [
+    { "name": "typecheck", "command": "node22 node_modules/typescript/bin/tsc -p tsconfig.json --pretty false", "status": "PASSED" },
+    { "name": "auth-targeted-tests", "command": "node22 node_modules/vitest/vitest.mjs run tests/auth/authSession.test.ts", "status": "PASSED", "testCount": 39 },
+    { "name": "framework-headless-tests", "command": "node22 node_modules/vitest/vitest.mjs run", "status": "PASSED", "testCount": 72, "testFileCount": 9 },
+    { "name": "build", "command": "node22 node_modules/typescript/bin/tsc -p tsconfig.build.json && node22 scripts/normalize-dist-imports.mjs", "status": "PASSED" },
+    { "name": "source-snapshot-equivalence", "status": "PASSED", "fileCount": 74, "detail": "All assets/tests/scripts and tsconfig/package/lock files matched the temporary verification snapshot by SHA256." },
+    { "name": "contracts-original-windows", "command": "node22 scripts/validate-contracts.mjs", "status": "FAILED_EXISTING_WINDOWS_PATH_CHECK", "detail": "Existing resolve() returns backslashes but schema/receipt containment checks require root + slash; fails at specs/framework-manifest-v1.schema.json. Original validator remains unchanged." },
+    { "name": "contracts-windows-compatible-copy", "status": "PASSED", "detail": "Temporary copy only pins root to this checkout and replaces slash-boundary checks with node:path sep; validates the same four contracts, receipt hashes/revisions, maturity and 58 tracked Markdown files." },
+    { "name": "readme-relative-links", "status": "PASSED", "linkCount": 57 },
+    { "name": "utf8-local-plan-write", "status": "PASSED", "document": "04-infrastructure/auth-session.md", "detail": "Read back UTF-8, required four-platform/cloud/deferred sections present; no replacement characters." },
+    { "name": "git-diff-check", "status": "PASSED" },
+    { "name": "protected-core-diff", "status": "PASSED", "detail": "No changes in declared Protected paths against baseline." }
+  ],
+  "verificationEnvironment": {
+    "node": "22.23.2",
+    "typescript": "5.9.2",
+    "vitest": "3.2.4",
+    "pnpm": "10.33.2",
+    "dependencyInstall": "Task-local temporary directory; frozen lockfile, ignore scripts; no repository dependency/lockfile changes.",
+    "workspace": "D:/code/shidai3/P0002",
+    "verificationSnapshot": "C:/Users/33272/AppData/Local/Temp/p0002-auth-session-20261009"
+  },
+  "reviews": {
+    "ocr": { "mode": "Delegation Mode", "rules": "../.opencodereview/rule.json", "reviewer": "codex host", "totalFiles": 10, "reviewedFiles": 10, "skippedFiles": 0, "openFindings": 0, "detail": "Host applies extracted OCR rules to the complete baseline-to-checkpoint scope; preview/rule output alone is not a review." },
+    "agents": [
+      { "role": "code-mapper", "task": "/root/code_mapper_audit", "mode": "prompt-emulated", "outcome": "Audit returned current source/pins/provider duplication and absent real auth/cloud wiring." },
+      { "role": "architect-reviewer", "task": "/root/auth_architecture_gate", "mode": "prompt-emulated", "outcome": "GO for non-Protected isolated auth module with explicit ports and headless evidence only." },
+      { "role": "reviewer", "task": "/root/auth_reviewer", "mode": "prompt-emulated", "outcome": "Deadline, DTO accessor/reentrancy and clock state issues fixed; final targeted read-only re-review found no blocking items." }
+    ],
+    "formalPresetInvocation": "NOT_SUPPORTED_BY_ENTRY_POINT",
+    "hardReadOnlyIsolation": "NOT_VERIFIED"
+  },
+  "platformAdapters": "NOT_IMPLEMENTED",
+  "trustedBackend": "NOT_IMPLEMENTED",
+  "accountBinding": "NOT_IMPLEMENTED",
+  "cloudSave": "NOT_IMPLEMENTED",
+  "cloudPlan": "DEFERRED_BY_OWNER",
+  "realAuthentication": "NOT_RUN",
+  "creatorImportAndMeta": "NOT_RUN",
+  "productRuntimeIntegration": "NOT_RUN",
+  "runtimeVerification": "NOT_RUN",
+  "productAcceptance": "NOT_RUN",
+  "remoteDelivery": "NOT_RUN_LOCAL_CHECKPOINT_ONLY",
+  "consumerPinsUnchangedByThisTask": {
+    "P1060": "3a4c6b9c44bdaba55c06588191f10c99e351d8e6",
+    "P4000/ant-cook": "2384980aab0c2bb60559b22cbef88d2c1391d784"
+  },
+  "recordedAt": "2026-10-09T10:26:14Z"
+}

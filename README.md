@@ -2,7 +2,7 @@
 
 状态: Accepted（Framework 已实现，P10-Cook DEVELOPMENT 验证完成）
 
-**当前版本：`v2.0.6`**
+**当前版本：`v2.1.0`**
 
 > 本仓库文档定义一套面向 RPG 与 Simulation（模拟）玩法的可组合游戏框架。
 > 第一阶段以 Cocos Creator + 2D/2.5D + Mobile First（移动端优先）为主要实现目标，单机优先，同时保留未来多人、3D 和跨引擎边界。
@@ -154,6 +154,7 @@ pnpm sample:headless
 ### Infrastructure（基础设施）
 
 - [Save / Snapshot / Migration（存档 / 快照 / 迁移）](04-infrastructure/save-snapshot-migration.md)
+- [Auth Session（离线验证的登录端口与会话生命周期）](04-infrastructure/auth-session.md)
 - [Data / Config / DSL（数据 / 配置 / 领域描述）](04-infrastructure/data-config-dsl.md)
 - [Command / Query / Event（命令 / 查询 / 事件）](04-infrastructure/event-command-query.md)
 - [Debug & Observability（调试与可观测性）](04-infrastructure/debug-observability.md)
