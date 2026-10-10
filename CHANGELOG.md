@@ -1,5 +1,11 @@
 # CHANGELOG（变更日志）
 
+## v2.2.0（未发布：遥测单源与抖音合同）
+
+- 新增非 Protected `assets/observability`，仅经 `db://shidai3/observability/index` 公开；复用两产品一致的三文件遥测实现、16项独立离线边界测试及有限队列／去重／隐私合同。只增加共享入口、抖音平台与未配置适配器，以及 ES2015／严格索引兼容处理；不修改既有 Runtime 或 Protected Core，默认关闭且无 SDK、存储、全局监听或网络副作用。
+- 定向19项 Node22 用例、strict 类型检查、构建及实际 ESM 入口 Smoke 通过；79份编译快照与当前源码逐字节一致，Vitest 文件发现未重复接管独立 Node 测试。新增 `infrastructure.telemetry` 的 IMPLEMENTED 证据，保留广泛 `infrastructure.observability` Inspector／Trace 的 DESIGN_ONLY；测试不代表原始异常／原生崩溃捕获或远端接收已验证。
+- 仅本地源码与合同检查点，未推送、tag、更新产品或父仓 pin。P1060／ant-cook 仍使用各自旧副本，真实单源消费、Creator 导入／Meta、Runtime 与平台 SDK 接线列入后续升级窗口；微信／抖音／Google／Apple 方向已定，云档非首发必须，免费后端方案继续 Deferred。
+
 ## v2.1.0（未发布：登录端口与会话生命周期）
 
 - 新增非 Protected `assets/auth`，仅经 `db://shidai3/auth/index` 公开；凭证获取与会话交换由调用方显式注入，未配置返回 `unavailable`，没有默认成功、SDK、网络、存储或真实认证实现。会话控制器在内存中处理并发共享请求、取消、超时、退出、过期与迟到响应；公开快照只复制身份投影与过期时间。

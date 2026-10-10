@@ -1,0 +1,148 @@
+{
+  "schemaVersion": "framework-capability-implementation-evidence-v1",
+  "capabilityId": "infrastructure.telemetry",
+  "frameworkVersion": "2.2.0",
+  "sourceRevision": "2edfd8dcf1217a822113bf7fbdefe6f73c28dce9",
+  "baselineRevision": "4176ba8bb3d19e799a20517ca34d4bef684e8877",
+  "status": "IMPLEMENTED",
+  "scope": "Standalone memory-only telemetry; reused two consumers with a default-off Douyin contract stub. Headless source only.",
+  "source": [
+    "assets/observability/index.ts",
+    "assets/observability/telemetryAdapters.ts",
+    "assets/observability/telemetryClient.ts",
+    "assets/observability/telemetrySchema.ts"
+  ],
+  "tests": [
+    "tests/observability/telemetry.node-test.cjs"
+  ],
+  "sourceSha256": {
+    "assets/observability/index.ts": "6d3f559141553c58612cc1d4a5e5ff00d00c93124f30d61bcf8a135e54519ce9",
+    "assets/observability/telemetryAdapters.ts": "b65c5b9cf0e313ad721fdb705d6f095d8c39064dad7ff43c4b1d27e92ed57d1a",
+    "assets/observability/telemetryClient.ts": "51a0402eb92edae5e12ae9a907cddde16198d903ccc4d7739f958cd0e1ad5269",
+    "assets/observability/telemetrySchema.ts": "b8c50255541271f8c32236698b2d8d135c3b09708cece543f9783713be619e2b",
+    "tests/observability/telemetry.node-test.cjs": "63d25ecdb5f173da7835aa4fef71e61edfa46704cfefbf30314708ac55f6e3d0"
+  },
+  "sourceHashConvention": "SHA256 of exact sourceRevision Git blob bytes; worktree compared after CRLF-to-LF normalization.",
+  "reuseProvenance": {
+    "P1060": {
+      "revision": "c72634da4e65210c7ac0757e246eef110e84b165",
+      "directory": "assets/script/game/common/observability"
+    },
+    "ant-cook": {
+      "revision": "dd953abe32e681f602466613523cba3f73b20c92",
+      "directory": "assets/shell/observability"
+    },
+    "matchingOriginalFiles": [
+      {
+        "name": "telemetrySchema.ts",
+        "sha256": "f6319e6569707794d981669fb151cdc091f5c946602d150824d3eb5826d21bba"
+      },
+      {
+        "name": "telemetryAdapters.ts",
+        "sha256": "5925574eb9e126888f85acbf3226f4e575c38d5d7e1db0d7819535eaa5300664"
+      },
+      {
+        "name": "telemetryClient.ts",
+        "sha256": "2a855f86410c8ea149fb8b5d6986daaaf0fbaaf7b7fdd6fa60a334516ca4b130"
+      }
+    ],
+    "originalIndependentTestCount": 16,
+    "originalTestSha256": "f4bcf5d8e053006d924f5f42dd392538640ca7edef1a6d471e55ab902e546d4f",
+    "additionalTestCount": 3,
+    "sourceChanges": [
+      "shared index exports",
+      "douyin platform/provider stub",
+      "ES2015 and noUncheckedIndexedAccess guards"
+    ]
+  },
+  "checks": [
+    {
+      "name": "telemetry-targeted-tests",
+      "command": "node22 --test tests/observability/telemetry.node-test.cjs",
+      "status": "PASSED",
+      "testCount": 19
+    },
+    {
+      "name": "typecheck",
+      "command": "node22 node_modules/typescript/bin/tsc -p tsconfig.json --pretty false",
+      "status": "PASSED"
+    },
+    {
+      "name": "build",
+      "command": "node22 node_modules/typescript/bin/tsc -p tsconfig.build.json; node22 scripts/normalize-dist-imports.mjs",
+      "status": "PASSED"
+    },
+    {
+      "name": "built-public-entry-smoke",
+      "status": "PASSED",
+      "detail": "Actual ESM dist/observability/index.js import; default off and Douyin not_configured verified."
+    },
+    {
+      "name": "vitest-discovery-only",
+      "command": "node22 node_modules/vitest/vitest.mjs list --filesOnly",
+      "status": "PASSED",
+      "detail": "Only the existing nine TS suites discovered; Node CJS suite excluded. Old full tests intentionally not rerun under Owner scope."
+    },
+    {
+      "name": "source-snapshot-equivalence",
+      "status": "PASSED",
+      "fileCount": 79
+    },
+    {
+      "name": "original-independent-test-preservation",
+      "status": "PASSED",
+      "testCount": 16
+    },
+    {
+      "name": "protected-path-diff",
+      "status": "PASSED",
+      "detail": "No Foundation, Save, Runtime, root public API or auth source modifications."
+    }
+  ],
+  "verificationEnvironment": {
+    "node": "22.23.2",
+    "typescript": "5.9.2",
+    "vitest": "3.2.4",
+    "workspace": "D:/code/shidai3/P0002",
+    "snapshot": "C:/Users/33272/AppData/Local/Temp/p0002-telemetry-20261010/snapshot",
+    "dependencies": "Existing task-local dependencies reused through a Temp-only junction; no install or dependency/lockfile changes."
+  },
+  "reviews": {
+    "sourceReview": {
+      "role": "reviewer",
+      "task": "/root/auth_startup_reviewer",
+      "mode": "prompt-emulated",
+      "reviewedFiles": 6,
+      "openFindings": 0
+    },
+    "mapping": {
+      "role": "code-mapper",
+      "task": "/root/auth_startup_mapper",
+      "mode": "prompt-emulated",
+      "outcome": "Confirmed isolated API and retained broad observability DESIGN_ONLY; CJS name avoids Vitest discovery."
+    },
+    "ocrMode": "Delegation; actual host diff review, not a preview-only PASS.",
+    "metadataReview": "Recorded separately in task outcome after hashing this source receipt.",
+    "formalPresetInvocation": "NOT_SUPPORTED_BY_ENTRY_POINT",
+    "hardReadOnlyIsolation": "NOT_VERIFIED"
+  },
+  "platformAdapters": {
+    "wechat": "NOT_CONFIGURED_STUB",
+    "douyin": "NOT_CONFIGURED_STUB",
+    "native-firebase": "NOT_CONFIGURED_STUB"
+  },
+  "externalDelivery": "NOT_IMPLEMENTED",
+  "rawErrorCapture": "NOT_IMPLEMENTED",
+  "nativeCrashCapture": "NOT_IMPLEMENTED",
+  "creatorImportAndMeta": "NOT_RUN",
+  "productRuntimeIntegration": "NOT_RUN",
+  "remoteReceiveVerification": "NOT_RUN",
+  "broadObservability": "DESIGN_ONLY",
+  "cloudPlan": "DEFERRED_BY_OWNER",
+  "consumerPinsUnchangedByThisTask": {
+    "P1060": "3a4c6b9c44bdaba55c06588191f10c99e351d8e6",
+    "P4000/ant-cook": "2384980aab0c2bb60559b22cbef88d2c1391d784"
+  },
+  "remoteDelivery": "NOT_RUN_LOCAL_CHECKPOINT_ONLY",
+  "recordedAt": "2026-10-10T07:19:39.800732+00:00"
+}
