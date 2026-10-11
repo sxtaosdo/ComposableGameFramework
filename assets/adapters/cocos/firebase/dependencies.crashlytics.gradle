@@ -1,0 +1,9 @@
+// Optional source fragment, NOT applied by dependencies.gradle or any product.
+// Include the Java source only under the same separately approved automatic-capture build gate.
+if (project.findProperty('shidai3CrashlyticsEnabled') == 'true') {
+    dependencies {
+        implementation platform('com.google.firebase:firebase-bom:35.0.0')
+        implementation 'com.google.firebase:firebase-crashlytics:21.0.0'
+    }
+}
+// No NDK SDK/plugin, symbols upload, google-services configuration or initialization here.
