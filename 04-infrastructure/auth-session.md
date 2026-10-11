@@ -190,12 +190,30 @@ const view = login.snapshot(); // guest / unavailable / localPlayAvailable=true
 
 源码检查点 `360a7366476b8a0386cd142b20cde4477ad1060f`；[auth-readiness-implementation-v1.json](../evidence/auth-readiness-implementation-v1.json)记录39项新增、严格类型、175/175 Vitest（14文件）、19/19 Node、build／真实ESM零调用Smoke和97份字节一致快照。OCR源码4个路径与独立reviewer复审关闭active-clock dispose/logout/retry P2；正式preset入口不支持，code-mapper `/root/auth_startup_mapper`、reviewer `/root/auth_reviewer`为真实prompt-emulated只读任务，硬隔离未核验。无下载，产物仅D盘；本地未发布，未改产品Main/pin、Protected Core、Creator、daemon或存档，真实SDK／后端／产品Runtime未执行。四平台公开ID、签名及费用仍只维护在下表，不新增第二份应用配置清单。
 
+### 抖音CredentialPort消费合同（v2.7.0；IMPLEMENTED／默认关闭）
+
+2026-10-11重新读取[官方小游戏tt.login](https://developer.open-douyin.com/docs/resource/zh-CN/mini-game/develop/api/javascript-api/open-capacity/log-in/tt-login)与[服务端code2Session](https://developer.open-douyin.com/docs/resource/zh-CN/mini-game/develop/server/log-in/code-2-session)正文，页面未显示发布日期，不宣称某个最新SDK release。基础库1.0.0+，force默认true，宿主未登录时会打开登录窗口；本片固定force:true且由玩家requestLogin触发。用户关闭宿主登录窗进入fail；当前官方表未给稳定专用取消码，不读取errMsg猜测取消。options未列timeout，返回值未列可取消Task；不照搬wx.login的timeout，不承诺关闭宿主UI。本地取消后宿主操作可能继续，立即重试可由平台报21101；此时保持脱敏failed及游客玩法，不自动重试。
+
+唯一源码 `assets/auth/douyinCredential.ts`，公开 `DouyinCredentialAdapter(api: DouyinLoginApi, scope: CredentialScope)` 与 `acquire(signal: AbortSignal): Promise<PlatformCredential>`，从既有 `db://shidai3/auth/index` 导出；API仅需login({force,success,fail})结构。复用既有CredentialPort、douyin-code DTO及LoginFacade／AuthSession的AbortSignal、总deadline与可信交换合同；不修改既有微信实现或建立第二个会话控制器。构造与默认关闭facade零平台调用；acquire只从明确注入的API取临时code，可选anonymousCode随冻结白名单DTO交交换端，匿名材料单独存在时拒绝。两种材料三分钟有效且服务端只可使用一次；AppSecret与session_key只留服务器，平台code及isLogin都不代表已认证游戏session。本地abort／统一超时使本地请求与迟到callback失效，SDK fail统一脱敏failed，主动facade.cancel则为cancelled；adapter不保存或打印材料，不新增SDK、网络、存储或计时器。直接acquire不自带timeout，产品必须沿现有facade／session期限调用；期限不能替代服务器有效期及重放检查。
+
+```ts
+import { DouyinCredentialAdapter, LoginFacade } from 'db://shidai3/auth/index';
+const login = new LoginFacade({ clock, config: { enabled: false },
+    credential: new DouyinCredentialAdapter(hostTtApi, scope) });
+// scope／API／clock由宿主显式提供；当前没有exchange，保持guest／unavailable。
+// 只有玩家动作才调用login.requestLogin()；退出时login.dispose()。
+```
+
+完整启用仍须既有config.enabled=true、platformConfigured=true、provider:'douyin'与匹配scope，以及真实credential／trusted SessionExchangePort齐备；只改enabled不能绕过缺交换端。产品仍先拆startup自动login，不阻塞Loading或本地保存，本片不改其Main／pin。proof只进入exchange，服务器独立换票、验证app／host与业务error、映射游戏身份；不读取SDK的openid、session_key、isLogin或原始错误来补认证。匿名进度迁移和跨端绑定不属于本片。
+
+源码检查点 `a73aca6b9dc558c497b60e789d97856e3bdb069d`；[douyin-credential-implementation-v1.json](../evidence/douyin-credential-implementation-v1.json)记录15项新增、定向20/20、受影响auth模块一次完整142/142（5文件）、strict、ES2015 build／真实ESM合成Smoke及99份字节一致快照。OCR源码4/4零排除，独立reviewer六项内存合成探针通过，无剩余确定P1/P2。docs-researcher `/root/platform_docs_researcher`与reviewer `/root/auth_reviewer`为实际prompt-emulated只读任务，硬隔离未核验。无新依赖／GitHub方案，无真实账号、tt调用、后端交换或产品Runtime验证，未重复无关遥测测试；仅本地未发布、不推送。
+
 ### 最小应用配置与Owner控制台事项
 
 | 平台 | 客户端允许的公开配置与宿主接线 | Owner／授权管理员控制台及服务器配置 | 当前真实能力 |
 |---|---|---|---|
 | 微信小游戏 | 对应小游戏AppID／应用与宿主范围，注入wx API；自己的HTTPS登录服务地址；wx.login参数仅timeout／callback，不传AppSecret或Google式nonce | 核实际小游戏主体、AppID和测试成员；AppSecret仅服务器用于code换票，session_key仅留服务器。正式域名／证书／准入及费用需Owner在小游戏控制台核实；本轮官方域名／价目正文未取得，不拿抖音规则替代 | 公共WechatCredentialAdapter调用源码及合成callback已验；产品无ports，真实code／换票未验 |
-| 抖音小游戏 | 对应小游戏AppID／host，注入tt API和自己的HTTPS地址；tt.login的force默认true；宿主未登录时会调起登录窗口，必须显式玩家请求；本片未实现该CredentialPort | 核小游戏主体、AppID、测试成员；AppSecret及code2Session只服务器。HTTPS／域名白名单／ICP备案／TLS1.2+／有效证书链按官方小游戏规则；secret/session_key不下发，含secret query不记日志 | 只有douyin-code合同。非匿名身份必须有code，anonymousCode不能当真实账号；小程序／小游戏及各宿主UnionID不自动互通 |
+| 抖音小游戏 | 对应小游戏AppID／host，注入tt API和自己的HTTPS地址；v2.7.0 DouyinCredentialAdapter固定force:true，宿主未登录时可调起登录窗口，必须显式玩家请求；统一本地期限，不传未公开timeout | 核小游戏主体、AppID、测试成员；AppSecret及code2Session只服务器。HTTPS／域名白名单／ICP备案／TLS1.2+／有效证书链按官方小游戏规则；secret/session_key不下发，含secret query不记日志 | 注入式CredentialPort／douyin-code DTO及合成生命周期已验；真实tt／可信换票未验。非匿名必须有code，anonymousCode不能当真实账号；小程序／小游戏及各宿主UnionID不自动互通 |
 | Google Android | Web类型server client ID；Android包名、签名证书SHA-1；Activity＋bridge显式configure、nonce、销毁解绑；自己的可信exchange地址 | Google Auth Platform项目／branding／audience及匹配Android OAuth client；管理员交付公开ID并配置后端允许audience／issuer与nonce／重放策略。客户端不存Google client secret | CredentialManager1.6.0／googleid1.2.1桥已javac；实际OAuth配置／SDK／设备／exchange未验 |
 | Google iOS | iOS client ID＋bundle ID；GIDClientID、reversed-client URL scheme；URL callback转GIDSignIn.handleURL；另有Web server client ID／GIDServerClientID；真实宿主controller | 同项目的iOS OAuth client与branding／audience，Apple合法签名及profile；公开两个client IDs不能混用，不加客户端secret；Google SDK Keychain缓存政策须明确 | 默认宏关闭的GoogleSignIn10.0.0源码候选；Xcode／SDK／设备未验 |
 | Apple iOS原生 | bundle／显式App ID；Sign in with Apple capability、`com.apple.developer.applesignin: ["Default"]`、匹配签名profile及真实window；原nonce/state桥 | 有效Apple Developer Program team，App ID设primary／启用capability并重生成profile。服务器用匹配App ID换码，Key ID／Team ID安全交接、.p8/private key及生成client_secret只存服务器；原生不要求Services ID／网站returnURL | AuthenticationServices源码候选；须有效ADP team；Xcode／签名／UI／服务器未验 |
@@ -218,6 +236,6 @@ Apple会员／能力及服务器依据：[iOS能力支持](https://developer.app
 | 可选FirebaseAuth／Identity Platform | 原生平台proof不依赖FirebaseAuth。Firebase非电话认证在价格表为无费用服务；升级Identity Platform后social等Tier1前50K MAU免费但Spark另有3000 DAU限制，超额／其他计划有计费边界，不把50K当唯一限额。本轮不选、不升级、不绑卡。[Firebase价格](https://firebase.google.com/pricing)、[IP价格](https://cloud.google.com/identity-platform/pricing)、[限额](https://firebase.google.com/docs/auth/limits) |
 | 自己的服务器／域名／签名／网络 | 是否已有合法资源及实际费用未知；可信登录需要可达、安全的交换服务，但不要求云存档数据库或指定付费托管。若额外成本／准入条件不获授权，登录保持不可用，单机玩法继续 |
 
-本轮已完成共享readiness／缺配置投影、公开路由配置白名单／私密项拒绝及纯模拟exchange状态边界测试。剩余无需账号的排队项：抖音注入式CredentialPort；默认关闭和显式请求／取消的产品源码与消费测试（等writer窗口）。不能把合成响应当真实后台认证完成。当前剩余Owner事项集中为首发平台／地域顺序、已有应用及team公开配置和签名、合法HTTPS交换服务与必要控制台准入；云档／跨端进度／付费托管均不作为必须回答的门。
+已完成共享readiness／缺配置投影、公开路由配置白名单／私密项拒绝及纯模拟exchange状态边界测试；v2.7.0抖音注入式CredentialPort也已完成公共源码／合成验收。剩余无需账号的排队项为默认关闭和显式请求／取消的产品源码与消费测试（等writer窗口）。不能把合成响应当真实后台认证完成。当前剩余Owner事项集中为首发平台／地域顺序、已有应用及team公开配置和签名、合法HTTPS交换服务与必要控制台准入；云档／跨端进度／付费托管均不作为必须回答的门。
 
 消费规划阶段code-mapper `/root/auth_startup_mapper`与docs-researcher `/root/platform_docs_researcher`、`/root/google_login_docs`完成真实只读任务；正式preset入口不支持，均为prompt-emulated，硬只读隔离未核验。该阶段及本轮共享配置切片均未修改产品、Creator、daemon、Save或秘密；未运行产品typecheck／tests，产品Runtime／真实账号验证未执行。

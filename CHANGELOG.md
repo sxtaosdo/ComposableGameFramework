@@ -1,5 +1,12 @@
 # CHANGELOG（变更日志）
 
+## v2.7.0（未发布；注入式抖音小游戏凭证端口）
+
+- 复用既有CredentialPort、douyin-code DTO及LoginFacade／AuthSession，新公开DouyinCredentialAdapter／DouyinLoginApi；导入与构造零SDK调用，只有显式acquire调用注入API且固定force:true。只复制自有数据code／可选anonymousCode，匿名-only拒绝；不把平台code／isLogin当已认证游戏session，不保存或打印凭证。
+- 重新核当前官方小游戏登录与code2Session：基础库1.0.0+，材料三分钟且一次换票，AppSecret/session_key只服务器。平台未公开timeout或可取消Task，不照抄微信参数；复用统一总deadline／AbortSignal终止本地等待，不承诺关闭宿主UI。平台fail统一脱敏failed，主动本地cancel为cancelled，迟到结果不能exchange；宿主仍在登录时重试可收到21101。
+- 15项新增合成边界覆盖默认关／缺exchange、force参数、白名单／getter／匿名-only、接收者、abort／清理／迟到、fail／throw、重复callback、并发原Promise、可信exchange、总timeout及游客可玩。定向20/20、受影响auth模块唯一完整142/142、strict、ES2015构建与真实ESM合成Smoke通过，99份源测试快照匹配；OCR与独立reviewer源码4/4及六探针关闭。
+- 同步单一认证合同、公开消费接口、版本／Manifest及实施证据。仅本地未发布，无新依赖或GitHub方案；未推送、改产品Main/pin/save、Protected Core、既有会话／微信／原生／遥测实现、Creator／Companion／daemon，未创建账号／云资源／凭据或执行真实登录。真实tt、可信端和产品Runtime仍未验，默认游客／离线／本地存档继续可用。
+
 ## v2.6.1（未发布；公共遥测配置与监听边界修复）
 
 - 微信异常监听每次启动独立handler，注销前先失效；平台保留的旧回调在重启后仍惰性。注册期间stop后返回false并清理迟到注册，旧注册抛错只清旧handler，不停掉重入创建的新监听；不读取原始错误、不自动flush。
