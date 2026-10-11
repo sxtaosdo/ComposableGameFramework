@@ -1,4 +1,6 @@
 export { AuthSession } from "./authSession";
+export { LoginFacade } from "./loginFacade";
+export type { AuthLoginConfig, AuthReadiness, AuthReadinessStatus, LoginFacadeOptions, LoginFacadeSnapshot } from "./loginFacade";
 export { WechatCredentialAdapter } from "./wechatCredential";
 export type { WechatLoginApi } from "./wechatCredential";
 export { GoogleCredentialAdapter, AppleCredentialAdapter } from "./nativeCredential";
