@@ -1,0 +1,7 @@
+// Source-only library integration; no Google services plugin, app configuration, or SDK initialization.
+// Native path pinned from official Android release notes 2026-10-07 (API >= 24).
+dependencies {
+    implementation platform('com.google.firebase:firebase-bom:35.0.0')
+    implementation 'com.google.firebase:firebase-analytics:24.0.0'
+}
+// Crashlytics intentionally absent: collection=false still retains raw crashes locally.

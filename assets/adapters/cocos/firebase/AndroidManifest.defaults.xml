@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Integration fragment only: not copied into either game or a running app by this checkpoint. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <application>
+        <meta-data android:name="firebase_analytics_collection_enabled" android:value="false" tools:replace="android:value" />
+        <meta-data android:name="firebase_crashlytics_collection_enabled" android:value="false" tools:replace="android:value" />
+        <provider android:name="com.google.firebase.provider.FirebaseInitProvider"
+            android:authorities="${applicationId}.firebaseinitprovider" tools:node="remove" />
+    </application>
+</manifest>

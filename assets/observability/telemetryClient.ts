@@ -2,7 +2,7 @@ import { LocalRecordingAdapter, TelemetryAdapter, TelemetryCapabilities } from '
 import { ErrorDetails, FactIdentity, TelemetryContext, TelemetryEventName, TelemetryFields, TelemetryRecord, TelemetrySchema, Scalar } from './telemetrySchema';
 
 export type TrackResult = 'queued' | 'duplicate' | 'disabled' | 'invalid' | 'limited' | 'failed';
-export interface FlushResult { status: 'disabled' | 'empty' | 'recorded_locally' | 'not_configured' | 'deferred' | 'failed'; accepted: number; pending: number }
+export interface FlushResult { status: 'disabled' | 'empty' | 'recorded_locally' | 'submitted_to_sdk' | 'not_configured' | 'deferred' | 'failed'; accepted: number; pending: number }
 export interface TelemetryOptions {
     context: TelemetryContext;
     enabled?: boolean;
@@ -95,7 +95,7 @@ export class TelemetryClient {
             const batch = Object.freeze(this.queue.slice(0, 20).map(item => item.record));
             const result = this.adapter.accept(batch);
             if (result === 'not_configured') return this.flushResult('not_configured');
-            if (result === 'recorded_locally') {
+            if (result === 'recorded_locally' || result === 'submitted_to_sdk') {
                 // Re-entrant adapter callbacks may enqueue/expire facts; remove only this accepted batch.
                 for (let i = this.queue.length - 1; i >= 0; i--) {
                     const item = this.queue[i];
@@ -105,7 +105,7 @@ export class TelemetryClient {
                     }
                 }
                 this.failures = 0; this.nextFlushAt = 0;
-                return this.flushResult('recorded_locally', batch.length);
+                return this.flushResult(result, batch.length);
             }
             this.defer(time);
             return this.flushResult('deferred');
