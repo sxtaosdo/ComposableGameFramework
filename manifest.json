@@ -3,7 +3,7 @@
   "framework": {
     "id": "composable-game-framework",
     "name": "Composable Game Framework",
-    "version": "2.6.0",
+    "version": "2.6.1",
     "status": "IMPLEMENTED"
   },
   "catalogs": {
@@ -303,7 +303,7 @@
       },
       {
         "id": "infrastructure.telemetry",
-        "version": "2.4.0",
+        "version": "2.6.1",
         "status": "IMPLEMENTED",
         "document": "04-infrastructure/debug-observability.md",
         "publicApi": {
@@ -317,9 +317,9 @@
           "saveSchemas": []
         },
         "evidence": {
-          "implementationReceiptPath": "evidence/crashlytics-client-implementation-v1.json",
-          "implementationReceiptSha256": "930199a7af52b647c3daf61fbed1a6691ae9e2b7f2c65788905cd818d09ac1af",
-          "sourceRevision": "d2f5d7574e12ece9cec6d6a6e69433a637c8659c"
+          "implementationReceiptPath": "evidence/telemetry-boundaries-implementation-v1.json",
+          "implementationReceiptSha256": "b5f1a8856cb1ffd51a8ca2f9bdf8d3023633c18b03d84f7b5422780c165186f9",
+          "sourceRevision": "756699171c0c49549feb2cb242bea8f307efa05c"
         }
       },
       {

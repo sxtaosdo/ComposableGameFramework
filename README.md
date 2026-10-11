@@ -2,7 +2,7 @@
 
 状态: Accepted（Framework 已实现，P10-Cook DEVELOPMENT 验证完成）
 
-**当前版本：`v2.6.0`**
+**当前版本：`v2.6.1`**
 
 > 本仓库文档定义一套面向 RPG 与 Simulation（模拟）玩法的可组合游戏框架。
 > 第一阶段以 Cocos Creator + 2D/2.5D + Mobile First（移动端优先）为主要实现目标，单机优先，同时保留未来多人、3D 和跨引擎边界。
@@ -16,6 +16,8 @@
 当前仓库包含技术设计、机器可读合同、Framework MVP 源码与 Tile-Match Headless 纵向切片。P10-Cook 已通过 Cocos Creator 3.8.8 的 DEVELOPMENT 验证：Framework 与 Public API 为 `IMPLEMENTED`，Cocos 3.8.8 兼容性及该产品实际覆盖的六项基础能力为 `VERIFIED`。Framework 顶层不晋级 `VERIFIED`；未被 P10-Cook 覆盖的 Tile-Match、ARPG、LifeSim 等能力保持原状态，微信开发者工具与真机仍为 `NOT_RUN`，Release Gate 保持阻断。能力成熟度与证据路径以 [`manifest.json`](manifest.json) 为准。
 
 共享登录入口v2.6.0新增 `LoginFacade`：默认关闭的配置就绪检查、缺交换端guest反馈与显式requestLogin，既有AuthSession不变。175/175 Vitest、19/19 Node、严格类型／构建与真实ESM默认关闭Smoke通过；产品与真实认证未接入。消费API及配置仍以[认证合同](04-infrastructure/auth-session.md)为唯一入口。
+
+公共遥测v2.6.1修复微信监听重启旧回调和可变配置误报：构造固定启用门、API／bridge引用与原始采集构建声明，原桥内部就绪仍动态查询。新增7项回归先失败后通过，受影响模块22/22平台、19/19 Node、strict／构建／真实ESM合成Smoke通过；产品接线与真实后台收件未执行，合同与证据见[遥测](04-infrastructure/debug-observability.md)。
 
 平台调用候选 v2.5.0：共享微信、Google、Apple CredentialPort 与 Firebase Analytics／Crashlytics 均默认关闭。新增 Google Android、Apple iOS 和 Google iOS 原生候选，Google 登录及两个 Firebase Java 桥已在独立 D 盘工具链通过 javac 类型编译；iOS、APK／设备、真实登录与可信后端交换未验。使用与事实状态见 [认证](04-infrastructure/auth-session.md) 和 [遥测](04-infrastructure/debug-observability.md)。此前两游戏 v2.2.0 源消费证据是旧检查点；本片未读写其当前 pin、Main 或父仓 gitlink，不把框架候选视为产品接线。
 

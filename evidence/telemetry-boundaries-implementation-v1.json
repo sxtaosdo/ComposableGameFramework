@@ -1,0 +1,86 @@
+{
+  "schemaVersion": "telemetry-boundaries-implementation-v1",
+  "capabilityId": "infrastructure.telemetry",
+  "status": "IMPLEMENTED",
+  "frameworkVersion": "2.6.1",
+  "sourceRevision": "756699171c0c49549feb2cb242bea8f307efa05c",
+  "baselineRevision": "e3165d370e1dee35367703df87849bae6dd7887c",
+  "delivery": "local unpublished checkpoint; no push/product Main/save/pin/parent gitlink/Creator changes",
+  "publicApi": "db://shidai3/observability/index; signatures unchanged",
+  "sourceHashes": {
+    "assets/observability/wechatErrors.ts": "6fbbdf11f2304bc7e5f209a15ed45990bdd7468bf882f96f73277cd4a4a0ec50",
+    "assets/observability/telemetryAdapters.ts": "e693851cfa1088491eba86ac2252f784894f790ee3ed7b9e4d2c543a4110be03",
+    "assets/observability/nativeCrashlytics.ts": "3036ff828680f8e66cc51b561dc3e65204a724835ddc71c323bc86f54aadfd87",
+    "tests/observability/platformAdapters.test.ts": "e6defca2eb5dd7015994faa8fdbd2e0080e27d4c5ff968ea0bc26bd1a43162e4",
+    "tests/observability/crashlytics.test.ts": "591d3384da635ddb3756d32e6ce55e029ac39d4feb00cde6ebce8c820abe4e31"
+  },
+  "implemented": [
+    "a fresh owned WeChat error handler per registration; invalidation before offError",
+    "old retained callbacks remain inert across restarts; stopped registration returns false and cleans late storage",
+    "failed old registration only clears its own handler and cannot stop a new reentrant lifetime",
+    "construct-time enabled gates and selected API/bridge references; no live caller-options reconfiguration",
+    "fixed Crashlytics raw/native build fact survives stop; disable targets the original bridge",
+    "service objects remain unfrozen; receiver and original bridge dynamic readiness preserved"
+  ],
+  "notImplemented": [
+    "new authentication provider or backend",
+    "product wiring or provider pin upgrade",
+    "actual SDK/device/Creator validation",
+    "remote telemetry reception or reports",
+    "cloud save or progress merging"
+  ],
+  "verification": {
+    "node": "22.23.2",
+    "typescript": "5.9.2",
+    "vitest": "3.2.4",
+    "baselineRegression": "7 newly added regressions fail; 15 existing platform cases pass against v2.6.0 source",
+    "directed": "22/22 in two platform test files",
+    "strictTypecheck": "PASS; same unchanged source reused for final acceptance",
+    "affectedModuleFinal": "22/22 platform Vitest + 19/19 telemetry Node; one final affected-module run after review",
+    "unrelatedFullSuite": "NOT_RERUN; no auth, Core, Runtime or native source changes",
+    "build": "PASS; ES2015 and import normalization",
+    "realBuiltEsmSmoke": "PASS; default-off immutable, raw capture fact after stop, retained old callback inert; synthetic ports only",
+    "snapshotFileCount": 97,
+    "snapshotHashesSha256": "038134ccc60f6939783856834b5ad64005ecb7d236d5e1ceeec98023df990ac2",
+    "baselineLogSha256": "16847782879f89566ed52bd133da9173104a909731294c3e5f9aa3b2a45636a9",
+    "directedLogSha256": "00dbf44f8dc249434ca1c97ebb00e5a97c5f5fc978e83af235af928507931c5d",
+    "finalVitestLogSha256": "c0baf2b1bcf92e7121f29046ddd8ad778717d38c4568efebbd557f9ff635471a",
+    "finalNodeLogSha256": "2354b5619a37f9eac1108222e2d43e63467079438b52e63853acdffcb3b5fdb0",
+    "esmLogSha256": "11251c0ba34223558d1c2383bd1dc311d61815cfbf28b530d69604a3e9f24885",
+    "testEnvironment": "97 byte-identical source/test files in separate D snapshot; existing D dependencies reused; outputs/cache/build on D only; no installs or downloads"
+  },
+  "review": {
+    "presetEntry": "Unavailable; prompt-emulated actual tasks; hard read-only isolation unverified",
+    "mapper": {
+      "role": "code-mapper",
+      "task": "/root/auth_startup_mapper",
+      "result": "read-only e3165d3 audit; confirmed lifecycle and mutable configuration defects"
+    },
+    "reviewer": {
+      "role": "reviewer",
+      "task": "/root/auth_reviewer",
+      "sourceCoverage": "5/5",
+      "result": "no remaining confirmed P1/P2; six independent Node22 in-memory synthetic probes pass"
+    },
+    "ocr": {
+      "mode": "Delegation Mode with explicit root shared rule",
+      "sourceReviewablePaths": 5,
+      "sourceExcludedPaths": 0,
+      "hostReviewedPaths": 5,
+      "findings": [],
+      "externalModelOrCodeUpload": false
+    }
+  },
+  "runtimeVerification": {
+    "realSdkDevice": "NOT_RUN",
+    "creatorProductConsumption": "NOT_RUN",
+    "remoteReceptionReports": "NOT_RUN"
+  },
+  "remainingConditions": [
+    "product writer integration window for explicit requestLogin, lifetime cleanup and reviewed provider pin",
+    "Owner authorized platform configuration and Firebase account setup; no account created by this slice",
+    "trusted HTTPS session exchange and backend verification for real login",
+    "approved real SDK/device and actual reception verification"
+  ],
+  "scope": "three observability source files and two tests only; auth/contracts, native sources/dependencies and Protected Core unchanged; guest/offline/local save contract preserved"
+}

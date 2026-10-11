@@ -1,5 +1,12 @@
 # CHANGELOG（变更日志）
 
+## v2.6.1（未发布；公共遥测配置与监听边界修复）
+
+- 微信异常监听每次启动独立handler，注销前先失效；平台保留的旧回调在重启后仍惰性。注册期间stop后返回false并清理迟到注册，旧注册抛错只清旧handler，不停掉重入创建的新监听；不读取原始错误、不自动flush。
+- 微信／Firebase Analytics和Crashlytics构造时固定启用门及所选API／bridge引用，不冻结服务对象，原桥内部readiness继续动态查询。Crashlytics固定原始采集构建声明，修改原options不能误报关闭或让stop关闭另一bridge；stop仍不证明SDK自动采集或上传已停止，重配置须明确新建实例。
+- 新增7项合成回归在v2.6.0全部复现失败，修复后受影响遥测模块22/22平台用例、19/19独立Node通过；复用同一源码已通过strict，ES2015构建及真实ESM合成Smoke通过，97份源测试快照字节一致。OCR及独立reviewer源码5/5关闭，未重复无关完整测试。
+- 同步单一遥测合同、版本／Manifest及实施回执；仅独立本地未发布检查点，不推送，不改登录主链、产品Main/save/pin、Protected Core、Creator／Companion／daemon。未创建平台或云账号、SDK配置与凭据，真实认证、SDK设备调用、后台收件和报告仍未验证；游客／离线／本地保存继续可用。
+
 ## v2.6.0（未发布；默认关闭的共享登录配置门）
 
 - 新增 `LoginFacade` 与公开配置／就绪／反馈类型，只从auth子路径消费。构造和guest投影零调用，只有显式requestLogin才使用既有AuthSession原Promise；缺可信exchange不探凭证，保持guest／unavailable与本地可玩，不将平台token直接当可信账号。

@@ -83,6 +83,18 @@ const stopped = crashAdapter.stop(); // 宿主停用时显式执行，SDK 停止
 
 官方 Crashlytics21.0.0 AAR class-file 已静态核验 getInstance、recordException(Throwable)、setCrashlyticsCollectionEnabled(boolean) 三个公共签名，不能替代 javac、链接或执行。实际调用SDK、真实crash、玩家数据发送、后台收件全部 NOT_RUN；源码只用合成端口验证，未改产品入口、pin、父仓gitlink或Creator/daemon。新能力仅 IMPLEMENTED 客户端候选，原始捕获与产品Runtime不晋级 VERIFIED。源码检查点 `d2f5d7574e12ece9cec6d6a6e69433a637c8659c`；正式回执见 [crashlytics-client-implementation-v1.json](../evidence/crashlytics-client-implementation-v1.json)。最终Node22 strict、92/92 Vitest（本片8项）、19/19独立Node、ES2015 build和实际ESM默认关闭Smoke通过，88份源码／测试快照字节一致。OCR六文件规则与独立源码审查关闭stop重入P2；原始Windows合同校验器问题未改，Temp路径等价副本实际通过4合同／58文档／2.4.0 IMPLEMENTED。
 
+## v2.6.1 配置归属与微信监听修复（2026-10-11）
+
+本片只修复已有公共层确证缺陷，不增加平台选型、SDK依赖或另一套共享实现。`WechatTelemetryAdapter`、`NativeFirebaseTelemetryAdapter` 和 `NativeFirebaseCrashlyticsAdapter` 在构造时固定enabled、所选API／bridge引用，以及Crashlytics的automaticCaptureEnabledInBuild声明；微信已配置事件名单仍复制为独立集合。修改原options不会启用关闭实例、换桥、改变构建原始采集声明或重新配置。API／bridge服务对象不冻结，调用保留receiver，原bridge内部的isConfigured仍动态查询，不把本地配置齐备当真实SDK验证。
+
+重配置由宿主停止使用旧client、注销自己拥有的监听，并对已启用Crashlytics adapter调用stop，再明确创建新实例和重验平台门；此操作不证明原生SDK自动采集或上传停止。构建声明为true时，rawErrorCapture/nativeCrashCapture在本地stop后继续为true，不能通过修改原options改为false。
+
+`WechatErrorListener.start(true)` 每次新注册使用独立handler；stop先令该handler失效，再只注销同一个自有callback。即使平台offError失败或保留回调，旧handler在再次start后仍无效。onError注册期间同步stop时，该次start返回false并清理注册结束后可能留存的旧callback；旧注册抛错不能停掉重入建立的新监听。不检查原始错误内容，不自动flush，不清其他Owner监听。
+
+源码检查点 `756699171c0c49549feb2cb242bea8f307efa05c`；[telemetry-boundaries-implementation-v1.json](../evidence/telemetry-boundaries-implementation-v1.json)记录7项新增回归在v2.6.0的全部失败及修复后22/22平台、19/19独立Node、严格类型、ES2015构建、真实ESM合成Smoke和97份字节一致快照。独立reviewer另做六项合成探针，源码5/5审查无剩余确定P1/P2；OCR明确加载根共享规则，5/5零排除。两角色为真实prompt-emulated任务，硬只读隔离未核验。未重复登录或其他模块完整测试，未改产品Main/save/pin、Protected Core、原生桥或SDK依赖。
+
+仅本地未发布交付，未推送；Firebase账号仍属Owner待办。真实微信／Firebase SDK、Creator／产品Runtime、原生设备、后台收件和运营报告均未执行。`submitted_to_sdk`仍仅表示官方SDK本地接受，不能当收件成功；已有默认关闭、游客／离线／本地存档合同不变。
+
 ## 保留设计范围（DESIGN_ONLY）
 
 以下 Trace、Modifier／Entity／World Inspector 与广泛 Event History 仍属于 `infrastructure.observability` 设计范围。独立遥测实现不使这些能力或整体可观测性自动晋级。
