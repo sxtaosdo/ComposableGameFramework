@@ -21,15 +21,19 @@ export interface NativeCrashlyticsOptions {
 export class NativeFirebaseCrashlyticsAdapter implements TelemetryAdapter {
     private active: boolean;
     private readonly ledger: PlatformSubmissionLedger;
-    public constructor(private readonly options: NativeCrashlyticsOptions = {}) {
-        this.active = options.enabled === true && options.automaticCaptureEnabledInBuild === true;
+    private readonly automaticCaptureEnabledInBuild: boolean;
+    private readonly bridge: NativeCrashlyticsBridge | undefined;
+    public constructor(options: NativeCrashlyticsOptions = {}) {
+        this.automaticCaptureEnabledInBuild = options.automaticCaptureEnabledInBuild === true;
+        this.active = options.enabled === true && this.automaticCaptureEnabledInBuild;
+        this.bridge = this.active ? options.bridge : undefined;
         this.ledger = new PlatformSubmissionLedger(options.now);
     }
     public get capabilities(): Readonly<TelemetryCapabilities> {
-        const raw = this.options.automaticCaptureEnabledInBuild === true;
+        const raw = this.automaticCaptureEnabledInBuild;
         let configured = false;
         try {
-            const ready = this.active && this.options.bridge?.isConfigured() === true;
+            const ready = this.active && this.bridge?.isConfigured() === true;
             configured = this.active && ready; // A host callback may synchronously stop this adapter.
         } catch { /* fail closed */ }
         // Stop cannot uninstall native handlers or prove immediate cessation of SDK collection.
@@ -37,11 +41,11 @@ export class NativeFirebaseCrashlyticsAdapter implements TelemetryAdapter {
             rawErrorCapture: raw, nativeCrashCapture: raw });
     }
     public accept(records: readonly TelemetryRecord[]): AdapterResult {
-        if (!this.capabilities.configured || !this.options.bridge) return 'not_configured';
+        if (!this.capabilities.configured || !this.bridge) return 'not_configured';
         try {
             const events = platformBatch(records, 'native');
             if (!events || events.some(event => event.name !== 'diagnostic_error')) return 'retry';
-            const bridge = this.options.bridge;
+            const bridge = this.bridge;
             return this.ledger.submit(events, event => {
                 const record = bridge.record;
                 return this.active && record.call(bridge,
@@ -53,8 +57,8 @@ export class NativeFirebaseCrashlyticsAdapter implements TelemetryAdapter {
     /** Stops this adapter immediately. SDK false override is only a request, never a capture/upload ACK. */
     public stop(): 'disabled_locally' | 'sdk_disable_requested' | 'sdk_disable_failed' {
         const wasActive = this.active; this.active = false;
-        if (!wasActive || !this.options.bridge) return 'disabled_locally';
-        try { return this.options.bridge.disable() === true ? 'sdk_disable_requested' : 'sdk_disable_failed'; }
+        if (!wasActive || !this.bridge) return 'disabled_locally';
+        try { return this.bridge.disable() === true ? 'sdk_disable_requested' : 'sdk_disable_failed'; }
         catch { return 'sdk_disable_failed'; }
     }
 }

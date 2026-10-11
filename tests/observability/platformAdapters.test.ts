@@ -101,4 +101,70 @@ describe('SDK adapters with synthetic data only', () => {
         expect(removed).toEqual([handler]); expect(client.flush().accepted).toBe(1);
         expect(local.snapshot()[0]?.fields).toEqual({ code: 'js_uncaught', operation: 'gameplay' });
     });
+    it('retained error callbacks stay inert after restart, including a failed unregister', () => {
+        const handlers: WechatErrorHandler[] = [];
+        const client = new TelemetryClient({ context, enabled: true, now: () => 1 });
+        const listener = new WechatErrorListener({ onError(handler) { handlers.push(handler); },
+            offError() { throw Error('synthetic retained callback'); } }, client);
+        expect(listener.start(true)).toBe(true); listener.stop();
+        expect(listener.start(true)).toBe(true);
+        handlers[0]?.('private old error'); expect(client.flush().accepted).toBe(0);
+        handlers[1]?.('private new error'); expect(client.flush().accepted).toBe(1);
+    });
+    it('registration stopped synchronously reports false and cleans a callback stored after stop', () => {
+        let retained: WechatErrorHandler | undefined;
+        const client = new TelemetryClient({ context, enabled: true, now: () => 1 });
+        const listener: WechatErrorListener = new WechatErrorListener({
+            onError(handler) { listener.stop(); retained = handler; },
+            offError(handler) { if (retained === handler) retained = undefined; },
+        }, client);
+        expect(listener.start(true)).toBe(false); expect(retained).toBeUndefined();
+        expect(client.flush().accepted).toBe(0);
+    });
+    it('a failed old registration never stops a synchronously restarted listener', () => {
+        const handlers: WechatErrorHandler[] = []; const removed: WechatErrorHandler[] = [];
+        const client = new TelemetryClient({ context, enabled: true, now: () => 1 });
+        const listener: WechatErrorListener = new WechatErrorListener({
+            onError(handler) {
+                handlers.push(handler);
+                if (handlers.length === 1) {
+                    listener.stop(); expect(listener.start(true)).toBe(true); throw Error('old registration failed');
+                }
+            }, offError(handler) { removed.push(handler); },
+        }, client);
+        expect(listener.start(true)).toBe(false);
+        expect(removed).not.toContain(handlers[1]);
+        handlers[0]?.('old'); expect(client.flush().accepted).toBe(0);
+        handlers[1]?.('new'); expect(client.flush().accepted).toBe(1);
+    });
+    it('stop invalidates its callback before offError may synchronously start a new listener', () => {
+        const handlers: WechatErrorHandler[] = []; let restart = true;
+        const client = new TelemetryClient({ context, enabled: true, now: () => 1 });
+        const listener: WechatErrorListener = new WechatErrorListener({ onError(handler) { handlers.push(handler); },
+            offError() { if (restart) { restart = false; expect(listener.start(true)).toBe(true); } } }, client);
+        expect(listener.start(true)).toBe(true); listener.stop();
+        handlers[0]?.('old'); expect(client.flush().accepted).toBe(0);
+        handlers[1]?.('new'); expect(client.flush().accepted).toBe(1);
+    });
+    it('captures enabled and the selected APIs without freezing service objects or retargeting options', () => {
+        let originalCalls = 0, replacementCalls = 0, configured = false;
+        const api = { reportEvent() { originalCalls++; } };
+        const wechatOptions = { enabled: true, api, configuredEvents: ['session_started', 'session_ready'] };
+        const wechat = new WechatTelemetryAdapter(wechatOptions);
+        wechatOptions.api = { reportEvent() { replacementCalls++; } }; wechatOptions.configuredEvents.length = 0;
+        expect(wechat.accept(records())).toBe('submitted_to_sdk'); expect(originalCalls).toBe(2);
+        expect(Object.isFrozen(api)).toBe(false);
+        const bridge = { isConfigured() { return configured; }, submit() { originalCalls++; return true; } };
+        const nativeOptions = { enabled: true, bridge };
+        const native = new NativeFirebaseTelemetryAdapter(nativeOptions);
+        nativeOptions.enabled = false;
+        nativeOptions.bridge = { isConfigured: () => true, submit() { replacementCalls++; return true; } };
+        expect(native.accept(records('native'))).toBe('not_configured');
+        configured = true; expect(native.accept(records('native'))).toBe('submitted_to_sdk');
+        expect(originalCalls).toBe(4); expect(replacementCalls).toBe(0); expect(Object.isFrozen(bridge)).toBe(false);
+        const disabledOptions = { enabled: false, bridge };
+        const disabled = new NativeFirebaseTelemetryAdapter(disabledOptions);
+        disabledOptions.enabled = true;
+        expect(disabled.accept(records('native'))).toBe('not_configured'); expect(originalCalls).toBe(4);
+    });
 });

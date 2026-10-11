@@ -46,22 +46,24 @@ export class WechatTelemetryAdapter implements TelemetryAdapter {
     public readonly capabilities: Readonly<TelemetryCapabilities>;
     private readonly ledger: PlatformSubmissionLedger;
     private readonly configuredEvents: ReadonlySet<string>;
-    public constructor(private readonly options: WechatTelemetryOptions = {}) {
+    private readonly api: WechatReportApi | undefined;
+    public constructor(options: WechatTelemetryOptions = {}) {
+        this.api = options.enabled === true ? options.api : undefined;
         this.configuredEvents = new Set(options.configuredEvents || []);
-        const configured = options.enabled === true && !!options.api && this.configuredEvents.size > 0;
+        const configured = !!this.api && this.configuredEvents.size > 0;
         this.capabilities = Object.freeze({ provider: 'wechat', configured, externalDelivery: configured,
             rawErrorCapture: false, nativeCrashCapture: false });
         this.ledger = new PlatformSubmissionLedger(options.now);
     }
     public accept(records: readonly TelemetryRecord[]): AdapterResult {
-        if (!this.capabilities.configured || !this.options.api) return 'not_configured';
+        if (!this.capabilities.configured || !this.api) return 'not_configured';
         try {
-            if (typeof this.options.api.reportEvent !== 'function') return 'not_configured';
+            if (typeof this.api.reportEvent !== 'function') return 'not_configured';
             const events = platformBatch(records, 'wechat');
             if (!events) return 'retry';
             if (events.some(event => !this.configuredEvents.has(event.name))) return 'not_configured';
             return this.ledger.submit(events, event => {
-                this.options.api!.reportEvent(event.name, event.parameters); return true;
+                this.api!.reportEvent(event.name, event.parameters); return true;
             }) ? 'submitted_to_sdk' : 'retry';
         } catch { return 'retry'; }
     }
@@ -84,21 +86,25 @@ export interface NativeFirebaseTelemetryOptions { enabled?: boolean; bridge?: Na
 /** Analytics-only path. Crashlytics automatic raw capture needs a separate explicit build/policy gate. */
 export class NativeFirebaseTelemetryAdapter implements TelemetryAdapter {
     private readonly ledger: PlatformSubmissionLedger;
-    public constructor(private readonly options: NativeFirebaseTelemetryOptions = {}) {
+    private readonly enabled: boolean;
+    private readonly bridge: NativeFirebaseBridge | undefined;
+    public constructor(options: NativeFirebaseTelemetryOptions = {}) {
+        this.enabled = options.enabled === true;
+        this.bridge = this.enabled ? options.bridge : undefined;
         this.ledger = new PlatformSubmissionLedger(options.now);
     }
     public get capabilities(): Readonly<TelemetryCapabilities> {
         let configured = false;
-        try { configured = this.options.enabled === true && this.options.bridge?.isConfigured() === true; } catch { /* fail closed */ }
+        try { configured = this.enabled && this.bridge?.isConfigured() === true; } catch { /* fail closed */ }
         return Object.freeze({ provider: 'native-firebase', configured, externalDelivery: configured,
             rawErrorCapture: false, nativeCrashCapture: false });
     }
     public accept(records: readonly TelemetryRecord[]): AdapterResult {
-        if (!this.capabilities.configured || !this.options.bridge) return 'not_configured';
+        if (!this.capabilities.configured || !this.bridge) return 'not_configured';
         try {
             const events = platformBatch(records, 'native');
             if (!events) return 'retry';
-            return this.ledger.submit(events, event => this.options.bridge!.submit(event.name, event.parameters) === true)
+            return this.ledger.submit(events, event => this.bridge!.submit(event.name, event.parameters) === true)
                 ? 'submitted_to_sdk' : 'retry';
         } catch { return 'retry'; }
     }

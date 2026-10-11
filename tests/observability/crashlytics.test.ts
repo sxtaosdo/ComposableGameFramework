@@ -72,6 +72,31 @@ describe('Crashlytics client contract with synthetic ports only', () => {
             bridge: { isConfigured() { throw Error('synthetic'); }, record: () => true, disable: () => false } });
         expect(unavailable.accept(errors())).toBe('not_configured');
     });
+    it('keeps the build capture fact and selected bridge even if the caller changes options', () => {
+        let configured = false, recordCalls = 0, stops = 0, replacementCalls = 0;
+        const bridge = { isConfigured() { return configured; }, record() { recordCalls++; return true; },
+            disable() { stops++; return true; } };
+        const options = { enabled: true, automaticCaptureEnabledInBuild: true, bridge };
+        const adapter = new NativeFirebaseCrashlyticsAdapter(options);
+        options.enabled = false; options.automaticCaptureEnabledInBuild = false;
+        options.bridge = { isConfigured() { replacementCalls++; return true; },
+            record() { replacementCalls++; return true; }, disable() { replacementCalls++; return true; } };
+        expect(adapter.capabilities).toMatchObject({ configured: false, rawErrorCapture: true, nativeCrashCapture: true });
+        configured = true; expect(adapter.accept(errors())).toBe('submitted_to_sdk'); expect(recordCalls).toBe(2);
+        expect(adapter.stop()).toBe('sdk_disable_requested'); expect(stops).toBe(1); expect(replacementCalls).toBe(0);
+        expect(adapter.capabilities).toMatchObject({ configured: false, rawErrorCapture: true, nativeCrashCapture: true });
+        expect(Object.isFrozen(bridge)).toBe(false);
+    });
+    it('mutating a disabled build declaration never enables capture or bridge calls', () => {
+        let calls = 0;
+        const options = { enabled: true, automaticCaptureEnabledInBuild: false,
+            bridge: { isConfigured() { calls++; return true; }, record() { calls++; return true; }, disable() { calls++; return true; } } };
+        const adapter = new NativeFirebaseCrashlyticsAdapter(options);
+        options.automaticCaptureEnabledInBuild = true;
+        expect(adapter.capabilities).toMatchObject({ configured: false, rawErrorCapture: false, nativeCrashCapture: false });
+        expect(adapter.accept(errors())).toBe('not_configured'); expect(adapter.stop()).toBe('disabled_locally');
+        expect(calls).toBe(0);
+    });
     it('synchronous stop during readiness, clock or the first record prevents subsequent submissions', () => {
         for (const phase of ['ready', 'clock', 'record'] as const) {
             let calls = 0;
