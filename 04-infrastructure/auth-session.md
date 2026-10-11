@@ -61,11 +61,11 @@ Firebase Auth 尚未接入这条游戏登录链。它输出的 Firebase ID token
 
 验证分别记录：微信 API 合成 callback 与统一会话边界已定向测试；真实微信 code、后台换票、过期／重放的远端验签、开发者工具／真机、产品新 pin 均未执行。原生 Firebase SDK 状态及启用门见 [遥测合同](debug-observability.md)。Node22完整 Vitest84/84（含本片12项）、另有遥测Node19/19、严格类型／构建及实际ESM默认关闭Smoke通过。候选实施回执补充源码 SHA 与最终验证，不能由测试替身推出真实平台收件。
 
-Owner 已要求四个平台与跨平台进度，零新增服务费用、云档不一定首发等约束继续适用；这不授权购买服务、创建云账号、暴露本机服务或自动合并游客进度。
+Owner 已要求推进微信／抖音／Google／Apple统一登录；2026-10-11当前首发不要求云存档或跨平台同账号进度。登录是可选能力，无可信后端时保持guest，单机玩法与本地存档继续；不因登录强制购买托管、创建云账号、暴露本机服务或合并游客进度。
 
-## 四平台登录、跨端进度与免费云服务方案（Deferred）
+## 历史跨端进度与云服务方案（Deferred；不属首发登录前置）
 
-调研日期：2026-10-09。原 2026-10-09 决定保存方案已由 2026-10-11 的微信／Firebase 客户端推进授权替代；本节后端、绑定、云档的未选业务方案继续为 **Deferred／待配置及业务决策**；不是后端选型批准、上线承诺或云资源开通指令。公共接口的 Headless 实现状态与本节方案状态分别记录。
+调研日期：2026-10-09。原 2026-10-09 决定保存方案已由 2026-10-11 的微信／Firebase 客户端推进授权替代；本节绑定、云档及具体云平台的未选业务方案继续为 **Deferred／待后续需求及业务决策**；不是后端选型批准、上线承诺或云资源开通指令。公共接口的 Headless 实现状态与本节方案状态分别记录。
 
 ### 四平台凭证与可信验证
 
@@ -84,14 +84,14 @@ Owner 已要求四个平台与跨平台进度，零新增服务费用、云档�
 
 账号可以共享，存档按 `accountId + productId + saveSlot + schemaVersion` 隔离。P1060 与 4060 的 ant／cook／shell 进度各有明确命名空间，不能跨产品覆盖；同一产品才讨论跨端继续。游客本地存档先保持现状，主动绑定后再明确选择保留本地、取云端或人工迁移；合并规则、版本冲突、解绑与注销策略均未实现。
 
-首发候选为 local：无后台也能保持当前玩法与本地存档；cloud 可后置。暂不为“统一账号”承诺已有跨端进度同步，先由 Owner 决定首发是否必须登录、是否必须同步，以及断网时的玩法和登录降级表现。
+2026-10-11首发范围已明确：保留单机玩法与本地存档，登录可选；云存档及跨平台进度不在本轮要求。不再把local/cloud选择、账号绑定和进度合并规则作为当前客户端推进门。真实账号可用仍需可信交换实现与应用配置，服务离线时认证不能放行，玩法继续guest。
 
-### 零新增服务费用的候选组合与边界
+### 历史云资源候选与费用边界（首发不需要）
 
 可后续实验的组合为 **免费 `workers.dev` 子域 + 托管 HTTPS／TLS + Workers Free + D1**：Worker 执行可信换票／验签与会话接口，D1 保存平台主体映射和按产品隔离的少量 JSON 存档。它是有限配额实验候选，不是已选定生产后端。本批没有创建账号、配置应用、申请密钥、开通数据库或部署服务。
 
-- [Workers 产品页](https://www.cloudflare.com/products/workers/)说明免费开始无需信用卡；[Workers 价格](https://developers.cloudflare.com/workers/platform/pricing/)当前 Free 为每天 100,000 请求、每次 10 ms CPU。真实验签及数据库操作能否满足 CPU／延迟要求需未来实测，不依宣传推断。
-- [D1 价格](https://developers.cloudflare.com/d1/platform/pricing/)当前 Free 为每天 5,000,000 行读取、100,000 行写入、账户合计 5 GB 存储。行扫描、索引写入也消耗额度；单库及其他限制推进时再次核对。超过读写额度会拒绝查询，存储满会阻止新增写入。
+- [Workers 产品页](https://www.cloudflare.com/products/workers/)说明免费开始无需信用卡；[Workers 价格](https://developers.cloudflare.com/workers/platform/pricing/)2026-10-09调研快照 Free 为每天 100,000 请求、每次 10 ms CPU。真实验签及数据库操作能否满足 CPU／延迟要求需未来实测，不依宣传推断。
+- [D1 价格](https://developers.cloudflare.com/d1/platform/pricing/)2026-10-09调研快照 Free 为每天 5,000,000 行读取、100,000 行写入、账户合计 5 GB 存储。行扫描、索引写入也消耗额度；单库及其他限制推进时再次核对。超过读写额度会拒绝查询，存储满会阻止新增写入。
 - 策略固定为 Free，**超额停服务或降级本地，不自动升级付费**；不绑定支付方式，不引入需要付费套餐的附加组件。[Workers 限额](https://developers.cloudflare.com/workers/platform/limits/)说明每日请求超限返回 1027；认证接口必须拒绝放行，不能绕过验证。免费配额不是无限容量，也不是永久 SLA。
 - [workers.dev 文档](https://developers.cloudflare.com/workers/configuration/routing/workers-dev/)说明该子域无需先接入自有域名，但官方推荐生产服务使用 route／custom domain。免费子域不等于 Owner 独立持有、实名或已完成 ICP 备案的域名，也不能证明小游戏平台接受该白名单。
 
@@ -99,15 +99,11 @@ Owner 已要求四个平台与跨平台进度，零新增服务费用、云档�
 
 微信 CloudBase 体验型权益存在期限，小游戏适用范围与实际权益还需核对：[腾讯官方体验说明](https://cloud.tencent.com/document/product/876/127357)。本次该页面抓取失败，期限结论来自本轮主线程调研，不补造天数，推进时必须重查。[抖音云定价](https://developer.open-douyin.com/docs/resource/zh-CN/developer/tools/cloud/charge/price)列出函数调用、内存、公网流量及日志等收费，即使部分组件暂免费也不能宣称整条链路免费。Cloudflare 的公开免费组合不证明微信／抖音国内链路可上线，亦不包含尚未核验的平台主体、签名、上架或域名成本。因此**不承诺四端、全链路永久全免费**。
 
-### Owner 恢复推进后的验收顺序
+### 当前登录推进与未来可选验收
 
-1. 确定首发地域／平台顺序、首发 local 或 cloud、登录强制性，确认零新增服务费与接受免费超限停服务的约束；国内域名／备案条件不满足时决定延期 cloud 或另选方案，不自动收费。
-2. 核对两个产品原 P0002 pin 到候选共享提交的完整差异，只消费单一共享模块；在批准集成窗口验证 Creator 导入／meta、各宿主 `AbortController`／AbortSignal 支持与生命周期清理，再安排产品接线。
-3. 在 Owner 另行授权提供的测试应用／测试账号下接入四个平台；验证 code／token 正常、过期、重放、错误 app／issuer／audience／nonce、取消、超时、退出和迟到结果。服务端密钥不进入客户端、日志或仓库。
-4. 如批准免费云实验，仅使用 Free 资源和测试数据，核验无支付方式／无自动付费升级；检查 TLS、微信／抖音正式域名白名单及备案接受情况，在关闭跳过校验后做国内真实设备网络验证。
-5. 验证显式绑定、同一产品跨端读写、跨产品访问拒绝、存档版本冲突与回滚；测试额度耗尽、服务离线、注销／解绑和备份恢复，不覆盖游客存档，不自动合并账号。观察配额、CPU 与延迟，仍合格才另行决定生产交付。
+当前只需按下节核对应用／平台配置、产品显式登录接缝及可信交换接口；无后端时继续guest，不为单机首发强制在线。Cloudflare、CloudBase、FirebaseAuth或其他托管均未选定，本节免费配额数字仅为2026-10-09历史研究快照，后续考虑时重新核对，不作为当前容量、成本或可上线承诺。
 
-客户端调用层已恢复推进；本节后端、云资源、绑定及跨端进度验收仍待对应配置与业务决策。待定业务项集中为首发地域及平台、local/cloud 与登录要求、绑定／进度冲突策略，以及域名条件与免费超限停服务的接受范围。
+如后续Owner另行要求账号绑定、云存档或跨端进度，再确定来源冲突、注销、额度及域名／地域要求，并另行授权实验／验收。历史方案的绑定、云读写、超额停服务和恢复测试不进入当前首发验收。
 
 候选 v2.3.0 源码检查点：`ebba1d7db15d7e4549f7cb5031eba55d7509cab2`；事实与哈希证据见 [platform-sdk-implementation-v1.json](../evidence/platform-sdk-implementation-v1.json)。此检查点未推送、未升级产品，原生／真实平台验收不因 IMPLEMENTED 状态通过。
 
@@ -129,9 +125,9 @@ const auth = new AuthSession({ clock, timeoutMs: 15000,
 
 | 候选 | 真正实现与接线 | 当前真实验证 | 剩余条件 |
 |---|---|---|---|
-| Google Android | CredentialManager 显式按钮→GetSignInWithGoogleOption→ID token／nonce；Activity弱引用、CancellationSignal、过期和一次poll；条件Gradle未应用 | 官方稳定1.6.0／googleid1.2.1 API与真实javac类型编译通过；TS合成生命周期通过 | 公开Web server client ID、Android OAuth package／签名SHA-1、前台Activity配置及销毁解绑、APK／设备／真登录 |
-| Apple iOS | AuthenticationServices，强持有per-request controller/delegate/window，state匹配，nullable UTF8 token＋code，request与proof均为原nonce | 官方iOS13基线、cancel iOS16+与弱delegate合同核实；TS合成测试通过 | Team／Bundle/App ID／capability／entitlement／profile／真实window、Xcode与设备；生产桥仍待验证 |
-| Google iOS | GoogleSignIn10.0.0 nonce overload；默认宏0，公开iOS/server client ID及宿主controller显式注入 | 官方tag header及iOS15最低条件核实；TS传输合成测试通过 | Xcode链接、reversed-client URL scheme与callback转交、SDK Keychain缓存政策、真机 |
+| Google Android | CredentialManager 显式按钮→GetSignInWithGoogleOption→ID token／nonce；Activity弱引用、CancellationSignal、过期和一次poll；条件Gradle未应用 | 官方稳定1.6.0／googleid1.2.1 API与真实javac类型编译通过；TS合成生命周期通过 | 应用项见下节统一配置表；前台Activity配置／销毁解绑、APK／设备／真登录 |
+| Apple iOS | AuthenticationServices，强持有per-request controller/delegate/window，state匹配，nullable UTF8 token＋code，request与proof均为原nonce | 官方iOS13基线、cancel iOS16+与弱delegate合同核实；TS合成测试通过 | 应用项见下节统一配置表；真实window、Xcode／设备及生产桥仍待验证 |
+| Google iOS | GoogleSignIn10.0.0 nonce overload；默认宏0，公开iOS/server client ID及宿主controller显式注入 | 官方tag header及iOS15最低条件核实；TS传输合成测试通过 | 应用项见下节统一配置表；Xcode链接、URL callback转交、SDK Keychain缓存政策、真机 |
 | 游戏会话 | 所有材料仅交既有SessionExchangePort；无后台时AuthSession保持guest／unavailable | 合成测试证明材料成功不能自行active，取消后不启动exchange | 可信后端／允许audience／issuer／nonce challenge与单次消费／重放防护；Firebase Auth仍未实现 |
 
 取消先失效本地请求再尽力通知平台。Apple iOS16+调用controller.cancel；13–15保留无效helper至原生terminal以阻止重叠，不能宣称关授权UI。GoogleiOS没有公共request-cancel API，同样保留in-flight并丢迟到材料，绝不用signOut／disconnect代替取消；SDK本身会保存Keychain状态，本片未运行SDK，后续必须处理其缓存政策。宿主在UI主线程配置窗口／控制器；原生展示由main queue执行，poll只传固定有界字符串。iOS reflection是DEVELOPMENT候选，官方JsbBridge上架建议与单回调/线程合同仍须通过宿主路由验证。
@@ -141,3 +137,61 @@ Apple原生此处直接传nonce；Firebase Apple要求SHA256(rawNonce)再由Fire
 官方来源：[Android稳定记录](https://developer.android.com/jetpack/androidx/releases/credentials)、[googleid发布记录](https://developers.google.com/identity/android-credential-manager/releases)、[显式按钮指南](https://developer.android.com/identity/sign-in/credential-manager-siwg-implementation)、[Google服务端验证](https://developers.google.com/identity/sign-in/android/backend-auth)、[GoogleiOS10 header](https://raw.githubusercontent.com/google/GoogleSignIn-iOS/10.0.0/GoogleSignIn/Sources/Public/GoogleSignIn/GIDSignIn.h)、[AppleController](https://developer.apple.com/documentation/authenticationservices/asauthorizationcontroller)、[Apple cancel](https://developer.apple.com/documentation/authenticationservices/asauthorizationcontroller/cancel())、[Apple nonce](https://developer.apple.com/documentation/authenticationservices/asauthorizationopenidrequest/nonce)、[Firebase Apple hash nonce](https://firebase.google.com/docs/auth/ios/apple)、[Cocos reflection](https://docs.cocos.com/creator/3.8/manual/en/advanced-topics/oc-reflection.html)。
 
 实施、源SHA、官方工具包哈希、44项新增测试、136/136 Vitest与19/19 Node、javac及未执行边界见 [native-credential-implementation-v1.json](../evidence/native-credential-implementation-v1.json)。本片不调用真实登录／上传、不创建账号凭据、不变产品pin、Main、父仓或Protected Core；没有Creator导入/meta、APK、iOS编译或设备证据。
+
+## 两产品消费与四平台最小配置（唯一清单；2026-10-11）
+
+这是只读接线方案，尚未修改业务入口、pin、设置UI或原生工程；候选源码／合成测试不代表真实账号可用。应用项和费用统一在本节维护；上文原生候选的“剩余配置”以本节为准。首发保留guest单机玩法，不要求云存档、跨平台同账号进度、账号合并或付费托管。
+
+### 当前快照与更新影响
+
+| 产品 | 只读Git快照 | 当前P0002消费 | 更新至v2.5的最小影响与接缝 |
+|---|---|---|---|
+| P1060 | 最新观察 `9983103bb10ba618b1f942b66aaa909dab4643a2`／v0.1.0.104；mapper先前观察fdc6e872／v103，接线三文件在两SHA间无差异 | HEAD/index/实际checkout均 `895f28728ef2624e56faa3520d11b02310b20f18`／v2.2 | `assets/script/Main.ts:106`仅run前接管注入session；123–137默认无ports但startup调用login；344–353立即进入Loading；447–451销毁logout。`assets/bundle/endless/settings/view/SettingsModal.ts:142`附近为本地存档／版本反馈，尚无账号登录UI |
+| 4060 | `bc4d812990f279fde9b1174d3b89f47ac243884a`／v0.3.0.65 | HEAD/index/实际checkout同上述v2.2 | `assets/shell/productBootstrap.ts:55`创建模块后继续boot；129–138默认无ports且startup调用login；204–208退出session。Ant `assets/Colony/popups/settings/script/settingsView.ts:91–113`显示本地资料，正由业务writer修改；公共账号反馈宜归Shell生命周期 |
+
+上述是移动中的只读快照，未锁定业务writer。两产品submodule各有9个未跟踪auth／observability Creator meta，源码无tracked dirty；主会话不删除、补写或认领这些meta。P0002代码候选 `ac005a28743a6d1c4c5d3c124a157ae0eb41fab2`、v2.5文档基线 `2b2f2b5b0ce65ca3ae1c732450d9755f8e07b0ea`均只在本地，升级消费需业务writer窗口与框架交付授权，不能写成已升级。
+
+旧pin→v2.5的AuthSession、contracts及TelemetrySchema原字节未改；新SDK候选为公开子路径新增导出，import不启动SDK。遥测新增submitted_to_sdk返回，已读两入口没有FlushResult穷举且忽略flush结果，现有兼容重导出继续单源消费。Shell切换的flush是玩法保存Promise，不是遥测。完整产品typecheck／消费测试与Creator导入仍需新pin下独立验证；P0002先前136/136 Vitest、19/19 Node与javac不能替代产品验收。
+
+### 排队的最小纵向接线
+
+1. **只更新默认关闭消费**：由产品writer在窗口内核对并消费批准的唯一P0002提交；继续无ports、guest，不调用wx/tt/native、不等待网络。登记meta归属，再经各自标准Creator入口导入／保存／读回；原生Google／Apple候选不自动加入默认构建。
+2. **共享配置就绪投影**：可在P0002 `assets/auth/` 增量实现共同的readiness／session组装辅助及合成测试（当前未实现）。只有显式enabled、平台公开配置和可信exchange齐备才提供完整ports；缺交换时不调用CredentialPort，反馈“登录暂不可用，离线玩法可继续”。UI只显示只读状态，不持有Gameplay或token。
+3. **先拆启动，再加显式请求**：两入口现有startup会调用login并忽略结果，不能只向它注入ready ports，否则启动将弹SDK授权。未来Main／ProductBootstrap的startup只创建／读取状态；玩家按钮才requestLogin→credential→trusted exchange→game session。P1060 session须run前安装，run后不替换；Loading和玩法继续不await登录。平台原生取消当前可能映射failed，反馈“本次登录未完成”，不能承诺每种SDK取消都返回cancelled。
+4. **反馈与销毁**：guest／unavailable显示本地可玩；pending只影响账号交互；failed／timeout／cancelled保留游客玩法并允许玩家重试；active只显示游戏身份投影，不改本地PlayerProfile ID、昵称、头像、注册时间或Save key。组件退出同时logout、dispose自身credential，并解除原生host；取消／迟到不得进入新exchange或覆盖新session。
+
+P1060最小产品源码范围为 `assets/script/Main.ts`、上述SettingsModal及既有 `tests/telemetry-integration.test.cjs:105,127`；loader `tests/public-module-loader.cjs:6,25`读取真实submodule。4060为 `assets/shell/productBootstrap.ts`、既有 `tests/provider/public-modules.test.mjs:42,67`（loader `tests/ts-loader.mjs:7,8`）；共同账号交互优先Shell `assets/shell/productNavigationView.ts`／`ProductNavigation.prefab`，若选择Ant设置则等settingsView现有writer窗口。新增固定按钮／Label／绑定须产品writer经Creator保存读回；本方案不生成UI资源。两个产品均无已跟踪native宿主工程，AppActivity／AppDelegate／Gradle／plist／entitlement实际路径须首次生成后核实，不虚构目标路径。
+
+消费验收至少覆盖：import／默认启动零SDK调用；缺平台或exchange保持guest／unavailable；完整ports在startup仍不调用acquire；显式一次请求、并发点击、取消／超时／迟到、销毁及重试；proof不进入UI／日志／存档；断网和认证失败不阻塞原Loading、单机玩法及本地保存。Creator／原生设备／可信端验签与错误audience／nonce／重放单列真实验证。
+
+### 最小应用配置与Owner控制台事项
+
+| 平台 | 客户端允许的公开配置与宿主接线 | Owner／授权管理员控制台及服务器配置 | 当前真实能力 |
+|---|---|---|---|
+| 微信小游戏 | 对应小游戏AppID／应用与宿主范围，注入wx API；自己的HTTPS登录服务地址；wx.login参数仅timeout／callback，不传AppSecret或Google式nonce | 核实际小游戏主体、AppID和测试成员；AppSecret仅服务器用于code换票，session_key仅留服务器。正式域名／证书／准入及费用需Owner在小游戏控制台核实；本轮官方域名／价目正文未取得，不拿抖音规则替代 | 公共WechatCredentialAdapter调用源码及合成callback已验；产品无ports，真实code／换票未验 |
+| 抖音小游戏 | 对应小游戏AppID／host，注入tt API和自己的HTTPS地址；tt.login的force默认true；宿主未登录时会调起登录窗口，必须显式玩家请求；本片未实现该CredentialPort | 核小游戏主体、AppID、测试成员；AppSecret及code2Session只服务器。HTTPS／域名白名单／ICP备案／TLS1.2+／有效证书链按官方小游戏规则；secret/session_key不下发，含secret query不记日志 | 只有douyin-code合同。非匿名身份必须有code，anonymousCode不能当真实账号；小程序／小游戏及各宿主UnionID不自动互通 |
+| Google Android | Web类型server client ID；Android包名、签名证书SHA-1；Activity＋bridge显式configure、nonce、销毁解绑；自己的可信exchange地址 | Google Auth Platform项目／branding／audience及匹配Android OAuth client；管理员交付公开ID并配置后端允许audience／issuer与nonce／重放策略。客户端不存Google client secret | CredentialManager1.6.0／googleid1.2.1桥已javac；实际OAuth配置／SDK／设备／exchange未验 |
+| Google iOS | iOS client ID＋bundle ID；GIDClientID、reversed-client URL scheme；URL callback转GIDSignIn.handleURL；另有Web server client ID／GIDServerClientID；真实宿主controller | 同项目的iOS OAuth client与branding／audience，Apple合法签名及profile；公开两个client IDs不能混用，不加客户端secret；Google SDK Keychain缓存政策须明确 | 默认宏关闭的GoogleSignIn10.0.0源码候选；Xcode／SDK／设备未验 |
+| Apple iOS原生 | bundle／显式App ID；Sign in with Apple capability、`com.apple.developer.applesignin: ["Default"]`、匹配签名profile及真实window；原nonce/state桥 | 有效Apple Developer Program team，App ID设primary／启用capability并重生成profile。服务器用匹配App ID换码，Key ID／Team ID安全交接、.p8/private key及生成client_secret只存服务器；原生不要求Services ID／网站returnURL | AuthenticationServices源码候选；须有效ADP team；Xcode／签名／UI／服务器未验 |
+
+Google基础Sign in with Google仅openid／userinfo.email／userinfo.profile时，官方Testing例外不要求列入test-user名单，也不按一般7天授权失效；追加其他scope则回到对应规则。外部Production显示名称／logo涉及独立brand verification，敏感／受限scope另有data-access verification，不能将全部Google登录一律写成100名测试用户／7天。当前不申请额外数据scope。[Google客户端](https://support.google.com/cloud/answer/15549257)、[Audience规则](https://support.google.com/cloud/answer/15549945)、[brand verification](https://developers.google.com/identity/protocols/oauth2/production-readiness/brand-verification)、[Google iOS准备](https://developers.google.com/identity/sign-in/ios/start-integrating)。
+
+微信材料5分钟、timeout参数基础库1.9.90+由官方小游戏类型库支持；整体wx.login最低版本本轮未证实。抖音tt.login基础库1.0.0+，code／anonymousCode三分钟、单次换票；自己的challenge不等于平台已验证nonce。换票由开发者服务器完成，故“不必指定CloudBase／Firebase或付费托管”是接口合同推断，不是整个系统零费用承诺。[微信类型库](https://github.com/wechat-miniprogram/minigame-api-typings/blob/master/types/wx/lib.wx.api.d.ts)、[抖音登录](https://developer.open-douyin.com/docs/resource/zh-CN/mini-game/develop/api/javascript-api/open-capacity/log-in/tt-login)、[抖音小游戏换票](https://developer.open-douyin.com/docs/resource/zh-CN/mini-game/develop/server/log-in/code-2-session)、[网络要求](https://developer.open-douyin.com/docs/resource/zh-CN/mini-game/develop/guide/basic-function/network)、[UnionID范围](https://developer.open-douyin.com/docs/resource/zh-CN/mini-game/develop/guide/open-ability/user-info/unionid-intro)。
+
+Apple会员／能力及服务器依据：[iOS能力支持](https://developer.apple.com/help/account/reference/supported-capabilities-ios)、[capability](https://developer.apple.com/help/account/capabilities/about-sign-in-with-apple)、[profile更新](https://developer.apple.com/help/account/identifiers/enable-app-capabilities)、[原生与web区分](https://developer.apple.com/help/account/capabilities/configure-sign-in-with-apple-for-the-web/)、[私钥](https://developer.apple.com/help/account/capabilities/create-a-sign-in-with-apple-private-key)、[授权码验证](https://developer.apple.com/documentation/signinwithapplerestapi/generate-and-validate-tokens)。
+
+### 费用边界（2026-10-11核查；不自动购买／绑卡）
+
+| 项目 | 已核事实与当前边界 |
+|---|---|
+| 微信小游戏准入／认证 | 本轮未取得当前小游戏认证官方价目正文，不能固定写¥300或全部免费；Owner按实际主体／认证路径在控制台核对。类型库只证明API，不证明价格 |
+| 抖音主体认证 | 官方开放平台FAQ Q5明确企业认证该项无需认证费用；Q2/Q3支持个人身份创建小游戏。不外推全部小游戏经营／上架成本为零。[官方FAQ](https://developer.open-douyin.com/docs/resource/zh-CN/developer/join/issues) |
+| Google登录调用 | 官方实施／准备文档未找到按次登录价目，不将其表述为全系统永久免费；可信后端仍需安全实现。FirebaseAuth不是本SDK路径的必要前置 |
+| Google Play分发 | 选择Play且缺既有账号时，Play Console注册为25USD一次；属于分发入驻费用。非Play准入按首发地域另核，不承诺全免费。[官方入驻](https://support.google.com/googleplay/android-developer/answer/6112435) |
+| Apple会员 | Apple Developer Program为99USD／会员年，地区本币／税项以Owner购买页为准；不是登录按次费或服务器月费。合格非营利／教育／政府实体可申请审核豁免，个人／单人企业不因此豁免。[费用](https://developer.apple.com/help/account/membership/program-enrollment/)、[豁免](https://developer.apple.com/help/account/membership/fee-waivers/) |
+| 可选FirebaseAuth／Identity Platform | 原生平台proof不依赖FirebaseAuth。Firebase非电话认证在价格表为无费用服务；升级Identity Platform后social等Tier1前50K MAU免费但Spark另有3000 DAU限制，超额／其他计划有计费边界，不把50K当唯一限额。本轮不选、不升级、不绑卡。[Firebase价格](https://firebase.google.com/pricing)、[IP价格](https://cloud.google.com/identity-platform/pricing)、[限额](https://firebase.google.com/docs/auth/limits) |
+| 自己的服务器／域名／签名／网络 | 是否已有合法资源及实际费用未知；可信登录需要可达、安全的交换服务，但不要求云存档数据库或指定付费托管。若额外成本／准入条件不获授权，登录保持不可用，单机玩法继续 |
+
+无需账号可先落地的排队项：共享readiness／缺配置投影及合成测试；抖音注入式CredentialPort；默认关闭和显式请求／取消的产品源码与消费测试（等writer窗口）；统一公开配置schema／私密项拒绝与纯模拟exchange边界。不能把合成响应当真实后台认证完成。当前剩余Owner事项集中为首发平台／地域顺序、已有应用及team公开配置和签名、合法HTTPS交换服务与必要控制台准入；云档／跨端进度／付费托管均不作为必须回答的门。
+
+本轮code-mapper `/root/auth_startup_mapper`与docs-researcher `/root/platform_docs_researcher`、`/root/google_login_docs`完成真实只读任务；正式preset入口不支持，均为prompt-emulated，硬只读隔离未核验。未修改产品、Creator、daemon、Save或秘密；本轮未运行产品typecheck／tests，产品Runtime／真实账号验证未执行。

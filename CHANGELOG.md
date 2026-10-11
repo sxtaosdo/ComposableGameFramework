@@ -7,6 +7,8 @@
 - Owner于2026-10-11明确同意SDK条款且要求D盘；仅在 `D:/services/toolchains/p0002-native-20261011/` 准备官方JDK17／API36、校验ZIP及保留许可，未改全局环境。Google登录、Analytics、Crashlytics三Java桥真实javac通过，两个非阻断warning及最小类型依赖范围写入回执；APK／设备、iOS编译与真实SDK调用未执行。
 - Node22严格类型、136/136 Vitest、19/19 Node、build及真实ESM默认关闭Smoke通过，95份验证快照与源文件字节相同。代码／文档分开本地检查点；未创建云账号、OAuth凭据或后端，未推送、触碰产品Main/pin、Protected Core、Creator或父仓。合同、Manifest和实施回执同步，不将平台材料当可信会话。
 
+- 后续只读消费规划集中补入认证合同：核实两产品仍pin v2.2及启动自动login接缝，明确先拆显式请求再注入ports、缺后端保持guest单机可玩；统一四平台应用配置／Owner控制台与费用证据，云存档和跨平台进度移出首发门。只改文档，无功能／pin／业务热点变化，不重复源码测试。
+
 ## v2.4.0（未发布；默认关闭的 Crashlytics 客户端候选）
 
 - 新增独立 error-only adapter 与固定 Cocos reflection 桥，复用共享 captureError 的限流、批次净化及成功前缀 ledger。普通事件／混合批次全拒；双门未满足不访问桥。stop立即阻断本地后续提交，原生关闭请求不等于上传或原始采集停止，capability保守保留原始采集构建事实。
