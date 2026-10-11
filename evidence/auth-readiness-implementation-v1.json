@@ -1,0 +1,128 @@
+{
+  "schemaVersion": "auth-readiness-implementation-v1",
+  "capabilityId": "infrastructure.auth-session",
+  "status": "IMPLEMENTED",
+  "frameworkVersion": "2.6.0",
+  "sourceRevision": "360a7366476b8a0386cd142b20cde4477ad1060f",
+  "baselineRevision": "669a5d6d3881467249e8014fd5a924470a0daecf",
+  "delivery": "local unpublished checkpoint; no push/product Main/pin/parent gitlink/Creator changes",
+  "publicApi": {
+    "entry": "db://shidai3/auth/index",
+    "class": "LoginFacade",
+    "methods": [
+      "readiness",
+      "snapshot",
+      "requestLogin",
+      "cancel",
+      "logout",
+      "dispose"
+    ],
+    "types": [
+      "AuthLoginConfig",
+      "AuthReadiness",
+      "AuthReadinessStatus",
+      "LoginFacadeOptions",
+      "LoginFacadeSnapshot"
+    ]
+  },
+  "sourceHashes": {
+    "assets/auth/loginFacade.ts": "1484427bf45de19f8ae4601173a62a46ba94d7f7c9841d0665739aa646a0462a",
+    "assets/auth/index.ts": "fd0054d65eaa67b0133f910fb6041a1e81e85c89acc6bc74b84d2ba3d68ff3ec",
+    "tests/auth/loginFacade.test.ts": "91fa192b61af8eb20396709b32b9b50fe71d5520a9a58ddce3431f1588fe66b0",
+    "assets/auth/authSession.ts": "7c44fd4c9a7d0e11dd9f2339c6756605b189a4ddef4d7ab81b71f76dbca00a56",
+    "assets/auth/contracts.ts": "a9424d25c470e10570e0c394ed739b1e2a603c8714156bca6fdcb3e3a9303b13"
+  },
+  "implemented": [
+    "default-off public configuration whitelist and immutable local readiness",
+    "missing exchange prevents even credential method discovery; incomplete ports keep guest/unavailable",
+    "explicit requestLogin only, existing AuthSession original Promise and two-stage trusted exchange",
+    "bounded prototype method discovery with receiver preservation, no adapter freezing or SDK probing",
+    "provider/scope association before trusted exchange; no client-side proof-to-account inference",
+    "stable token/error-free feedback, localPlayAvailable always true, owned cancellation/timeout/late callback isolation",
+    "active-clock dispose/logout/retry regression fix; live snapshot takes precedence over historical outcome"
+  ],
+  "notImplemented": [
+    "real SDK initialization/login",
+    "trusted backend proof/issuer/audience/expiry/nonce/replay verification",
+    "product Main/login UI/config/pin integration",
+    "Creator import/Preview/device/native build",
+    "account binding/progress merging/cloud save"
+  ],
+  "configuration": {
+    "allowedKeys": [
+      "enabled",
+      "platformConfigured",
+      "provider",
+      "scope"
+    ],
+    "scopeKeys": [
+      "issuer",
+      "applicationId",
+      "host"
+    ],
+    "platformConfigured": "explicit host assertion of local app configuration; not actual SDK or platform verification",
+    "readinessOrder": [
+      "invalid-config",
+      "disabled",
+      "missing-platform-config",
+      "missing-exchange-port",
+      "missing-credential-port",
+      "ready"
+    ],
+    "configurationChanges": "dispose old facade then create a new one; no live config mutation",
+    "timeoutMs": {
+      "default": 15000,
+      "min": 1,
+      "max": 60000
+    }
+  },
+  "verification": {
+    "node": "22.23.2",
+    "typescript": "5.9.2",
+    "vitest": "3.2.4",
+    "strictTypecheck": "PASS",
+    "directed": "78/78 (39 new facade + 39 existing AuthSession)",
+    "vitestFull": "175/175 in 14 files; run once after source review fix",
+    "nodeRegression": "19/19",
+    "build": "PASS",
+    "realBuiltEsmSmoke": "PASS: default-off, missing exchange, inert ready and disposed all guest with zero credential/exchange/clock calls",
+    "snapshotFileCount": 97,
+    "snapshotHashesSha256": "fb175cf49a96c3547f3554495441f560c5263535c5a6426727079e2f715b0ad7",
+    "directedLogSha256": "ff6475aa6b92a9807677b3528685dd81af39850f326a45b86b8b9f60f3cd4048",
+    "fullLogSha256": "3d5697e9f81cfc5b6d940ebf221b52a75e5f32300568193284dfa14189f447e6",
+    "esmLogSha256": "804187e6ff14ec4afcb0aeb7aff7dbcc9798af51265e43048b4012874c591e2b",
+    "testEnvironment": "separate D-drive byte-identical snapshot; existing D dependencies reused, all new logs/cache/build output on D, no downloads/global environment changes"
+  },
+  "review": {
+    "presetEntry": "Unavailable; roles prompt-emulated, inherited model; hard read-only isolation unverified",
+    "mapper": {
+      "task": "/root/auth_startup_mapper",
+      "role": "code-mapper",
+      "result": "completed read-only source/call/permission mapping"
+    },
+    "reviewer": {
+      "task": "/root/auth_reviewer",
+      "role": "reviewer",
+      "sourceCoverage": "4/4 including initial single contract",
+      "result": "one confirmed active-clock reentry P2 fixed; independent Node22 dispose/logout probes and regression reviewed; no remaining confirmed P1/P2"
+    },
+    "ocr": {
+      "mode": "Delegation Mode with explicit root shared rule",
+      "externalModelOrCodeUpload": false,
+      "sourceReviewablePaths": 4,
+      "sourceExcludedPaths": 0
+    }
+  },
+  "runtimeVerification": {
+    "realPlatformAccountBackend": "NOT_RUN",
+    "creatorProductConsumption": "NOT_RUN",
+    "nativeBuildDeviceSdk": "NOT_RUN"
+  },
+  "remainingConditions": [
+    "existing product writer integration window for explicit player action and new pin",
+    "Owner public app/team/signing configuration and platform console admission",
+    "authorized trusted HTTPS exchange and nonce/replay policy",
+    "Creator and actual native/device/account validation"
+  ],
+  "scope": "AuthSession/contracts, platform adapters and Protected Core unchanged; first release guest/offline/local save remains usable; no mandatory cloud saves/cross-platform progress/paid hosting"
+}

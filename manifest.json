@@ -3,7 +3,7 @@
   "framework": {
     "id": "composable-game-framework",
     "name": "Composable Game Framework",
-    "version": "2.5.0",
+    "version": "2.6.0",
     "status": "IMPLEMENTED"
   },
   "catalogs": {
@@ -282,7 +282,7 @@
       },
       {
         "id": "infrastructure.auth-session",
-        "version": "2.5.0",
+        "version": "2.6.0",
         "status": "IMPLEMENTED",
         "document": "04-infrastructure/auth-session.md",
         "publicApi": {
@@ -296,9 +296,9 @@
           "saveSchemas": []
         },
         "evidence": {
-          "implementationReceiptPath": "evidence/native-credential-implementation-v1.json",
-          "implementationReceiptSha256": "0f4398c0bef92c1122530ba5cd7521793f2fae11c5eed80db31a955570d04fff",
-          "sourceRevision": "ac005a28743a6d1c4c5d3c124a157ae0eb41fab2"
+          "implementationReceiptPath": "evidence/auth-readiness-implementation-v1.json",
+          "implementationReceiptSha256": "8e2f9a67d449235a72989359ea5d9d1429d388e1496d6ea9df24148f7b2c26d7",
+          "sourceRevision": "360a7366476b8a0386cd142b20cde4477ad1060f"
         }
       },
       {

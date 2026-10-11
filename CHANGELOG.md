@@ -1,5 +1,12 @@
 # CHANGELOG（变更日志）
 
+## v2.6.0（未发布；默认关闭的共享登录配置门）
+
+- 新增 `LoginFacade` 与公开配置／就绪／反馈类型，只从auth子路径消费。构造和guest投影零调用，只有显式requestLogin才使用既有AuthSession原Promise；缺可信exchange不探凭证，保持guest／unavailable与本地可玩，不将平台token直接当可信账号。
+- 公开配置own-data白名单拒绝额外／私密项和getter；捕获可继承的端口方法并保留receiver，冻结配置与反馈，不冻结SDK对象。按provider／scope检查路由后交可信端独立验签；配置变更需销毁旧实例。
+- 39项新增合成测试覆盖启动、缺配置／交换端、重复点击、取消／超时／迟到、销毁、active过期及clock／abort重入。独立审查发现active-clock销毁后仍会启动凭证的P2，已修复并复核dispose／logout／retry；既有AuthSession和contracts未改。
+- Node22严格类型、定向78/78、最终唯一完整175/175 Vitest（14文件）、19/19 Node、build及真实ESM零调用Smoke通过；97份源测试快照与本轮源字节一致。版本、Manifest及实施证据同步，本地源码／文档检查点；未推送、改产品Main/pin、Protected Core、Creator/daemon、存档或真实账号／后端。四平台配置仍维护在单一认证合同，云档／跨端进度／付费托管不属首发门。
+
 ## v2.5.0（未发布；Apple／Google 默认关闭凭证候选）
 
 - 新增统一 CredentialPort 的 Apple／Google adapter、固定 begin／poll／cancel 桥与有界一次消费材料，不解 token、不推断游戏身份、不持久化凭证。OS 随机 nonce／requestId、超时、重入取消及迟到隔离共44项新增合成测试；Apple terminal 后取消永久占槽与公开桥原始异常外泄两项 P2 已修复并独立复核。

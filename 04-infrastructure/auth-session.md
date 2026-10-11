@@ -144,25 +144,51 @@ Apple原生此处直接传nonce；Firebase Apple要求SHA256(rawNonce)再由Fire
 
 ### 当前快照与更新影响
 
-| 产品 | 只读Git快照 | 当前P0002消费 | 更新至v2.5的最小影响与接缝 |
+| 产品 | 只读Git快照 | 当前P0002消费 | 更新至v2.6的最小影响与接缝 |
 |---|---|---|---|
 | P1060 | 最新观察 `9983103bb10ba618b1f942b66aaa909dab4643a2`／v0.1.0.104；mapper先前观察fdc6e872／v103，接线三文件在两SHA间无差异 | HEAD/index/实际checkout均 `895f28728ef2624e56faa3520d11b02310b20f18`／v2.2 | `assets/script/Main.ts:106`仅run前接管注入session；123–137默认无ports但startup调用login；344–353立即进入Loading；447–451销毁logout。`assets/bundle/endless/settings/view/SettingsModal.ts:142`附近为本地存档／版本反馈，尚无账号登录UI |
 | 4060 | `bc4d812990f279fde9b1174d3b89f47ac243884a`／v0.3.0.65 | HEAD/index/实际checkout同上述v2.2 | `assets/shell/productBootstrap.ts:55`创建模块后继续boot；129–138默认无ports且startup调用login；204–208退出session。Ant `assets/Colony/popups/settings/script/settingsView.ts:91–113`显示本地资料，正由业务writer修改；公共账号反馈宜归Shell生命周期 |
 
-上述是移动中的只读快照，未锁定业务writer。两产品submodule各有9个未跟踪auth／observability Creator meta，源码无tracked dirty；主会话不删除、补写或认领这些meta。P0002代码候选 `ac005a28743a6d1c4c5d3c124a157ae0eb41fab2`、v2.5文档基线 `2b2f2b5b0ce65ca3ae1c732450d9755f8e07b0ea`均只在本地，升级消费需业务writer窗口与框架交付授权，不能写成已升级。
+上述是移动中的只读快照，未锁定业务writer。两产品submodule各有9个未跟踪auth／observability Creator meta，源码无tracked dirty；主会话不删除、补写或认领这些meta。P0002 v2.6共享配置源码 `360a7366476b8a0386cd142b20cde4477ad1060f`；原生候选v2.5 `ac005a28743a6d1c4c5d3c124a157ae0eb41fab2`、v2.5文档基线 `2b2f2b5b0ce65ca3ae1c732450d9755f8e07b0ea`均只在本地，升级消费需业务writer窗口与框架交付授权，不能写成已升级。
 
-旧pin→v2.5的AuthSession、contracts及TelemetrySchema原字节未改；新SDK候选为公开子路径新增导出，import不启动SDK。遥测新增submitted_to_sdk返回，已读两入口没有FlushResult穷举且忽略flush结果，现有兼容重导出继续单源消费。Shell切换的flush是玩法保存Promise，不是遥测。完整产品typecheck／消费测试与Creator导入仍需新pin下独立验证；P0002先前136/136 Vitest、19/19 Node与javac不能替代产品验收。
+旧pin→v2.6的AuthSession、contracts及TelemetrySchema原字节未改；新SDK候选为公开子路径新增导出，import不启动SDK。遥测新增submitted_to_sdk返回，已读两入口没有FlushResult穷举且忽略flush结果，现有兼容重导出继续单源消费。Shell切换的flush是玩法保存Promise，不是遥测。完整产品typecheck／消费测试与Creator导入仍需新pin下独立验证；P0002本片175/175 Vitest、19/19 Node与既有javac不能替代产品验收。
 
 ### 排队的最小纵向接线
 
 1. **只更新默认关闭消费**：由产品writer在窗口内核对并消费批准的唯一P0002提交；继续无ports、guest，不调用wx/tt/native、不等待网络。登记meta归属，再经各自标准Creator入口导入／保存／读回；原生Google／Apple候选不自动加入默认构建。
-2. **共享配置就绪投影**：可在P0002 `assets/auth/` 增量实现共同的readiness／session组装辅助及合成测试（当前未实现）。只有显式enabled、平台公开配置和可信exchange齐备才提供完整ports；缺交换时不调用CredentialPort，反馈“登录暂不可用，离线玩法可继续”。UI只显示只读状态，不持有Gameplay或token。
+2. **共享配置就绪投影**：P0002 v2.6的 `LoginFacade` 已实现共同readiness／session组装及合成测试，精确API见下节；产品接线仍未实施。只有显式enabled、平台公开配置和可信exchange齐备才提供完整ports；缺交换时不调用CredentialPort，反馈“登录暂不可用，离线玩法可继续”。UI只显示只读状态，不持有Gameplay或token。
 3. **先拆启动，再加显式请求**：两入口现有startup会调用login并忽略结果，不能只向它注入ready ports，否则启动将弹SDK授权。未来Main／ProductBootstrap的startup只创建／读取状态；玩家按钮才requestLogin→credential→trusted exchange→game session。P1060 session须run前安装，run后不替换；Loading和玩法继续不await登录。平台原生取消当前可能映射failed，反馈“本次登录未完成”，不能承诺每种SDK取消都返回cancelled。
 4. **反馈与销毁**：guest／unavailable显示本地可玩；pending只影响账号交互；failed／timeout／cancelled保留游客玩法并允许玩家重试；active只显示游戏身份投影，不改本地PlayerProfile ID、昵称、头像、注册时间或Save key。组件退出同时logout、dispose自身credential，并解除原生host；取消／迟到不得进入新exchange或覆盖新session。
 
 P1060最小产品源码范围为 `assets/script/Main.ts`、上述SettingsModal及既有 `tests/telemetry-integration.test.cjs:105,127`；loader `tests/public-module-loader.cjs:6,25`读取真实submodule。4060为 `assets/shell/productBootstrap.ts`、既有 `tests/provider/public-modules.test.mjs:42,67`（loader `tests/ts-loader.mjs:7,8`）；共同账号交互优先Shell `assets/shell/productNavigationView.ts`／`ProductNavigation.prefab`，若选择Ant设置则等settingsView现有writer窗口。新增固定按钮／Label／绑定须产品writer经Creator保存读回；本方案不生成UI资源。两个产品均无已跟踪native宿主工程，AppActivity／AppDelegate／Gradle／plist／entitlement实际路径须首次生成后核实，不虚构目标路径。
 
 消费验收至少覆盖：import／默认启动零SDK调用；缺平台或exchange保持guest／unavailable；完整ports在startup仍不调用acquire；显式一次请求、并发点击、取消／超时／迟到、销毁及重试；proof不进入UI／日志／存档；断网和认证失败不阻塞原Loading、单机玩法及本地保存。Creator／原生设备／可信端验签与错误audience／nonce／重放单列真实验证。
+
+### 共享显式登录消费合同（v2.6.0；IMPLEMENTED／默认关闭）
+
+公开子路径 `db://shidai3/auth/index` 新增 `LoginFacade`，复用既有AuthSession，不改旧login语义。产品只调用 `readiness()`、`snapshot()`、玩家显式 `requestLogin()`、`cancel()`、`logout()`／`dispose()`；不提供login兼容别名。构造、读取就绪和guest投影均不调用CredentialPort／ExchangePort或SDK探测，Loading不等待认证。
+
+`LoginFacadeOptions` 接收 `clock`、可选 `timeoutMs`（默认15000，1–60000ms）、`config`、`credential`、`exchange`。公开 `AuthLoginConfig` 只允许own-data字段 `enabled`／`platformConfigured`／`provider`／`scope`，scope只允许issuer／applicationId／host（各为1–256无空白／控制字符的字符串）；额外字段、symbol、accessor配置拒绝且不读取其值。没有enabled=true默认关闭；platformConfigured=true只是宿主确认上述平台配置已准备的本地声明，不证明SDK可用、平台注册通过或账号可信。
+
+固定就绪优先级为invalid-config→disabled→missing-platform-config→missing-exchange-port→missing-credential-port→ready；完整配置和两端口齐备才安装ports，缺exchange时连credential方法也不探测。服务对象可用原型方法，捕获方法保留receiver，不冻结SDK对象。配置与方法在构造时固定；更换配置需dispose旧实例再创建，不能靠修改原对象临时启用。
+
+`snapshot()`只返回冻结的auth身份投影、readiness、feedback、canRequestLogin及恒true的localPlayAvailable；guest未就绪的反馈恒unavailable，产品映射为“登录暂不可用，离线玩法可继续”。ready不等于active；平台code／token必须先经过匹配provider与scope的本地路由检查，再交注入的可信SessionExchangePort进行独立验签与游戏账号映射，缺端口绝无认证成功回退。临时材料、配置与错误原文不进入投影、日志或存档。
+
+重复点击复用AuthSession原Promise；pending／active优先于历史feedback，取消／超时／失败／expired仅反馈状态，localPlayAvailable保持true。cancel只取消pending；logout清回guest；dispose先阻止后续请求再结束本地会话，晚到结果不得覆盖新attempt。宿主仍单独dispose自己拥有的credential adapter／原生host；facade不调用远端登出或原生SDK清理。真实SDK、后端验签、Creator／产品消费均不由本片合成测试替代。
+
+产品可从 `db://shidai3/auth/index` 导入：
+
+```ts
+import { LoginFacade } from "db://shidai3/auth/index";
+const login = new LoginFacade({ clock, config: { enabled: false } });
+const view = login.snapshot(); // guest / unavailable / localPlayAvailable=true
+// 仅玩家动作调用 await login.requestLogin()；当前缺端口返回unavailable。
+// 产品退出时 login.dispose()，再清理自己拥有的adapter／host。
+```
+
+完整启用需config.enabled=true、platformConfigured=true、provider／scope及两端口全部齐备。LoginFacade不是旧 `Main.setAuthSession(AuthSession)` 的直接替代参数；产品writer须在窗口内调整所持公开接口与显式按钮，禁止保留旧startup自动login接线。feedback沿用guest／unavailable／pending／active／cancelled／timeout／expired／failed稳定码；unavailable显示“登录暂不可用，离线玩法可继续”，failed显示“本次登录未完成”，其他文案由产品本地化。active仅表示可信交换端返回的游戏身份，ready仅是本地齐备。
+
+源码检查点 `360a7366476b8a0386cd142b20cde4477ad1060f`；[auth-readiness-implementation-v1.json](../evidence/auth-readiness-implementation-v1.json)记录39项新增、严格类型、175/175 Vitest（14文件）、19/19 Node、build／真实ESM零调用Smoke和97份字节一致快照。OCR源码4个路径与独立reviewer复审关闭active-clock dispose/logout/retry P2；正式preset入口不支持，code-mapper `/root/auth_startup_mapper`、reviewer `/root/auth_reviewer`为真实prompt-emulated只读任务，硬隔离未核验。无下载，产物仅D盘；本地未发布，未改产品Main/pin、Protected Core、Creator、daemon或存档，真实SDK／后端／产品Runtime未执行。四平台公开ID、签名及费用仍只维护在下表，不新增第二份应用配置清单。
 
 ### 最小应用配置与Owner控制台事项
 
@@ -192,6 +218,6 @@ Apple会员／能力及服务器依据：[iOS能力支持](https://developer.app
 | 可选FirebaseAuth／Identity Platform | 原生平台proof不依赖FirebaseAuth。Firebase非电话认证在价格表为无费用服务；升级Identity Platform后social等Tier1前50K MAU免费但Spark另有3000 DAU限制，超额／其他计划有计费边界，不把50K当唯一限额。本轮不选、不升级、不绑卡。[Firebase价格](https://firebase.google.com/pricing)、[IP价格](https://cloud.google.com/identity-platform/pricing)、[限额](https://firebase.google.com/docs/auth/limits) |
 | 自己的服务器／域名／签名／网络 | 是否已有合法资源及实际费用未知；可信登录需要可达、安全的交换服务，但不要求云存档数据库或指定付费托管。若额外成本／准入条件不获授权，登录保持不可用，单机玩法继续 |
 
-无需账号可先落地的排队项：共享readiness／缺配置投影及合成测试；抖音注入式CredentialPort；默认关闭和显式请求／取消的产品源码与消费测试（等writer窗口）；统一公开配置schema／私密项拒绝与纯模拟exchange边界。不能把合成响应当真实后台认证完成。当前剩余Owner事项集中为首发平台／地域顺序、已有应用及team公开配置和签名、合法HTTPS交换服务与必要控制台准入；云档／跨端进度／付费托管均不作为必须回答的门。
+本轮已完成共享readiness／缺配置投影、公开路由配置白名单／私密项拒绝及纯模拟exchange状态边界测试。剩余无需账号的排队项：抖音注入式CredentialPort；默认关闭和显式请求／取消的产品源码与消费测试（等writer窗口）。不能把合成响应当真实后台认证完成。当前剩余Owner事项集中为首发平台／地域顺序、已有应用及team公开配置和签名、合法HTTPS交换服务与必要控制台准入；云档／跨端进度／付费托管均不作为必须回答的门。
 
-本轮code-mapper `/root/auth_startup_mapper`与docs-researcher `/root/platform_docs_researcher`、`/root/google_login_docs`完成真实只读任务；正式preset入口不支持，均为prompt-emulated，硬只读隔离未核验。未修改产品、Creator、daemon、Save或秘密；本轮未运行产品typecheck／tests，产品Runtime／真实账号验证未执行。
+消费规划阶段code-mapper `/root/auth_startup_mapper`与docs-researcher `/root/platform_docs_researcher`、`/root/google_login_docs`完成真实只读任务；正式preset入口不支持，均为prompt-emulated，硬只读隔离未核验。该阶段及本轮共享配置切片均未修改产品、Creator、daemon、Save或秘密；未运行产品typecheck／tests，产品Runtime／真实账号验证未执行。
