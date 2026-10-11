@@ -1,5 +1,12 @@
 # CHANGELOG（变更日志）
 
+## v2.5.0（未发布；Apple／Google 默认关闭凭证候选）
+
+- 新增统一 CredentialPort 的 Apple／Google adapter、固定 begin／poll／cancel 桥与有界一次消费材料，不解 token、不推断游戏身份、不持久化凭证。OS 随机 nonce／requestId、超时、重入取消及迟到隔离共44项新增合成测试；Apple terminal 后取消永久占槽与公开桥原始异常外泄两项 P2 已修复并独立复核。
+- Google Android 固定稳定 credentials1.6.0／googleid1.2.1；Apple AuthenticationServices、GoogleSignIn10.0.0 的 iOS源码为 DEVELOPMENT 候选。Apple原 nonce 与Firebase hash nonce分开；iOS13–15／GoogleiOS只本地失效，保留原请求至callback以阻止重叠，不承诺关闭UI或清SDK Keychain缓存。
+- Owner于2026-10-11明确同意SDK条款且要求D盘；仅在 `D:/services/toolchains/p0002-native-20261011/` 准备官方JDK17／API36、校验ZIP及保留许可，未改全局环境。Google登录、Analytics、Crashlytics三Java桥真实javac通过，两个非阻断warning及最小类型依赖范围写入回执；APK／设备、iOS编译与真实SDK调用未执行。
+- Node22严格类型、136/136 Vitest、19/19 Node、build及真实ESM默认关闭Smoke通过，95份验证快照与源文件字节相同。代码／文档分开本地检查点；未创建云账号、OAuth凭据或后端，未推送、触碰产品Main/pin、Protected Core、Creator或父仓。合同、Manifest和实施回执同步，不将平台材料当可信会话。
+
 ## v2.4.0（未发布；默认关闭的 Crashlytics 客户端候选）
 
 - 新增独立 error-only adapter 与固定 Cocos reflection 桥，复用共享 captureError 的限流、批次净化及成功前缀 ledger。普通事件／混合批次全拒；双门未满足不访问桥。stop立即阻断本地后续提交，原生关闭请求不等于上传或原始采集停止，capability保守保留原始采集构建事实。

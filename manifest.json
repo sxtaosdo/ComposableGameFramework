@@ -3,7 +3,7 @@
   "framework": {
     "id": "composable-game-framework",
     "name": "Composable Game Framework",
-    "version": "2.4.0",
+    "version": "2.5.0",
     "status": "IMPLEMENTED"
   },
   "catalogs": {
@@ -282,7 +282,7 @@
       },
       {
         "id": "infrastructure.auth-session",
-        "version": "2.3.0",
+        "version": "2.5.0",
         "status": "IMPLEMENTED",
         "document": "04-infrastructure/auth-session.md",
         "publicApi": {
@@ -296,9 +296,9 @@
           "saveSchemas": []
         },
         "evidence": {
-          "implementationReceiptPath": "evidence/platform-sdk-implementation-v1.json",
-          "implementationReceiptSha256": "7d5dd12e88af0ad805589568d0ae1f50a8912c6276fc4a03347de400f667ea3c",
-          "sourceRevision": "ebba1d7db15d7e4549f7cb5031eba55d7509cab2"
+          "implementationReceiptPath": "evidence/native-credential-implementation-v1.json",
+          "implementationReceiptSha256": "0f4398c0bef92c1122530ba5cd7521793f2fae11c5eed80db31a955570d04fff",
+          "sourceRevision": "ac005a28743a6d1c4c5d3c124a157ae0eb41fab2"
         }
       },
       {
@@ -324,7 +324,7 @@
       },
       {
         "id": "infrastructure.platform-sdk",
-        "version": "2.4.0",
+        "version": "2.5.0",
         "status": "IMPLEMENTED",
         "document": "04-infrastructure/debug-observability.md",
         "publicApi": {
@@ -339,9 +339,9 @@
           "saveSchemas": []
         },
         "evidence": {
-          "implementationReceiptPath": "evidence/crashlytics-client-implementation-v1.json",
-          "implementationReceiptSha256": "930199a7af52b647c3daf61fbed1a6691ae9e2b7f2c65788905cd818d09ac1af",
-          "sourceRevision": "d2f5d7574e12ece9cec6d6a6e69433a637c8659c"
+          "implementationReceiptPath": "evidence/native-credential-implementation-v1.json",
+          "implementationReceiptSha256": "0f4398c0bef92c1122530ba5cd7521793f2fae11c5eed80db31a955570d04fff",
+          "sourceRevision": "ac005a28743a6d1c4c5d3c124a157ae0eb41fab2"
         }
       },
       {

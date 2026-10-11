@@ -180,3 +180,9 @@ Inactive Entity State
 候选 v2.3.0 源码检查点：`ebba1d7db15d7e4549f7cb5031eba55d7509cab2`；事实与哈希证据见 [platform-sdk-implementation-v1.json](../evidence/platform-sdk-implementation-v1.json)。此检查点未推送、未升级产品，原生／真实平台验收不因 IMPLEMENTED 状态通过。
 
 机器合同校验：仓内原命令仍因既有 Windows `root + /` 路径包含检查报 Schema escapes；本片未改工具脚本。仅 Temp 等价副本将目录分隔符改为 node:path.sep，实际通过4份合同、58份Markdown计数及候选2.3.0／IMPLEMENTED检查。该替代结果不写成原命令通过，也不扩大为新SDK Runtime验证。
+
+## Android类型编译条件已解除（2026-10-11后续授权）
+
+上节v2.4.0检查点的“工具链缺失／协议待确认”是当时事实。Owner于2026-10-11 05:09:49 UTC明确同意Android SDK条款并限定D盘；后续仅在 `D:/services/toolchains/p0002-native-20261011/` 下载、解压、缓存和输出官方JDK17.0.20.1／API36 r2，保留SDK包附旧许可、当前条款及JDK GPLv2＋Classpath Exception文件，不改全局PATH/JAVA_HOME。API36按官方XML SHA1核对，全部ZIP通过CRC并记录SHA256；这是便携归档使用，未安装sdkmanager或声称运行许可交互命令。
+
+现有Shidai3FirebaseAnalytics.java与Shidai3FirebaseCrashlytics.java、新增Google登录桥三者真实javac通过，最小官方类型classpath可解析调用签名。第三方Checker注解缺类及既有DiagnosticException serialVersionUID给两个非阻断warning，源码未为清warning作无关修改。此结果不等同Gradle依赖闭包、APK、设备或SDK执行；未初始化FirebaseApp、采集/上传、真崩溃、后台收件或验证Apple编译。工具、源字节和编译证据集中见 [后续统一登录回执](../evidence/native-credential-implementation-v1.json)，原v2.4.0历史回执保留。

@@ -1,6 +1,6 @@
 # Auth Session（登录端口与会话生命周期）
 
-状态: Accepted（本轮明确授权的独立基础设施合同；仅 Headless 实现）
+状态: Accepted（统一端口与默认关闭客户端候选；原生 Runtime 未验）
 
 ## 范围与来源
 
@@ -25,7 +25,7 @@ P1060 与 4060 是预计消费者，本批没有产品接线，不称为两个�
 
 临时材料按 `wechat-code/douyin-code/google-id-token/apple-id-token-code` 区分：Google ID token 不等同 Apple 的 ID token 加 authorization code；Google/Apple 带此次请求的 nonce，由适配器拥有生成和校验关联。交换端口负责服务端签名、issuer、audience/app、exp 与 nonce 验证后才映射内部账号。端口只检验材料形状和对应标签，不能代替这些验证。微信／抖音 code 是一次性短期材料，不持久化、缓存重用或自动重试；`checkSession` 仅检查平台会话，不能证明本地游戏账号会话。不同平台 session_key 不规定统一有效期，`logout()` 是本模块本地失效，不编造 `wx.logout/tt.logout`。
 
-主线程补充来源：[微信官方小游戏类型库](https://github.com/wechat-miniprogram/minigame-api-typings/blob/master/types/wx/lib.wx.api.d.ts)、[腾讯官方微信换票说明](https://docs.cloudbase.net/recipes/add-auth-wechat-miniprogram)、[抖音小游戏服务端换票](https://developer.open-douyin.com/docs/resource/zh-CN/mini-game/develop/server/log-in/code-2-session)。Apple 原生适配待核验 AuthenticationServices 与 Cocos JsbBridge；这些均未进入本批代码。
+主线程补充来源：[微信官方小游戏类型库](https://github.com/wechat-miniprogram/minigame-api-typings/blob/master/types/wx/lib.wx.api.d.ts)、[腾讯官方微信换票说明](https://docs.cloudbase.net/recipes/add-auth-wechat-miniprogram)、[抖音小游戏服务端换票](https://developer.open-douyin.com/docs/resource/zh-CN/mini-game/develop/server/log-in/code-2-session)。v2.3.0检查点未纳入Apple原生适配；v2.5.0的AuthenticationServices候选与剩余JsbBridge／原生验证见下节。
 
 凭证仅在本次获取与交换之间传递，不进入公开快照、结果、日志、事件或存档。交换适配器负责真实远端验证，以及 bearer token 等传输材料的所有权；控制器只复制 `gameAccountId/sessionId/expiresAtMs`。稳定的 `gameAccountId` 必须由可信后端映射各 provider subject；不得将 email、昵称、设备 ID 或平台 subject 直接等同跨平台游戏账号。本批没有映射后端、绑定／合并操作或进度传输。收到 active 结果仅表示配置的交换端口返回了合法且未过期的投影，不能凭本模块离线测试证明远端认证安全。
 
@@ -37,7 +37,7 @@ P1060 与 4060 是预计消费者，本批没有产品接线，不称为两个�
 
 离线 fake 仅位于 `tests/auth/`，不提供生产模拟登录。Node 22 执行框架约定的 typecheck、tests、build；实施证据分别记录源码、构建、SDK、Creator 与产品接线状态。没有手写 `.meta`；Creator 导入、meta 保存和产品 Runtime 验收待主线程集成窗口，因此本批不能声明可直接装配到 Creator 的资源已验收。
 
-当前两产品已通过自己的 `extensions/shidai3` 单源消费公共认证／遥测：P1060 源码检查点 `4f5955988f35f3aa36ce9e72365fcdb4a8d7fa52`、4060 检查点 `287fe6b101a6e37cb2a335da2d415c17cd941b68` 均 pin `895f28728ef2624e56faa3520d11b02310b20f18`（v2.2.0）。本轮只交付框架候选 v2.3.0，不更新两游戏 pin、入口或父仓 gitlink；新平台适配不因旧共享接线而自动进入产品。
+v2.3.0历史检查点记录两产品当时已通过自己的 `extensions/shidai3` 单源消费公共认证／遥测：P1060 源码检查点 `4f5955988f35f3aa36ce9e72365fcdb4a8d7fa52`、4060 检查点 `287fe6b101a6e37cb2a335da2d415c17cd941b68` 均 pin `895f28728ef2624e56faa3520d11b02310b20f18`（v2.2.0）。该检查点只交付框架候选 v2.3.0，未更新两游戏 pin、入口或父仓 gitlink；新平台适配不因旧共享接线而自动进入产品。 v2.5.0未读取当前产品pin，不将上述历史SHA视为当期现状。
 
 ## 微信真实凭证调用层（2026-10-11）
 
@@ -110,3 +110,34 @@ Owner 已要求四个平台与跨平台进度，零新增服务费用、云档�
 客户端调用层已恢复推进；本节后端、云资源、绑定及跨端进度验收仍待对应配置与业务决策。待定业务项集中为首发地域及平台、local/cloud 与登录要求、绑定／进度冲突策略，以及域名条件与免费超限停服务的接受范围。
 
 候选 v2.3.0 源码检查点：`ebba1d7db15d7e4549f7cb5031eba55d7509cab2`；事实与哈希证据见 [platform-sdk-implementation-v1.json](../evidence/platform-sdk-implementation-v1.json)。此检查点未推送、未升级产品，原生／真实平台验收不因 IMPLEMENTED 状态通过。
+
+## Apple／Google 凭证候选 v2.5.0（2026-10-11）
+
+唯一共享源仍在 `assets/auth/`，新增 `GoogleCredentialAdapter`、`AppleCredentialAdapter` 和 `CocosNativeCredentialBridge`，公开子路径不变；原生单源在 `assets/adapters/cocos/auth/`。默认 enabled=false，缺 bridge／配置、已取消、并发 acquire 都拒绝，不访问SDK；只有完整 credential＋trusted exchange 注入 AuthSession 后才可由宿主显式发起。
+
+```ts
+import { AuthSession, GoogleCredentialAdapter, CocosNativeCredentialBridge } from 'db://shidai3/auth/index';
+// nativeReflection、clock、scope 由已核验平台宿主注入；trustedExchange 必须另有可信实现。
+const bridge = new CocosNativeCredentialBridge(nativeReflection, 'google', 'android');
+const credential = new GoogleCredentialAdapter({ enabled: true, scope, clock, bridge, timeoutMs: 15000 });
+const auth = new AuthSession({ clock, timeoutMs: 15000,
+    ports: { credential, exchange: trustedExchange } });
+// 玩家按钮调用 auth.login()；宿主销毁调用 auth.logout()、credential.dispose() 并解除原生配置。
+```
+
+固定桥传输为 isConfigured／nonce／begin／poll／cancel，不覆盖 Cocos 的唯一全局 onNative 回调。每次请求用OS CSPRNG生成独立32字节nonce和requestId（64位小写hex），requestId兼Apple state；TS与原生校验关联、边界及一次消费。TS默认15秒、最高60秒绝对期限；原生60秒清除自己拥有的材料引用，JS挂起也不会无限保留终态token。字符串仅释放引用，不能承诺物理清零。所有失败只给固定标签／固定错误，未知DTO、原始error／profile、accessor和继承字段不读取。
+
+| 候选 | 真正实现与接线 | 当前真实验证 | 剩余条件 |
+|---|---|---|---|
+| Google Android | CredentialManager 显式按钮→GetSignInWithGoogleOption→ID token／nonce；Activity弱引用、CancellationSignal、过期和一次poll；条件Gradle未应用 | 官方稳定1.6.0／googleid1.2.1 API与真实javac类型编译通过；TS合成生命周期通过 | 公开Web server client ID、Android OAuth package／签名SHA-1、前台Activity配置及销毁解绑、APK／设备／真登录 |
+| Apple iOS | AuthenticationServices，强持有per-request controller/delegate/window，state匹配，nullable UTF8 token＋code，request与proof均为原nonce | 官方iOS13基线、cancel iOS16+与弱delegate合同核实；TS合成测试通过 | Team／Bundle/App ID／capability／entitlement／profile／真实window、Xcode与设备；生产桥仍待验证 |
+| Google iOS | GoogleSignIn10.0.0 nonce overload；默认宏0，公开iOS/server client ID及宿主controller显式注入 | 官方tag header及iOS15最低条件核实；TS传输合成测试通过 | Xcode链接、reversed-client URL scheme与callback转交、SDK Keychain缓存政策、真机 |
+| 游戏会话 | 所有材料仅交既有SessionExchangePort；无后台时AuthSession保持guest／unavailable | 合成测试证明材料成功不能自行active，取消后不启动exchange | 可信后端／允许audience／issuer／nonce challenge与单次消费／重放防护；Firebase Auth仍未实现 |
+
+取消先失效本地请求再尽力通知平台。Apple iOS16+调用controller.cancel；13–15保留无效helper至原生terminal以阻止重叠，不能宣称关授权UI。GoogleiOS没有公共request-cancel API，同样保留in-flight并丢迟到材料，绝不用signOut／disconnect代替取消；SDK本身会保存Keychain状态，本片未运行SDK，后续必须处理其缓存政策。宿主在UI主线程配置窗口／控制器；原生展示由main queue执行，poll只传固定有界字符串。iOS reflection是DEVELOPMENT候选，官方JsbBridge上架建议与单回调/线程合同仍须通过宿主路由验证。
+
+Apple原生此处直接传nonce；Firebase Apple要求SHA256(rawNonce)再由FirebaseOAuth消费rawNonce，是另一条私有交换合同，不能直接套本片原nonce冒称FirebaseAuth接入。可信后端必须验签、issuer、audience、exp及本次nonce／重放策略，再映射受验证subject为gameAccountId；客户端scope不可信、邮箱不作跨平台绑定键，服务端secret不得放客户端。跨平台同账号、游客进度合并与云存档保持Deferred，Apple web/Services ID不纳入原生切片。
+
+官方来源：[Android稳定记录](https://developer.android.com/jetpack/androidx/releases/credentials)、[googleid发布记录](https://developers.google.com/identity/android-credential-manager/releases)、[显式按钮指南](https://developer.android.com/identity/sign-in/credential-manager-siwg-implementation)、[Google服务端验证](https://developers.google.com/identity/sign-in/android/backend-auth)、[GoogleiOS10 header](https://raw.githubusercontent.com/google/GoogleSignIn-iOS/10.0.0/GoogleSignIn/Sources/Public/GoogleSignIn/GIDSignIn.h)、[AppleController](https://developer.apple.com/documentation/authenticationservices/asauthorizationcontroller)、[Apple cancel](https://developer.apple.com/documentation/authenticationservices/asauthorizationcontroller/cancel())、[Apple nonce](https://developer.apple.com/documentation/authenticationservices/asauthorizationopenidrequest/nonce)、[Firebase Apple hash nonce](https://firebase.google.com/docs/auth/ios/apple)、[Cocos reflection](https://docs.cocos.com/creator/3.8/manual/en/advanced-topics/oc-reflection.html)。
+
+实施、源SHA、官方工具包哈希、44项新增测试、136/136 Vitest与19/19 Node、javac及未执行边界见 [native-credential-implementation-v1.json](../evidence/native-credential-implementation-v1.json)。本片不调用真实登录／上传、不创建账号凭据、不变产品pin、Main、父仓或Protected Core；没有Creator导入/meta、APK、iOS编译或设备证据。

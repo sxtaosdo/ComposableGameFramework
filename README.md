@@ -2,7 +2,7 @@
 
 状态: Accepted（Framework 已实现，P10-Cook DEVELOPMENT 验证完成）
 
-**当前版本：`v2.4.0`**
+**当前版本：`v2.5.0`**
 
 > 本仓库文档定义一套面向 RPG 与 Simulation（模拟）玩法的可组合游戏框架。
 > 第一阶段以 Cocos Creator + 2D/2.5D + Mobile First（移动端优先）为主要实现目标，单机优先，同时保留未来多人、3D 和跨引擎边界。
@@ -15,7 +15,7 @@
 
 当前仓库包含技术设计、机器可读合同、Framework MVP 源码与 Tile-Match Headless 纵向切片。P10-Cook 已通过 Cocos Creator 3.8.8 的 DEVELOPMENT 验证：Framework 与 Public API 为 `IMPLEMENTED`，Cocos 3.8.8 兼容性及该产品实际覆盖的六项基础能力为 `VERIFIED`。Framework 顶层不晋级 `VERIFIED`；未被 P10-Cook 覆盖的 Tile-Match、ARPG、LifeSim 等能力保持原状态，微信开发者工具与真机仍为 `NOT_RUN`，Release Gate 保持阻断。能力成熟度与证据路径以 [`manifest.json`](manifest.json) 为准。
 
-平台调用候选 v2.4.0：已有微信 CredentialPort、reportEvent、错误监听与 Firebase Analytics 原生桥，新增独立默认关闭的 Crashlytics nonfatal 客户端、原生源码和条件依赖片段。SDK构建选择会保守声明原始采集，stop不证明原生采集已停止；默认未包含 SDK 或初始化。使用与事实状态见 [认证](04-infrastructure/auth-session.md) 和 [遥测](04-infrastructure/debug-observability.md)。两游戏共享 v2.2.0 pin 检查点，本片不升级产品；缺JDK/android.jar且本轮不接受新SDK协议，Apple无Xcode，真实原生编译／真机／后台收件仍待验；Firebase Auth与可信后端链仍未实现。
+平台调用候选 v2.5.0：共享微信、Google、Apple CredentialPort 与 Firebase Analytics／Crashlytics 均默认关闭。新增 Google Android、Apple iOS 和 Google iOS 原生候选，Google 登录及两个 Firebase Java 桥已在独立 D 盘工具链通过 javac 类型编译；iOS、APK／设备、真实登录与可信后端交换未验。使用与事实状态见 [认证](04-infrastructure/auth-session.md) 和 [遥测](04-infrastructure/debug-observability.md)。此前两游戏 v2.2.0 源消费证据是旧检查点；本片未读写其当前 pin、Main 或父仓 gitlink，不把框架候选视为产品接线。
 
 ## 1. 目标
 
