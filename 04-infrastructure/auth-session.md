@@ -19,7 +19,7 @@ P1060 与 4060 是预计消费者，本批没有产品接线，不称为两个�
 
 平台标签限定为 `wechat/douyin/google/apple`，分别对应 Owner 指定的微信小游戏、抖音、Google、Apple；这只是统一端口的标签，不声明 SDK 接入或签名／服务端验证方式已经确定，真实适配须依据各平台官网最新文档核验。
 
-凭证带 `scope.issuer/applicationId/host` 路由范围；这些客户端字段是不可信元数据，必须由交换适配器依据服务端允许配置和真实凭证独立核验，不因字符串合法就相信发行方或主体。provider subject 必须连同范围映射，不把抖音小游戏／小程序、不同宿主或 Google 平台游戏身份自动合并。Apple 隐藏邮箱及邮箱域名也不是跨平台账号身份键。上述边界采用主线程本轮官方文档研究；本模块不调用其 API，也不声明实现了平台验证。
+凭证带 `scope.issuer/applicationId/host` 路由范围；这些客户端字段是不可信元数据，必须由交换适配器依据服务端允许配置和真实凭证独立核验，不因字符串合法就相信发行方或主体。provider subject 必须连同范围映射，不把抖音小游戏／小程序、不同宿主或 Google 平台游戏身份自动合并。Apple 隐藏邮箱及邮箱域名也不是跨平台账号身份键。上述边界采用主线程本轮官方文档研究；本模块不实现平台验证；2026-10-11 新增的微信适配器只调用 wx.login 获取临时材料。
 
 参考：[Android 平台身份](https://developer.android.com/games/pgs/platform-authentication)、[Google Credential Manager](https://developer.android.com/identity/sign-in/credential-manager-siwg-implementation)、[抖音小游戏登录](https://developer.open-douyin.com/docs/resource/zh-CN/mini-game/develop/api/javascript-api/open-capacity/log-in/tt-login)、[抖音小游戏 UnionID 范围](https://developer.open-douyin.com/docs/resource/zh-CN/mini-game/develop/guide/open-ability/user-info/unionid-intro)、[Apple 隐藏邮箱公告](https://developer.apple.com/news/?id=1ptvdtcm)。正式适配时重新核验适用平台、版本与验证链。
 
@@ -37,13 +37,35 @@ P1060 与 4060 是预计消费者，本批没有产品接线，不称为两个�
 
 离线 fake 仅位于 `tests/auth/`，不提供生产模拟登录。Node 22 执行框架约定的 typecheck、tests、build；实施证据分别记录源码、构建、SDK、Creator 与产品接线状态。没有手写 `.meta`；Creator 导入、meta 保存和产品 Runtime 验收待主线程集成窗口，因此本批不能声明可直接装配到 Creator 的资源已验收。
 
-本地候选版本为 `2.1.0`。本批保留 P1060 的 `3a4c6b9c44bdaba55c06588191f10c99e351d8e6` 与 4060 的 `2384980aab0c2bb60559b22cbef88d2c1391d784`。后续由主线程选择已验证的框架提交／必要的窄移植，核对原 pin 到候选的完整差异，再分别验证产品 gitlink；不得因新增模块统一升级两个产品或带入无关框架变化，不复制第三份源码。
+当前两产品已通过自己的 `extensions/shidai3` 单源消费公共认证／遥测：P1060 源码检查点 `4f5955988f35f3aa36ce9e72365fcdb4a8d7fa52`、4060 检查点 `287fe6b101a6e37cb2a335da2d415c17cd941b68` 均 pin `895f28728ef2624e56faa3520d11b02310b20f18`（v2.2.0）。本轮只交付框架候选 v2.3.0，不更新两游戏 pin、入口或父仓 gitlink；新平台适配不因旧共享接线而自动进入产品。
 
-Owner 已要求上述四个平台以及跨平台进度方案，方案约束为零新增服务费用，云存档不一定首发；这不授权购买服务、创建云账号或暴露本机服务。本模块不选择 CloudBase、Firebase Auth 或其他后台，也不自动合并游客账号／进度。无 SDK、账号、凭据、真实登录或玩家数据发送；正式认证、账号绑定与云存档属于后续切片。
+## 微信真实凭证调用层（2026-10-11）
+
+Owner 已恢复微信与 Firebase SDK 推进。`assets/auth/wechatCredential.ts` 的 `WechatCredentialAdapter` 实现既有 `CredentialPort`，由宿主显式注入小游戏 `wx` 的结构化 API、应用范围与超时。导入／构造没有平台调用；只有 `acquire(signal)` 才调用官方 `wx.login({ timeout, success, fail })`。它只返回 `wechat-code`，不生成 openid、内部账号或 active 会话，不缓存或自动重用 code，不调用不存在的 wx.logout。
+
+```ts
+import { AuthSession, WechatCredentialAdapter } from 'db://shidai3/auth/index';
+// hostWechatApi、clock、scope 由平台宿主注入；trustedExchange 由已配置的可信后端实现。
+const credential = new WechatCredentialAdapter(hostWechatApi, scope, 10000);
+const auth = new AuthSession({ clock, timeoutMs: 15000,
+    ports: { credential, exchange: trustedExchange } });
+```
+
+上述用法只在可信交换端口已配置时成立。未配置后端时不要构造完整 ports；现有 `AuthSession.login()` 仍短路返回 `unavailable`，保持 guest，连 wx.login 都不会调用。SDK success 的 code 不能当游戏登录成功；AppSecret、session_key、服务账号密钥留在服务端，客户端配置只包含允许公开的应用路由元数据。交换端必须独立核验这些不可信 scope。
+
+取消会立即拒绝此次凭证 Promise、移除自己的 AbortSignal 监听；不能中止的 wx 请求晚到也不复活会话。SDK fail／throw 统一降级，不读取或转发 errMsg、message、stack。成功只复制自有数据字段 code，不执行 getter 或序列化未知字段。超时由 wx 请求 timeout 和 AuthSession 的绝对期限共同约束。
+
+官方微信网页本轮抓取失败；API 签名、code 需后台换票及五分钟有效期由 [腾讯官方小游戏类型库](https://github.com/wechat-miniprogram/minigame-api-typings/blob/master/types/wx/lib.wx.api.d.ts) 核实（2026-10-11），不把网页抓取失败写成文档验收通过。
+
+Firebase Auth 尚未接入这条游戏登录链。它输出的 Firebase ID token／UID 不等同当前 Google／Apple proof 或 `gameAccountId`。后续可在 `SessionExchangePort` 内部私有执行原平台 proof → Firebase Auth → Firebase token → 可信游戏后端，不预改本次公开 proof；后端必须核验 Firebase issuer、audience、project、过期与主体映射。不得用匿名 Firebase 成功绕过游戏账号后端。官方依据：[Google 原生认证](https://firebase.google.com/docs/auth/android/google-signin)、[Apple 认证](https://firebase.google.com/docs/auth/ios/apple)、[服务端 token 验证](https://firebase.google.com/docs/auth/admin/verify-id-tokens)。Apple SDK 13 当期 GoogleSignIn 配套限制见 [发布记录](https://firebase.google.com/support/release-notes/ios)，不能承诺本片完成跨端登录。
+
+验证分别记录：微信 API 合成 callback 与统一会话边界已定向测试；真实微信 code、后台换票、过期／重放的远端验签、开发者工具／真机、产品新 pin 均未执行。原生 Firebase SDK 状态及启用门见 [遥测合同](debug-observability.md)。Node22完整 Vitest84/84（含本片12项）、另有遥测Node19/19、严格类型／构建及实际ESM默认关闭Smoke通过。候选实施回执补充源码 SHA 与最终验证，不能由测试替身推出真实平台收件。
+
+Owner 已要求四个平台与跨平台进度，零新增服务费用、云档不一定首发等约束继续适用；这不授权购买服务、创建云账号、暴露本机服务或自动合并游客进度。
 
 ## 四平台登录、跨端进度与免费云服务方案（Deferred）
 
-调研日期：2026-10-09。Owner 本轮决定：方案保存到本地，后面再推进。本节是保存的候选方案，状态为 **Deferred／待 Owner 推进**；不是后端选型批准、上线承诺或云资源开通指令。公共接口的 Headless 实现状态与本节方案状态分别记录。
+调研日期：2026-10-09。原 2026-10-09 决定保存方案已由 2026-10-11 的微信／Firebase 客户端推进授权替代；本节后端、绑定、云档的未选业务方案继续为 **Deferred／待配置及业务决策**；不是后端选型批准、上线承诺或云资源开通指令。公共接口的 Headless 实现状态与本节方案状态分别记录。
 
 ### 四平台凭证与可信验证
 
@@ -85,4 +107,6 @@ Owner 已要求上述四个平台以及跨平台进度方案，方案约束为�
 4. 如批准免费云实验，仅使用 Free 资源和测试数据，核验无支付方式／无自动付费升级；检查 TLS、微信／抖音正式域名白名单及备案接受情况，在关闭跳过校验后做国内真实设备网络验证。
 5. 验证显式绑定、同一产品跨端读写、跨产品访问拒绝、存档版本冲突与回滚；测试额度耗尽、服务离线、注销／解绑和备份恢复，不覆盖游客存档，不自动合并账号。观察配额、CPU 与延迟，仍合格才另行决定生产交付。
 
-当前只保存方案并保留公共接口检查点；以上验收全部待 Owner 恢复推进。待定业务项集中为首发地域及平台、local/cloud 与登录要求、绑定／进度冲突策略，以及域名条件与免费超限停服务的接受范围。
+客户端调用层已恢复推进；本节后端、云资源、绑定及跨端进度验收仍待对应配置与业务决策。待定业务项集中为首发地域及平台、local/cloud 与登录要求、绑定／进度冲突策略，以及域名条件与免费超限停服务的接受范围。
+
+候选 v2.3.0 源码检查点：`ebba1d7db15d7e4549f7cb5031eba55d7509cab2`；事实与哈希证据见 [platform-sdk-implementation-v1.json](../evidence/platform-sdk-implementation-v1.json)。此检查点未推送、未升级产品，原生／真实平台验收不因 IMPLEMENTED 状态通过。

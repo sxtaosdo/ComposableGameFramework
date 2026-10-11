@@ -2,7 +2,7 @@
 
 状态: Accepted（Framework 已实现，P10-Cook DEVELOPMENT 验证完成）
 
-**当前版本：`v2.2.0`**
+**当前版本：`v2.3.0`**
 
 > 本仓库文档定义一套面向 RPG 与 Simulation（模拟）玩法的可组合游戏框架。
 > 第一阶段以 Cocos Creator + 2D/2.5D + Mobile First（移动端优先）为主要实现目标，单机优先，同时保留未来多人、3D 和跨引擎边界。
@@ -14,6 +14,8 @@
 后续 Cocos 产品必须以 **git submodule** 将本仓挂到产品根 `extensions/shidai3`，经 Creator `asset-db.mount` 暴露为 `db://shidai3/*`。禁止把本仓源码复制粘贴、vendor 进产品树。产品仓只提交已验证 gitlink；框架改动只在本仓交付。MVP 强制消费细则见 [`09-governance/engineering-standards/cocos-creator.md`](09-governance/engineering-standards/cocos-creator.md) 与 [`git.md`](09-governance/engineering-standards/git.md)。
 
 当前仓库包含技术设计、机器可读合同、Framework MVP 源码与 Tile-Match Headless 纵向切片。P10-Cook 已通过 Cocos Creator 3.8.8 的 DEVELOPMENT 验证：Framework 与 Public API 为 `IMPLEMENTED`，Cocos 3.8.8 兼容性及该产品实际覆盖的六项基础能力为 `VERIFIED`。Framework 顶层不晋级 `VERIFIED`；未被 P10-Cook 覆盖的 Tile-Match、ARPG、LifeSim 等能力保持原状态，微信开发者工具与真机仍为 `NOT_RUN`，Release Gate 保持阻断。能力成熟度与证据路径以 [`manifest.json`](manifest.json) 为准。
+
+平台调用候选 v2.3.0：公共入口新增微信 CredentialPort、reportEvent 和显式错误监听，以及 Firebase Android/iOS Analytics 原生桥源码。默认发送关闭；SDK替身不代表真实SDK编译／真机／后台收件。使用与未验证条件见 [认证](04-infrastructure/auth-session.md) 和 [遥测](04-infrastructure/debug-observability.md)。两游戏当前共享 v2.2.0 pin，本片不升级产品；Crashlytics、Firebase Auth 与后端认证不因源码候选晋级。
 
 ## 1. 目标
 

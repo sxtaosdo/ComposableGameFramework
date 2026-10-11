@@ -1,0 +1,497 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "ebba1d7db15d7e4549f7cb5031eba55d7509cab2",
+  "baselineRevision": "895f28728ef2624e56faa3520d11b02310b20f18",
+  "frameworkCandidate": "2.3.0",
+  "status": "IMPLEMENTED",
+  "scope": "P0002 client platform calling layer only; no business bootstrap, protected core, backend, deployment or cloud resource changes",
+  "authorization": {
+    "owner": "Owner via parent coordination",
+    "at": "2026-10-11T03:58:57Z",
+    "reference": "Sentinel_1d46d7fc2ec88191a9ad7fcdd124b75c",
+    "action": "Attempt Wechat and Firebase official SDK integration; related documentation required"
+  },
+  "capabilities": {
+    "wechatCredential": {
+      "source": "IMPLEMENTED",
+      "api": "wx.login",
+      "verifiedGameSession": "NOT_RUN",
+      "backendExchange": "NOT_CONFIGURED",
+      "realWechatRuntime": "NOT_RUN",
+      "default": "guest/unavailable without full trusted exchange ports"
+    },
+    "wechatTelemetry": {
+      "source": "IMPLEMENTED",
+      "api": "wx.reportEvent",
+      "minimumBaseLibrary": "2.14.4",
+      "default": "not_configured",
+      "registeredEventAttestationRequired": true,
+      "realRuntime": "NOT_RUN",
+      "remoteReception": "NOT_RUN"
+    },
+    "wechatErrors": {
+      "source": "IMPLEMENTED",
+      "api": [
+        "wx.onError",
+        "wx.offError"
+      ],
+      "default": "off",
+      "rawMessageOrStackRead": false,
+      "autoFlush": false
+    },
+    "nativeFirebaseAnalytics": {
+      "source": "IMPLEMENTED",
+      "androidDependency": {
+        "bom": "35.0.0",
+        "analytics": "24.0.0",
+        "minimumApi": 24
+      },
+      "appleCandidate": {
+        "spm": "13.0.0",
+        "zip": "13.0.1",
+        "minimumIos": "15",
+        "minimumXcode": "26.2"
+      },
+      "default": "off / no implicit Firebase app initialization",
+      "androidBinaryApi": "VERIFIED_STATIC_BINARY_API",
+      "androidCompile": "NOT_RUN: JDK and android.jar unavailable",
+      "appleCompile": "NOT_RUN: macOS/Xcode unavailable",
+      "creatorMeta": "NOT_RUN",
+      "nativeRuntime": "NOT_RUN",
+      "remoteReception": "NOT_RUN",
+      "sdkAutomaticMetadataOptOut": "NOT_RUN"
+    },
+    "crashlytics": {
+      "source": "NOT_IMPLEMENTED",
+      "runtimeDependency": "ABSENT",
+      "rawErrorCapture": false,
+      "nativeCrashCapture": false,
+      "reason": "Disabled collection still retains raw native crashes; independent capture policy/build gate required"
+    },
+    "firebaseAuth": {
+      "source": "NOT_IMPLEMENTED",
+      "gameIdentity": "Never infer from Firebase UID/token",
+      "nextBoundary": "Private SessionExchangePort platform proof -> Firebase -> trusted game backend; no public proof change in this slice"
+    }
+  },
+  "sdkSubmissionContract": {
+    "status": "submitted_to_sdk is local SDK acceptance only, not remote ACK",
+    "maxParameters": 25,
+    "booleanEncoding": "0/1",
+    "wireEventId": "Not sent; reconstruct local identity tuple from allowed context/name/factId",
+    "partialBatchLedger": {
+      "maxEntries": 2000,
+      "ttlMs": 86400000,
+      "unknownThrowAfterAccept": "No exactly-once claim"
+    },
+    "nativeReconfiguration": "Existing app collection set false before replacement/enabling; SDK shutdown errors and persisted overrides require real-device verification"
+  },
+  "verification": {
+    "node": "22.23.2",
+    "typescript": "5.9.2",
+    "vitest": "3.2.4",
+    "directTargetTests": {
+      "passed": 12,
+      "includedInFull": true
+    },
+    "vitestFull": {
+      "passed": 84,
+      "files": 11,
+      "exitCode": 0
+    },
+    "telemetryNodeTests": {
+      "passed": 19,
+      "exitCode": 0
+    },
+    "typecheck": "PASS",
+    "es2015Build": "PASS",
+    "realEmittedEsmSmoke": "PASS: default-off imports, no SDK or platform access",
+    "nativeDefaultsXmlPlistSyntax": "PASS",
+    "snapshotAssetAndTestFileCount": 83,
+    "snapshotByteIdentity": "PASS",
+    "sourceHashes": {
+      "assets/adapters/cocos/firebase/AndroidManifest.defaults.xml": "f49932765d96f1c37790244701f90aaea38e3435bd9f3008b4b2cbea42e3b3fc",
+      "assets/adapters/cocos/firebase/Info.defaults.plist": "40de40ccca6d75b3ac6b2238a7782a13fc26f35a944c44c831e144293a1c0cd8",
+      "assets/adapters/cocos/firebase/Shidai3FirebaseAnalytics.java": "73728710be65ccee580cbaaed6e1e60fcb7cc4ecac2cda27f6a190399d10e66d",
+      "assets/adapters/cocos/firebase/Shidai3FirebaseAnalytics.mm": "93e2c53dc84389ba8ed17339b44f98135e4fd59c9d0e82c0ec6214b10ab3889d",
+      "assets/adapters/cocos/firebase/dependencies.gradle": "ce3122a9d4996a4ee7cb686584caf59b810a97146fa72147da6467cb39aca0eb",
+      "assets/auth/wechatCredential.ts": "3b15b4c203f7304183521c260a97c4d3c62d0523ed7ec79538456eee837bcd9a",
+      "assets/observability/nativeFirebaseBridge.ts": "ac2c2ae0c246b6ffb2abcc5184907ee325af2314e6755ecac80d8bed06367fee",
+      "assets/observability/platformTelemetry.ts": "4eb31cd3c469ecfa04de8a50b526b71a772eb4908bcd0de1676f72fa48041fc5",
+      "assets/observability/wechatErrors.ts": "15b0f25e97f782622de02b44190d7354587f66ac0764e8384f10eda57e1b01f7",
+      "tests/auth/wechatCredential.test.ts": "cf29baabe46d86bdc9679d873f2000f17d6ea88da2b2f77db2d7cfd78917a9bc",
+      "tests/observability/platformAdapters.test.ts": "7ce2e33f5665b5aec7030a03fe7cc72cfc2b08df6c9c6e626c5809d71d34435a",
+      "assets/auth/index.ts": "60958dbbabab109275f71fd4d0fa1fc17c2c1009ba51a87434eccabb746d0e9e",
+      "assets/observability/index.ts": "3d0ee390c98a47fff091e3c6c5dd9736c3431b03665f5d4576cb811ec55c0556",
+      "assets/observability/telemetryAdapters.ts": "3020d6fb1cb39be3e10bb331ca67207808dc084822eb5634b4cde3346fe1c715",
+      "assets/observability/telemetryClient.ts": "02eb67231c824298596349fd077a91ed960b61d9a6d79e69d1b6e415e10c2c7c"
+    },
+    "contracts": {
+      "repositoryScript": "FAIL: pre-existing Windows slash containment rejects valid schema path",
+      "temporaryWindowsEquivalent": "PASS: 4 contracts / documentCount58 / 2.3.0 / IMPLEMENTED",
+      "repositoryScriptModified": false
+    }
+  },
+  "officialSdkPreparation": {
+    "location": "Temp only; no game installation, linking, SDK execution or full transitive dependency resolution",
+    "downloads": [
+      {
+        "url": "https://dl.google.com/dl/android/maven2/com/google/firebase/firebase-bom/35.0.0/firebase-bom-35.0.0.pom",
+        "file": "bom.pom",
+        "bytes": 5228,
+        "sha256": "b1872260d0b665e1da92f9006b0994b87bcdc4212c933122adf6c8dae72f8ee9",
+        "status": "downloaded",
+        "dependencies": [
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-analytics",
+            "version": "24.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-appcheck-debug",
+            "version": "20.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-appcheck-debug-testing",
+            "version": "20.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-appcheck-playintegrity",
+            "version": "20.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-appcheck-recaptcha",
+            "version": "20.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-appcheck",
+            "version": "20.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-auth",
+            "version": "25.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-common",
+            "version": "23.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-config",
+            "version": "24.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-crashlytics",
+            "version": "21.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-crashlytics-ndk",
+            "version": "21.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-database",
+            "version": "23.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-dataconnect",
+            "version": "18.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-encoders",
+            "version": "18.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-firestore",
+            "version": "27.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-pnv",
+            "version": "17.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-functions",
+            "version": "23.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-inappmessaging",
+            "version": "23.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-inappmessaging-display",
+            "version": "23.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-installations",
+            "version": "20.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-messaging",
+            "version": "26.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-messaging-directboot",
+            "version": "26.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-perf",
+            "version": "23.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-storage",
+            "version": "23.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-ai",
+            "version": "18.0.0",
+            "type": null,
+            "scope": null
+          },
+          {
+            "groupId": "com.google.firebase",
+            "artifactId": "firebase-ai-ksp-processor",
+            "version": "17.0.0",
+            "type": null,
+            "scope": null
+          }
+        ]
+      },
+      {
+        "url": "https://dl.google.com/dl/android/maven2/com/google/firebase/firebase-analytics/24.0.0/firebase-analytics-24.0.0.pom",
+        "file": "analytics.pom",
+        "bytes": 1406,
+        "sha256": "3cbc5669912f435f76f88e7aa42fc5bc571c9d230d51a33c2b73a2354965c738",
+        "status": "downloaded",
+        "dependencies": [
+          {
+            "groupId": "com.google.android.gms",
+            "artifactId": "play-services-measurement",
+            "version": "24.0.0",
+            "type": "aar",
+            "scope": "compile"
+          },
+          {
+            "groupId": "com.google.android.gms",
+            "artifactId": "play-services-measurement-api",
+            "version": "24.0.0",
+            "type": "aar",
+            "scope": "compile"
+          },
+          {
+            "groupId": "com.google.android.gms",
+            "artifactId": "play-services-measurement-sdk",
+            "version": "24.0.0",
+            "type": "aar",
+            "scope": "compile"
+          }
+        ]
+      },
+      {
+        "url": "https://dl.google.com/dl/android/maven2/com/google/firebase/firebase-analytics/24.0.0/firebase-analytics-24.0.0.aar",
+        "file": "analytics.aar",
+        "bytes": 787,
+        "sha256": "7dd87294f3d47fd5bff6bb16d9d2cb66236177973603bbfd07c7b2f95addc94c",
+        "status": "downloaded",
+        "firebaseAnalyticsClass": false,
+        "classCount": 0
+      }
+    ],
+    "binarySignatures": {
+      "scope": "Static class-file API signatures only; no SDK execution, no javac/native compile",
+      "results": [
+        {
+          "url": "https://dl.google.com/dl/android/maven2/com/google/android/gms/play-services-measurement-api/24.0.0/play-services-measurement-api-24.0.0.aar",
+          "file": "measurement-api.aar",
+          "bytes": 78156,
+          "sha256": "39c4fa9ed5bd723dea35d5ab47007c8453bc90be5e588a4630101adfcb1e9268",
+          "class": "com/google/firebase/analytics/FirebaseAnalytics.class",
+          "publicMethods": [
+            {
+              "name": "getInstance",
+              "signature": "(Landroid/content/Context;)Lcom/google/firebase/analytics/FirebaseAnalytics;",
+              "public": true,
+              "static": true
+            },
+            {
+              "name": "logEvent",
+              "signature": "(Ljava/lang/String;Landroid/os/Bundle;)V",
+              "public": true,
+              "static": false
+            },
+            {
+              "name": "setAnalyticsCollectionEnabled",
+              "signature": "(Z)V",
+              "public": true,
+              "static": false
+            }
+          ],
+          "status": "VERIFIED_STATIC_BINARY_API"
+        },
+        {
+          "url": "https://dl.google.com/dl/android/maven2/com/google/firebase/firebase-common/23.0.0/firebase-common-23.0.0.aar",
+          "file": "firebase-common.aar",
+          "bytes": 121307,
+          "sha256": "f8595dd404aa37bb4a92824ffd7b0325428432079ce4908ea3f97af1c6b33f0f",
+          "class": "com/google/firebase/FirebaseApp.class",
+          "publicMethods": [
+            {
+              "name": "getApplicationContext",
+              "signature": "()Landroid/content/Context;",
+              "public": true,
+              "static": false
+            },
+            {
+              "name": "getInstance",
+              "signature": "()Lcom/google/firebase/FirebaseApp;",
+              "public": true,
+              "static": true
+            }
+          ],
+          "status": "VERIFIED_STATIC_BINARY_API"
+        }
+      ]
+    }
+  },
+  "review": {
+    "ocr": "Delegation preview/rule with parent shared rule; no managed external model or code upload",
+    "initialCoverage": {
+      "reviewable": 20,
+      "excludedPlistManuallyRead": 1,
+      "checked": 21,
+      "total": 21
+    },
+    "roles": [
+      {
+        "preset": "code-mapper",
+        "task": "/root/auth_startup_mapper",
+        "invocation": "prompt-emulated",
+        "result": "Baseline public APIs/bridge/toolchain located; no writer overlap"
+      },
+      {
+        "preset": "docs-researcher",
+        "task": "/root/platform_docs_researcher",
+        "invocation": "prompt-emulated",
+        "result": "Official versions/APIs/default capture behavior separated by platform"
+      },
+      {
+        "preset": "architect-reviewer",
+        "task": "/root/auth_architecture_gate",
+        "invocation": "prompt-emulated",
+        "result": "GO for default-off source/offline layer; retain private trusted session exchange"
+      },
+      {
+        "preset": "reviewer",
+        "task": "/root/auth_reviewer",
+        "invocation": "prompt-emulated",
+        "result": "21/21 checked; two native collection-gate P2 findings fixed and closed; no remaining source P1/P2"
+      }
+    ],
+    "effectiveHardReadOnlyIsolation": "UNVERIFIED; actual reviewers performed no writes"
+  },
+  "productConsumption": {
+    "currentSharedPin": "895f28728ef2624e56faa3520d11b02310b20f18",
+    "p1060IntegrationSource": "4f5955988f35f3aa36ce9e72365fcdb4a8d7fa52",
+    "antCookIntegrationSource": "287fe6b101a6e37cb2a335da2d415c17cd941b68",
+    "newCandidateConsumed": "NOT_RUN",
+    "pinsChangedThisSlice": false
+  },
+  "delivery": {
+    "localIndependentSubrepoOnly": true,
+    "push": false,
+    "parentGitlinkWrite": false,
+    "creatorOrDaemonUse": false,
+    "accountsOrCloudResourcesCreated": false,
+    "secretsRead": false,
+    "playerDataSent": false
+  },
+  "remainingConditions": [
+    "Native JDK/android.jar and macOS/Xcode compile environments",
+    "Approved test apps/event console configuration and real-sdk optout/restart tests",
+    "Trusted backend exchange/application verification before game login activation",
+    "Product writer window for new pin/Creator import/runtime",
+    "Crash capture scope/build gate and Firebase Auth exchange contract",
+    "Remote receipt and operations report acceptance owned by separate backend/report task"
+  ],
+  "officialSources": [
+    "https://github.com/wechat-miniprogram/minigame-api-typings/blob/master/types/wx/lib.wx.api.d.ts",
+    "https://firebase.google.com/support/release-notes/android",
+    "https://firebase.google.com/support/release-notes/ios",
+    "https://firebase.google.com/support/release-notes/cpp-relnotes",
+    "https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics",
+    "https://firebase.google.com/docs/reference/android/com/google/firebase/FirebaseApp",
+    "https://firebase.google.com/docs/crashlytics/android/customize-crash-reports",
+    "https://firebase.google.com/docs/auth/admin/verify-id-tokens",
+    "https://docs.cocos.com/creator/3.8/manual/en/advanced-topics/java-reflection.html",
+    "https://docs.cocos.com/creator/3.8/manual/en/advanced-topics/oc-reflection.html"
+  ]
+}

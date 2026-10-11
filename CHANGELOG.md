@@ -1,5 +1,12 @@
 # CHANGELOG（变更日志）
 
+## v2.3.0（未发布；微信调用与原生 Firebase Analytics 候选）
+
+- 新增公共微信 CredentialPort：实际调用 wx.login，只返回短期 code；取消与迟到回调隔离，无后台端口仍保持 unavailable／guest。未创建应用、云账号或凭据，不把 code 当可信游戏账号。
+- 微信 reportEvent 与 Firebase native adapter 显式双重启用，默认 not_configured；新增 submitted_to_sdk 仅表示本地 SDK 提交，白名单二次净化和有界账本防止批次重试重发成功前缀。微信 onError/offError 只拥有自己的监听、忽略 raw 内容、不自动 flush。
+- 新增单源 Android Java／Apple ObjC++ Analytics 官方调用桥与默认关闭的集成片段。Firebase Native依赖钉 Android BoM35.0.0／Analytics24.0.0；Apple选择SPM13.0.0。官方Android Maven部分POM／AAR只下载到Temp，五个实际公共方法签名静态核验通过；未进行javac／原生编译、链接或运行；Crashlytics默认不含运行依赖／初始化，Firebase Auth／可信后端交换另列边界。
+- 同步现有认证／遥测用法、需求、架构和真实验证矩阵，纠正两产品已消费 v2.2.0 单源 pin 的旧快照。本片不改产品入口、pin、Creator、Protected Core或父仓；只提交独立本地检查点，不推送。Node22完整84/84 Vitest、另19/19Node、strict类型、ES2015构建／ESM Smoke通过；83份验证快照字节一致。独立21/21审查关闭两项原生配置P2，默认配置语法通过；最终验证证据与源码SHA在实施回执单列。
+
 ## v2.2.0（未发布：遥测单源与抖音合同）
 
 - 新增非 Protected `assets/observability`，仅经 `db://shidai3/observability/index` 公开；复用两产品一致的三文件遥测实现、16项独立离线边界测试及有限队列／去重／隐私合同。只增加共享入口、抖音平台与未配置适配器，以及 ES2015／严格索引兼容处理；不修改既有 Runtime 或 Protected Core，默认关闭且无 SDK、存储、全局监听或网络副作用。
