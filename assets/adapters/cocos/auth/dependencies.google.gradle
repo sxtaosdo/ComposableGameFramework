@@ -1,0 +1,8 @@
+// Host opts in explicitly. This fragment contains no OAuth IDs, plugin or automatic sign-in.
+if (project.findProperty('shidai3GoogleCredentialEnabled') == 'true') {
+    dependencies {
+        implementation 'androidx.credentials:credentials:1.6.0'
+        implementation 'androidx.credentials:credentials-play-services-auth:1.6.0'
+        implementation 'com.google.android.libraries.identity.googleid:googleid:1.2.1'
+    }
+}
