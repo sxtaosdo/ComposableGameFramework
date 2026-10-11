@@ -1,0 +1,326 @@
+{
+  "schemaVersion": 1,
+  "frameworkCandidate": "2.4.0",
+  "status": "IMPLEMENTED",
+  "sourceRevision": "d2f5d7574e12ece9cec6d6a6e69433a637c8659c",
+  "baselineRevision": "0f9371553493ac2fc622fdfe678bec85bfc6a903",
+  "scope": "Independent default-off Crashlytics client and native source only; no product entry/pin, Protected Core, parent gitlink or deployment changes",
+  "authorization": {
+    "owner": "Owner via parent coordination",
+    "sourceThreadId": "01a10a39-cd83-72a4-b5dc-c9ed833e3007",
+    "action": "Continue independent native tooling verification and default-off Crashlytics source/synthetic lifecycle; no new legal agreement or real crash/upload"
+  },
+  "sourceFiles": [
+    {
+      "path": "assets/observability/index.ts",
+      "sha256": "14bb5023007310b0c50cd2f01a5a50bc3c17d14077485cff5bbacbff4318932a"
+    },
+    {
+      "path": "assets/observability/nativeCrashlytics.ts",
+      "sha256": "eee4bc045f2327b19de8c02827352985348062b8ad44542fff55dc8639aefa18"
+    },
+    {
+      "path": "assets/adapters/cocos/firebase/Shidai3FirebaseCrashlytics.java",
+      "sha256": "68a826544e1972042010d4f934b12c7b7501d188840b9de889e282763ca00d49"
+    },
+    {
+      "path": "assets/adapters/cocos/firebase/Shidai3FirebaseCrashlytics.mm",
+      "sha256": "65289a2e93ba1fa5d25101b026f059a5567e8dfbaed170a0472685a306d3eceb"
+    },
+    {
+      "path": "assets/adapters/cocos/firebase/dependencies.crashlytics.gradle",
+      "sha256": "8d5d139de628c8191e8dcc61f8ff666b9a47a2a4f92e41ed0c2b2bc739186ee8"
+    },
+    {
+      "path": "tests/observability/crashlytics.test.ts",
+      "sha256": "174b8b76465bc07fa5ddbb6cb3c21ef712032bde7337c418e69d3b5c46bfafda"
+    }
+  ],
+  "publicApi": [
+    "NativeFirebaseCrashlyticsAdapter",
+    "CocosFirebaseCrashlyticsBridge",
+    "NativeCrashlyticsBridge",
+    "NativeCrashlyticsOptions"
+  ],
+  "clientContract": {
+    "default": "not_configured / no bridge calls",
+    "gates": [
+      "enabled",
+      "automaticCaptureEnabledInBuild",
+      "native isConfigured"
+    ],
+    "batch": "errors only; event/breadcrumb/mixed rejected before submission",
+    "rawCauseRead": false,
+    "wire": "code and operation finite enums only; no account/session/fact identity",
+    "sharedLimits": {
+      "maxErrorsPerSession": 5,
+      "fingerprintIntervalMs": 60000,
+      "ledgerMaxEntries": 2000,
+      "ledgerTtlMs": 86400000
+    },
+    "stop": "Blocks later adapter submissions including synchronous reentry; SDK disable request is not automatic-capture or upload cessation ACK",
+    "captureCapabilities": "Conservative raw/native=true when host attests capture SDK build; remains true after stop or SDK unavailability",
+    "acceptance": "submitted_to_sdk is local acceptance only; no remote ACK/exactly-once claim"
+  },
+  "nativeSource": {
+    "android": "FirebaseCrashlytics.recordException fixed DiagnosticException with no cause/writable stack",
+    "apple": "FIRCrashlytics.recordError fixed NSError domain/code + operation; SDK captures native thread stack",
+    "defaultBuild": "SDK and native source must both be excluded; optional Gradle fragment not applied anywhere",
+    "androidDependency": {
+      "bom": "35.0.0",
+      "crashlytics": "21.0.0",
+      "minApi": 24
+    },
+    "appleCandidate": {
+      "spm": "13.0.0",
+      "minIos": "15",
+      "minXcode": "26.2"
+    },
+    "automaticRawCapture": "SDK can retain raw crashes locally even with collection=false; Android disable applies next launch",
+    "androidCompile": "NOT_RUN: no JDK/android.jar in inspected locations; SDK usage agreement not accepted",
+    "appleCompile": "NOT_RUN: no macOS/Xcode",
+    "sdkExecution": "NOT_RUN",
+    "trueCrash": "NOT_RUN",
+    "remoteReception": "NOT_RUN",
+    "playerDataUpload": "NOT_RUN",
+    "creatorImportMeta": "NOT_RUN",
+    "nativeExceptionIsolation": "NOT_RUN",
+    "symbolsAndUnsentDeletion": "NOT_IMPLEMENTED"
+  },
+  "toolchain": {
+    "inspectedInventory": {
+      "C:/Program Files/Java": {
+        "exists": false,
+        "matches": []
+      },
+      "C:/Program Files/Eclipse Adoptium": {
+        "exists": false,
+        "matches": []
+      },
+      "C:/Program Files/Microsoft": {
+        "exists": false,
+        "matches": []
+      },
+      "C:/Program Files/Android": {
+        "exists": false,
+        "matches": []
+      },
+      "C:/Program Files/Amazon Corretto": {
+        "exists": false,
+        "matches": []
+      },
+      "C:/Program Files/LLVM": {
+        "exists": false,
+        "matches": []
+      },
+      "C:/Users/33272/.jdks": {
+        "exists": false,
+        "matches": []
+      },
+      "C:/Users/33272/.gradle/jdks": {
+        "exists": false,
+        "matches": []
+      },
+      "C:/Users/33272/AppData/Local/Android/Sdk": {
+        "exists": false,
+        "matches": []
+      },
+      "C:/ProgramData/Cocos/editors/Creator/3.8.8/resources/tools": {
+        "exists": true,
+        "matches": [
+          "C:\\ProgramData\\Cocos\\editors\\Creator\\3.8.8\\resources\\tools\\cmake\\bin\\cmake.exe"
+        ]
+      },
+      "approvedOfficialCache": [
+        {
+          "path": "C:\\Users\\33272\\AppData\\Local\\Temp\\p0002-platform-20261011\\official-sdk\\analytics.aar",
+          "bytes": 787
+        },
+        {
+          "path": "C:\\Users\\33272\\AppData\\Local\\Temp\\p0002-platform-20261011\\official-sdk\\analytics.pom",
+          "bytes": 1406
+        },
+        {
+          "path": "C:\\Users\\33272\\AppData\\Local\\Temp\\p0002-platform-20261011\\official-sdk\\binary-api-evidence.json",
+          "bytes": 1922
+        },
+        {
+          "path": "C:\\Users\\33272\\AppData\\Local\\Temp\\p0002-platform-20261011\\official-sdk\\bom.pom",
+          "bytes": 5228
+        },
+        {
+          "path": "C:\\Users\\33272\\AppData\\Local\\Temp\\p0002-platform-20261011\\official-sdk\\download-evidence.json",
+          "bytes": 6434
+        },
+        {
+          "path": "C:\\Users\\33272\\AppData\\Local\\Temp\\p0002-platform-20261011\\official-sdk\\firebase-common.aar",
+          "bytes": 121307
+        },
+        {
+          "path": "C:\\Users\\33272\\AppData\\Local\\Temp\\p0002-platform-20261011\\official-sdk\\measurement-api.aar",
+          "bytes": 78156
+        }
+      ]
+    },
+    "existingCreatorCMake": "3.24.3",
+    "searchScope": "PATH/env + common JDK/SDK paths, Creator3.8.8 tools, named Temp caches and previously approved Firebase cache; not all disks",
+    "coreCompileToolCandidates": [
+      {
+        "kind": "jdk17-windows-x64",
+        "url": "https://aka.ms/download-jdk/microsoft-jdk-17.0.20.1-windows-x64.zip",
+        "resolvedUrl": "https://download.visualstudio.microsoft.com/download/pr/a9672056-0a4d-425d-8488-f481ee56319c/ac8d1216f7d03a27c018bc960f947721/microsoft-jdk-17.0.20.1-windows-x64.zip",
+        "bytes": "186915383",
+        "status": 200
+      },
+      {
+        "kind": "android-sdk-package",
+        "path": "platforms;android-36",
+        "displayName": "Android SDK Platform 36",
+        "licenseRef": "android-sdk-license",
+        "host": null,
+        "url": "https://dl.google.com/android/repository/platform-36_r02.zip",
+        "bytes": 65878410,
+        "checksum": "2c1a80dd4d9f7d0e6dd336ec603d9b5c55a6f576"
+      }
+    ],
+    "coreToolArchiveBytes": 252793793,
+    "transitiveTypeClosure": "Not resolved; source type compile only, not APK/Creator native packaging",
+    "jdkOrAndroidPackagesDownloaded": false,
+    "globalPathOrPermissionsChanged": false,
+    "legalAgreementAccepted": false,
+    "blockingLicenseSource": "https://developer.android.com/studio/terms",
+    "nextCompileCondition": "Owner supplies existing lawful JDK/Android SDK paths, or separately handles SDK usage authorization; do not preseed licenses"
+  },
+  "officialSdkPreparation": {
+    "url": "https://dl.google.com/dl/android/maven2/com/google/firebase/firebase-crashlytics/21.0.0/firebase-crashlytics-21.0.0.aar",
+    "bytes": 427421,
+    "sha256": "3e99d4bf4491bd166e6936d9708616b5fee1d609685d020701af0da10be94bab",
+    "class": "com/google/firebase/crashlytics/FirebaseCrashlytics.class",
+    "publicMethods": [
+      {
+        "name": "getInstance",
+        "signature": "()Lcom/google/firebase/crashlytics/FirebaseCrashlytics;",
+        "public": true,
+        "static": true
+      },
+      {
+        "name": "recordException",
+        "signature": "(Ljava/lang/Throwable;)V",
+        "public": true,
+        "static": false
+      },
+      {
+        "name": "setCrashlyticsCollectionEnabled",
+        "signature": "(Z)V",
+        "public": true,
+        "static": false
+      }
+    ],
+    "status": "VERIFIED_STATIC_BINARY_API",
+    "scope": "No javac compile, SDK execution, or network submission"
+  },
+  "verification": {
+    "node": "22.23.2",
+    "typescript": "5.9.2",
+    "vitest": "3.2.4",
+    "snapshotFileCount": 88,
+    "results": [
+      {
+        "name": "typecheck",
+        "command": [
+          "C:/Users/33272/AppData/Local/npm-cache/_npx/5e73393260797e7e/node_modules/node/bin/node.exe",
+          "node_modules/typescript/bin/tsc",
+          "-p",
+          "tsconfig.json"
+        ],
+        "cwd": "C:\\Users\\33272\\AppData\\Local\\Temp\\p0002-native-20261011\\snapshot",
+        "exitCode": 0,
+        "log": "C:\\Users\\33272\\AppData\\Local\\Temp\\p0002-native-20261011\\typecheck.log"
+      },
+      {
+        "name": "vitest-full",
+        "command": [
+          "C:/Users/33272/AppData/Local/npm-cache/_npx/5e73393260797e7e/node_modules/node/bin/node.exe",
+          "node_modules/vitest/vitest.mjs",
+          "run"
+        ],
+        "cwd": "C:\\Users\\33272\\AppData\\Local\\Temp\\p0002-native-20261011\\snapshot",
+        "exitCode": 0,
+        "log": "C:\\Users\\33272\\AppData\\Local\\Temp\\p0002-native-20261011\\vitest-full.log"
+      },
+      {
+        "name": "telemetry-node",
+        "command": [
+          "C:/Users/33272/AppData/Local/npm-cache/_npx/5e73393260797e7e/node_modules/node/bin/node.exe",
+          "--test",
+          "tests/observability/telemetry.node-test.cjs"
+        ],
+        "cwd": "C:\\Users\\33272\\AppData\\Local\\Temp\\p0002-native-20261011\\snapshot",
+        "exitCode": 0,
+        "log": "C:\\Users\\33272\\AppData\\Local\\Temp\\p0002-native-20261011\\telemetry-node.log"
+      },
+      {
+        "name": "build",
+        "command": [
+          "C:/Users/33272/AppData/Local/npm-cache/_npx/5e73393260797e7e/node_modules/node/bin/node.exe",
+          "node_modules/typescript/bin/tsc",
+          "-p",
+          "tsconfig.build.json"
+        ],
+        "cwd": "C:\\Users\\33272\\AppData\\Local\\Temp\\p0002-native-20261011\\snapshot",
+        "exitCode": 0,
+        "log": "C:\\Users\\33272\\AppData\\Local\\Temp\\p0002-native-20261011\\build.log"
+      },
+      {
+        "name": "normalize-dist",
+        "command": [
+          "C:/Users/33272/AppData/Local/npm-cache/_npx/5e73393260797e7e/node_modules/node/bin/node.exe",
+          "scripts/normalize-dist-imports.mjs"
+        ],
+        "cwd": "C:\\Users\\33272\\AppData\\Local\\Temp\\p0002-native-20261011\\snapshot",
+        "exitCode": 0,
+        "log": "C:\\Users\\33272\\AppData\\Local\\Temp\\p0002-native-20261011\\normalize-dist.log"
+      }
+    ],
+    "vitestTests": 92,
+    "newLifecycleTests": 8,
+    "nodeTelemetryTests": 19,
+    "emittedEsmDefaultOff": "PASS",
+    "logSha256": {
+      "typecheck.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vitest-full.log": "5ab624ba5455139f06cc6e646154e9f07d824d571cebe9e4b343593ac097e73f",
+      "telemetry-node.log": "f2da05760650249916d6d88104d23bc303fceb95900c751e5918f9dbc24b15a7",
+      "build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "normalize-dist.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "snapshotBytesMatchCurrent": 88,
+    "machineContracts": "Known original Windows root + slash failure; final metadata validation uses Temp equivalent path.sep-only copy; no repo tool changes"
+  },
+  "review": {
+    "presetEntry": "Unavailable; actual roles prompt-emulated with inherited model/configuration, isolation not verified",
+    "mapper": {
+      "task": "/root/auth_startup_mapper",
+      "role": "code-mapper",
+      "result": "Read-only seam/risk report completed; no writes"
+    },
+    "reviewer": {
+      "task": "/root/auth_reviewer",
+      "role": "reviewer",
+      "sourceCoverage": "6/6",
+      "result": "No remaining confirmed P1/P2; stop reentry P2 fixed and independently reprobed",
+      "nativeGaps": "Java/Apple compile and SDK/native exception behavior remain NOT_RUN"
+    },
+    "ocr": {
+      "mode": "Delegation Mode",
+      "externalModelOrCodeUpload": false,
+      "reviewableSourcePaths": 6
+    }
+  },
+  "remainingConditions": [
+    "Lawful Android SDK/JDK toolchain",
+    "Apple Xcode build and production bridge",
+    "Approved separate test FirebaseApp/configuration and automatic-capture policy",
+    "Product consumption upgrade window",
+    "Native device opt-out/restart/unsent reports/symbols/reception verification"
+  ]
+}

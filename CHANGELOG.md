@@ -1,5 +1,11 @@
 # CHANGELOG（变更日志）
 
+## v2.4.0（未发布；默认关闭的 Crashlytics 客户端候选）
+
+- 新增独立 error-only adapter 与固定 Cocos reflection 桥，复用共享 captureError 的限流、批次净化及成功前缀 ledger。普通事件／混合批次全拒；双门未满足不访问桥。stop立即阻断本地后续提交，原生关闭请求不等于上传或原始采集停止，capability保守保留原始采集构建事实。
+- 新增 Android固定无原始cause/stack异常与 Apple固定NSError调用源码、未应用的条件SDK片段。默认构建继续排除Crashlytics依赖／原生源文件，未初始化SDK、触发真实crash或发送玩家数据；AppleSDK自身线程栈及自动崩溃捕获边界明确保留。Crashlytics21.0.0官方427,421字节AAR仅Temp静态验证三个公共签名，未冒充原生编译。
+- 核查现有工具链与缓存，仅发现Creator CMake3.24.3，检查范围内缺JDK/android.jar；记录官方两工具包约241.1MiB基数及SDK协议条件，未重复安装、改PATH、安全权限或接受新协议。同步共享用法、状态矩阵、Manifest与实施回执；无产品Main/pin、ProtectedCore或父仓变化，未推送。新增生命周期合成测试并修复同步stop重入后仍可能提交的问题；完整验证与独立审查结果见回执。
+
 ## v2.3.0（未发布；微信调用与原生 Firebase Analytics 候选）
 
 - 新增公共微信 CredentialPort：实际调用 wx.login，只返回短期 code；取消与迟到回调隔离，无后台端口仍保持 unavailable／guest。未创建应用、云账号或凭据，不把 code 当可信游戏账号。

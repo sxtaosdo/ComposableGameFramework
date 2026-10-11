@@ -8,7 +8,7 @@
 
 - `TelemetryClient` 默认关闭，必须显式 `enabled: true` 和有效构建上下文才记录。客户端只在调用时处理内存队列，不注册计时器、全局异常监听、平台探测、存储或网络；事实由 Gameplay 所属事务提供稳定 `factId`，奖励持久化后才能报告 `ad_reward_committed`，重试沿用原事实身份。
 - 上下文保留已有两个真实复用场景：`p1060/endless` 与 `ant-cook/ant|cook|shell`；`platform` 为 `web|wechat|douyin|native`，由宿主明确传入，不自动猜测。Google／Apple 原生端继续对应 `native` 适配边界，不把认证 provider 与遥测平台标签混为同一身份。
-- 公开 `LocalRecordingAdapter`、`WechatTelemetryAdapter`、`DouyinTelemetryAdapter` 与 `NativeFirebaseTelemetryAdapter`。本地适配器只返回 `recorded_locally`；微信和原生 Firebase 候选 v2.3.0 新增显式 SDK 调用，成功返回 `submitted_to_sdk`，它只表示本地提交。默认或缺配置仍为 `not_configured`；rawErrorCapture/nativeCrashCapture 保持 false。抖音仍是无 tt 调用的合同桩。所有路径均无远端 ACK 或原始崩溃捕获实现。
+- 公开 `LocalRecordingAdapter`、`WechatTelemetryAdapter`、`DouyinTelemetryAdapter` 与 `NativeFirebaseTelemetryAdapter`。本地适配器只返回 `recorded_locally`；微信和原生 Firebase 候选 v2.3.0 新增显式 SDK 调用，成功返回 `submitted_to_sdk`，它只表示本地提交。这四条路径默认或缺配置仍为 `not_configured`，rawErrorCapture/nativeCrashCapture 为 false；抖音仍是无 tt 调用的合同桩。v2.4.0 另增独立 `NativeFirebaseCrashlyticsAdapter`，其原始采集声明和开关见下节；所有路径均无远端 ACK。
 - 只复制白名单标量，拒绝已知字段的 getter、错误产品／玩法组合、未知平台、非法构建身份、未持久化奖励与不一致的货币事实。原始异常的 message／stack／cause、账号或平台凭证、URL 和存档正文不进入记录；不读取未知字段。
 - 内存队列最多200条／512 KiB，每批20条，事实去重账本最多2000条，TTL 为24小时；退避最多5分钟且不自动重试。面包屑最多30条，错误每会话最多5条、同指纹间隔至少60秒。适配器异常及重入不改变 Gameplay 或保存结果，内存状态不写入 Save Protocol。
 
@@ -16,7 +16,7 @@
 
 产品已单源消费检查点 v2.2.0：P1060 `4f5955988f35f3aa36ce9e72365fcdb4a8d7fa52` 和 ant-cook `287fe6b101a6e37cb2a335da2d415c17cd941b68` 均 pin `895f28728ef2624e56faa3520d11b02310b20f18`，原三文件为纯公开入口 re-export，实际启动使用共享类。本轮候选 v2.3.0 不改产品 pin／启动入口；新平台 SDK 尚未接线进游戏。云存档与未选后端继续 Deferred。
 
-## 微信／Firebase 调用层与启用门（2026-10-11）
+## 微信／Firebase v2.3.0 调用检查点（2026-10-11）
 
 Owner 本轮要求尝试真实平台 SDK 并同步文档。本切片实现实际官方 API 调用源码，以合成数据验证，不创建账号、云资源、密钥、应用配置，不读取秘密或发送玩家数据。
 
@@ -26,7 +26,7 @@ Owner 本轮要求尝试真实平台 SDK 并同步文档。本切片实现实际
 | 微信异常 | `WechatErrorListener.start(true)/stop()` 自持 onError/offError handler，只记录固定 js_uncaught，忽略原始字符串 | 生命周期合成测试；不 auto-flush，真实宿主未执行 |
 | Android Analytics | Java `Shidai3FirebaseAnalytics` → 官方 getInstance/logEvent；固定 reflection 类和 boolean 回值；显式 configure 默认关 | TS reflection 合同已测；缺 JDK/android.jar，官方 Android AAR 公共方法签名已静态核实；真实 SDK 编译与设备运行未执行 |
 | iOS Analytics | ObjC++ `Shidai3FirebaseAnalytics` → FIRAnalytics；固定 selector，显式 configure 默认关 | TS reflection 合同已测；macOS/Xcode 构建、设备、Apple 发布路径未执行 |
-| Crashlytics | 默认不包含 SDK、不初始化，不以 collection=false 冒充无采集 | 原始捕获、nonfatal/native crash、符号上传、后台收件均未执行 |
+| Crashlytics | v2.3.0 未实现；v2.4.0 默认关闭的独立候选见下节 | 真实 nonfatal/native crash、符号上传、后台收件均未执行 |
 | Firebase Auth | 保留独立可信交换边界，不把 Firebase UID 当游戏账号 | 原生 SDK 与后端认证链未实现／未实测，见 [认证合同](auth-session.md) |
 
 调用映射重验 TelemetrySchema：只接受已定义 event/error 与产品／玩法／平台上下文、事实身份、时间和字段；拒绝伪 eventId、getter、未知事件和 breadcrumb 发送。参数为最多25个白名单标量，boolean 映射为0/1，普通字符串限制在100字以内。长 JSON `eventId` 只在本地使用，平台 payload 传 `environment/product/gameplay/sessionId/kind/name(事件名)/factId` 等已允许字段，报告端可按相同元组重建身份，不能用账户身份替换。
@@ -49,9 +49,39 @@ const client = new TelemetryClient({ enabled: true, context, adapter });
 
 `AndroidManifest.defaults.xml`／`Info.defaults.plist` 是未来集成片段，本片未装入产品。Android移除 FirebaseInitProvider，Analytics collection默认false；Apple不自动配置 FIRApp，collection默认false。宿主先在相同门下配置测试FirebaseApp，再显式 native configure(true)，最后开启 TS adapter/client。重配置先尝试关闭旧实例 collection 再验证新应用，任何本地失败不继续提交；SDK 关闭自身抛错不证明自动采集已停止。运行时 collection 设置可能持久覆盖默认，因此需要在 opt-out 与重启时验证；只关闭 TS Client 不足以证明 SDK 无自动事件／设备信息。详情：[Android collection](https://firebase.google.com/docs/analytics/android/configure-data-collection)、[Apple collection](https://firebase.google.com/docs/analytics/ios/configure-data-collection)、[FirebaseApp 自动初始化](https://firebase.google.com/docs/reference/android/com/google/firebase/FirebaseApp)。
 
-Crashlytics关闭发送仍会本地保存原始崩溃，Android运行时关闭下次启动才生效；因此本片不加入它的运行依赖、注册器或 nonfatal 调用，capability 坚持 false。若后续启用，必须单独明确原始原生采集范围及测试应用、默认关闭的构建配置，验证符号化／删除未发送报告／后台收件，不能把自定义脱敏 Throwable 等同 SDK 不自动采集。[Android 官方说明](https://firebase.google.com/docs/crashlytics/android/customize-crash-reports)、[Apple 官方说明](https://firebase.google.com/docs/crashlytics/ios/customize-crash-reports)。
+Crashlytics关闭发送仍会本地保存原始崩溃，Android运行时关闭下次启动才生效；v2.3.0 检查点不加入它的运行依赖、注册器或 nonfatal 调用，已有 Analytics adapter 的 capability 仍为 false。v2.4.0 独立候选保留这一事实，不把自定义脱敏 Throwable 等同 SDK 不自动采集。[Android 官方说明](https://firebase.google.com/docs/crashlytics/android/customize-crash-reports)、[Apple 官方说明](https://firebase.google.com/docs/crashlytics/ios/customize-crash-reports)。
 
 Node22完整 Vitest84/84（含本片12项）、另有遥测Node19/19、严格类型检查、ES2015构建及实际ESM导入／默认关闭Smoke通过。83份 assets/tests 快照与工作树字节匹配；默认XML／plist语法通过，OCR委派与独立21/21只读审查关闭两项native配置P2。构建与SDK二进制签名核验不等同原生编译。本片仅候选源码／离线调用合同交付；SDK真实编译、Creator导入／Meta、产品升级接线、微信工具／原生真机、真实登录、真实收件与运营报告部署均未执行。Owner 的客户 SDK 推进已替代旧“客户端等待恢复”的流程，后端／云存档／绑定政策不由本片选定。根 README／AI_CONTEXT／治理导航由父会话协调，本片不改共用入口。
+
+## Crashlytics v2.4.0 独立候选与原生编译条件（2026-10-11）
+
+唯一公共源码仍在 `assets/observability/`，原生文件仍在 `assets/adapters/cocos/firebase/`。新入口导出 `NativeFirebaseCrashlyticsAdapter`、`CocosFirebaseCrashlyticsBridge` 及其端口／选项。构造和导入不初始化 SDK，不探测平台或注册监听；未配置默认 `not_configured`。
+
+宿主须先独立批准原始自动采集的测试构建，再在该构建下同时纳入 Java／ObjC++ 文件和 SDK；`dependencies.crashlytics.gradle` 仅是未应用的条件片段，要求 `shidai3CrashlyticsEnabled=true`，当前 Analytics 依赖文件和两产品没有应用它。Android BoM35.0.0／Crashlytics21.0.0；Apple未来选已有 SPM13.0.0 FirebaseCrashlytics 模块，当前没有安装或解析。不要把新 Java 文件无条件加入默认 Analytics-only 编译源集，否则缺 Crashlytics 类会编译失败。默认构建排除 SDK 和原生文件；collection=false 不能替代这道门。
+
+原生宿主仅在测试 FirebaseApp 已独立配置后调用 Android `configure(true,true)`／Apple `configure:YES upload:YES`；两个参数分别明确自动原始采集与上传，任一未允许时不调用 SDK getInstance/crashlytics（已有实例仅请求关闭 collection）。TS 层不能隐式配置原生或 FirebaseApp。以下仅为已批准测试构建的未来消费用法，本片未接入产品：
+
+```ts
+import { TelemetryClient, NativeFirebaseCrashlyticsAdapter, CocosFirebaseCrashlyticsBridge }
+    from 'db://shidai3/observability/index';
+const crashAdapter = new NativeFirebaseCrashlyticsAdapter({ enabled: true,
+    automaticCaptureEnabledInBuild: true, // 对 SDK 构建采集事实的明确声明，不是授权提示
+    bridge: new CocosFirebaseCrashlyticsBridge(nativeReflection, 'android') });
+const errors = new TelemetryClient({ enabled: true, context: nativeTestContext, adapter: crashAdapter });
+errors.captureError(undefined, { code: 'resource_failed', operation: 'resource', factId: 'synthetic-resource' });
+errors.flush(); // 仅 SDK 本地接受；不会保证此时发出或收到网络数据。
+const stopped = crashAdapter.stop(); // 宿主停用时显式执行，SDK 停止事实另验。
+```
+
+错误客户端复用每会话5条／同指纹60秒限制、白名单重验和有界 ledger；只接收 error 批次，event／breadcrumb 或混合批次整批拒绝，不部分转投 Analytics。固定 reflection 只传两个有限枚举 code/operation；Android `record(String)Z` 用无 cause／无 stack 的固定 DiagnosticException 调 `recordException`，Apple `record:` 用固定 NSError domain／有界 code 与 operation 调 `recordError`。平台 context、session/factId 和原始 cause 不传入此桥。Apple SDK 会同时捕获当前原生线程栈，SDK 初始化也可安装原始崩溃采集，不能称为纯脱敏采集。
+
+`automaticCaptureEnabledInBuild=true` 时 capability 保守声明 rawErrorCapture/nativeCrashCapture=true，即使 SDK 不可用或本地 stop 后也不降为 false；它表示构建含原生 SDK 原始采集路径，不能作为实时观测或许可证明，也不表示已覆盖 Cocos C++／Android NDK（本片未加 NDK SDK）。configured/externalDelivery 仅表示适配器活跃且原生门就绪；false 不证明 SDK 没有自动上传。stop 立即阻止此 adapter 后续提交（包括同步重入停用和同批次后续项），只对 SDK collection 提出关闭请求；重复 stop 无重复调用。返回 sdk_disable_requested 不代表上传／自动捕获已停止，Android false override 下一启动才生效。再次使用须明确新建 adapter 并重验宿主原生门，不能只开启 Analytics。删除未发送报告、重启策略、符号化、真实异常收件和同意撤回链仍未实现／未验证。
+
+工具链只读核查：PATH、JAVA_HOME/ANDROID_*、常见 JDK/Android 安装目录、Creator3.8.8 tools 及已批准 Firebase 缓存中未找到 java/javac/android.jar；Creator既有 CMake3.24.3 可用，不能代替 Java 编译器。此结论限定所检查位置，不表示全盘不存在。独立 `javac` 类型编译缺 JDK17 和 Android平台 jar；选定官方便携 JDK17.0.20.1 Windows x64 ZIP 186,915,383字节，加 API36 r2平台 ZIP 65,878,410字节，工具下载基数252,793,793字节（约241.1 MiB），另需实际类型依赖闭包。已有官方 Analytics/common AAR可复用；本片只追加427,421字节 Crashlytics21.0.0 AAR到Temp。未下载这两个工具包；无需为该类型验证先装整个 Android Studio、cmdline-tools、Gradle或NDK。APK／Creator原生打包是另一级验证，工具依赖不由 javac 结果覆盖。
+
+包体积由官方HTTP HEAD与[Google SDK仓库元数据](https://dl.google.com/android/repository/repository2-3.xml)核实；[Microsoft JDK下载表](https://learn.microsoft.com/en-us/java/openjdk/download)列版本。[Android SDK条款](https://developer.android.com/studio/terms)规定使用SDK也表示接受；本轮明确不接受新法律协议，所以尚未安装、使用、预写许可证或执行 sdkmanager --licenses。允许继续编译的条件是 Owner 提供既有合法可用SDK/JDK路径，或另行处理 SDK 使用授权；Windows无Xcode，Apple原生编译继续 NOT_RUN。
+
+官方 Crashlytics21.0.0 AAR class-file 已静态核验 getInstance、recordException(Throwable)、setCrashlyticsCollectionEnabled(boolean) 三个公共签名，不能替代 javac、链接或执行。实际调用SDK、真实crash、玩家数据发送、后台收件全部 NOT_RUN；源码只用合成端口验证，未改产品入口、pin、父仓gitlink或Creator/daemon。新能力仅 IMPLEMENTED 客户端候选，原始捕获与产品Runtime不晋级 VERIFIED。源码检查点 `d2f5d7574e12ece9cec6d6a6e69433a637c8659c`；正式回执见 [crashlytics-client-implementation-v1.json](../evidence/crashlytics-client-implementation-v1.json)。最终Node22 strict、92/92 Vitest（本片8项）、19/19独立Node、ES2015 build和实际ESM默认关闭Smoke通过，88份源码／测试快照字节一致。OCR六文件规则与独立源码审查关闭stop重入P2；原始Windows合同校验器问题未改，Temp路径等价副本实际通过4合同／58文档／2.4.0 IMPLEMENTED。
 
 ## 保留设计范围（DESIGN_ONLY）
 
