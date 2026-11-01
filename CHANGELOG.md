@@ -1,6 +1,8 @@
-# CHANGELOG（变更日志）
+﻿# CHANGELOG（变更日志）
 
 ## v2.7.0（未发布；注入式抖音小游戏凭证端口）
+
+- 同步 Creator 为 auth／observability／firebase 适配器生成的 `.meta`，便于产品仓 `extensions/shidai3` 干净挂载。
 
 - 复用既有CredentialPort、douyin-code DTO及LoginFacade／AuthSession，新公开DouyinCredentialAdapter／DouyinLoginApi；导入与构造零SDK调用，只有显式acquire调用注入API且固定force:true。只复制自有数据code／可选anonymousCode，匿名-only拒绝；不把平台code／isLogin当已认证游戏session，不保存或打印凭证。
 - 重新核当前官方小游戏登录与code2Session：基础库1.0.0+，材料三分钟且一次换票，AppSecret/session_key只服务器。平台未公开timeout或可取消Task，不照抄微信参数；复用统一总deadline／AbortSignal终止本地等待，不承诺关闭宿主UI。平台fail统一脱敏failed，主动本地cancel为cancelled，迟到结果不能exchange；宿主仍在登录时重试可收到21101。
